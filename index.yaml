@@ -3,7 +3,17 @@ entries:
   dcm4che:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2020-04-13T15:47:20.532487-03:00"
+    created: "2020-04-13T15:48:40.940482-03:00"
+    description: Instalación de DCM4Che
+    digest: d0f26056fc8449d043b197c789750740478ac65e45989eff010abfe57b2a4790
+    name: dcm4che
+    type: application
+    urls:
+    - dcm4che-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-04-13T15:48:40.937618-03:00"
     description: Instalación de DCM4Che
     digest: ea1db59df5f52c7be708dd6b46b1b470e94df204ebfca4abd5d19d1893ea2bec
     name: dcm4che
@@ -11,4 +21,4 @@ entries:
     urls:
     - dcm4che-0.1.0.tgz
     version: 0.1.0
-generated: "2020-04-13T15:47:20.530389-03:00"
+generated: "2020-04-13T15:48:40.935635-03:00"
