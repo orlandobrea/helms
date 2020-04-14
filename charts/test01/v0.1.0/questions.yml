@@ -5,10 +5,10 @@ labels:
 questions:
 - variable: replicaCount
   default: 1
-  description: "Number of replicas in the replica set"
+  description: "Cantidad de instancias de la aplicación"
   type: int
   min: 1
   max: 12
-  label: Number of Replicas
+  label: Replicas
   required: true
-  group: "MongoDB Settings"
+  group: "Configuración"
