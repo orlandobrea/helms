@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dcm4che-kibana.fullname" . }}
+  labels:
+    {{- include "dcm4che-kibana.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dcm4che-kibana.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dcm4che-kibana.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- range $port :=  .Values.service.ports }}
+            - containerPort: {{ $port.number }}
+              protocol: {{ $port.protocol }}
+            {{- end}}  
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: {{ .Values.elasticsearch.host | quote }}
+          volumeMounts:
+          - name: vm-localtime
+            mountPath: /etc/localtime            
+          - name: vm-timezone
+            mountPath: /etc/timezone             
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}          
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+        - name: vm-localtime
+          hostPath:
+            path: /etc/localtime  
+        - name: vm-timezone
+          hostPath:
+            path: /etc/timezone   

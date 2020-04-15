@@ -1,16 +1,19 @@
-# Default values for test01.
+# Default values for dcm4che-kibana.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: orlandobrea/dcm4che-logstash
+  pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "dcm4che-logstash"
+
+elasticsearch:
+  host: "dcm4che-elastic"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -34,7 +37,23 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  ports:
+    - name: gelf
+      number: 12201
+      protocol: UDP
+    - name: syslog-udp
+      number: 8514
+      protocol: UDP
+    - name: syslog-tcp
+      number: 8514
+      protocol: TCP  
+
+volumes:
+  type: "hostPath"
+  properties:
+    path: "/hashtree"
+    type: "DirectoryOrCreate"
+
 
 ingress:
   enabled: false
