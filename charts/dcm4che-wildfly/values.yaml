@@ -5,15 +5,13 @@
 replicaCount: 1
 
 image:
-  repository: orlandobrea/dcm4che-logstash
+  repository: dcm4che/dcm4chee-arc-psql
   pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "dcm4che-logstash"
+fullnameOverride: "dcm4che-wildfly"
 
-elasticsearch:
-  host: "dcm4che-elastic"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -38,22 +36,47 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    - name: gelf
-      number: 12201
-      protocol: UDP
-    - name: syslog-udp
-      number: 8514
-      protocol: UDP
-    - name: syslog-tcp
-      number: 8514
-      protocol: TCP  
+    - name: http
+      number: 8880
+      protocol: TCP
+    - name: https
+      number: 8843
+      protocol: TCP
+    - name: management
+      number: 9990
+      protocol: TCP
+    - name: management-tls
+      number: 9993
+      protocol: TCP
+    - name: dicom-tls
+      number: 2762
+      protocol: TCP
+    - name: hl7-tcp
+      number: 2575
+      protocol: TCP
+    - name: hl7-udp
+      number: 2575
+      protocol: UDP      
+    - name: other
+      number: 12575
+      protocol: TCP
+
+
+
+env_vars:
+  POSTGRES_DB: "pacsdb"
+  POSTGRES_USER: "pacs"
+  POSTGRES_PASSWORD: "pacs"
+  LOGSTASH_HOST: "logstash"
+  AUTH_SERVER_URL: "https://dcm4che-keycloak:8843/auth"
+  WILDFLY_WAIT_FOR: "dcm4che-slapd:389 dcm4che-postgres:5432 dcm4che-logstash:8514"
 
 volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/hashtree"
-      type: "DirectoryOrCreate"
+      path: "/wildfly"
+      type: "DirectoryOrCreate"    
 
 
 ingress:

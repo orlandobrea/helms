@@ -5,15 +5,13 @@
 replicaCount: 1
 
 image:
-  repository: orlandobrea/dcm4che-logstash
+  repository: dcm4che/postgres-dcm4chee
   pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "dcm4che-logstash"
+fullnameOverride: "dcm4che-postgres"
 
-elasticsearch:
-  host: "dcm4che-elastic"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -38,22 +36,22 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    - name: gelf
-      number: 12201
-      protocol: UDP
-    - name: syslog-udp
-      number: 8514
-      protocol: UDP
-    - name: syslog-tcp
-      number: 8514
-      protocol: TCP  
+    - name: postgres
+      number: 5432
+      protocol: TCP
+
+env_vars:
+  POSTGRES_DB: "pacsdb"
+  POSTGRES_USER: "pacs"
+  POSTGRES_PASSWORD: "pacs" #@ToDo sacara a secrets
+
 
 volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/hashtree"
-      type: "DirectoryOrCreate"
+      path: "/postgres"
+      type: "DirectoryOrCreate"    
 
 
 ingress:

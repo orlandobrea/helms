@@ -72,9 +72,11 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone   
-        - name: data
-          {{.Values.volumes.type }}:          
-        {{- range $key, $val := .Values.volumes.properties }}
+        {{- range $volume :=  .Values.volumes }}
+        - name: {{ $volume.name }}
+          {{ $volume.type }}:          
+          {{- range $key, $val := $volume.properties }}
             {{$key}}: {{ $val | quote}}
-        {{- end}}
+          {{- end}}  
+        {{- end}}  
 

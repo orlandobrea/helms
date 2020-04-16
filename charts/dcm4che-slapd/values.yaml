@@ -5,12 +5,12 @@
 replicaCount: 1
 
 image:
-  repository: orlandobrea/dcm4che-logstash
+  repository: dcm4che/slapd-dcm4chee
   pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "dcm4che-logstash"
+fullnameOverride: "dcm4che-slapd"
 
 elasticsearch:
   host: "dcm4che-elastic"
@@ -38,22 +38,27 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    - name: gelf
-      number: 12201
-      protocol: UDP
-    - name: syslog-udp
-      number: 8514
-      protocol: UDP
-    - name: syslog-tcp
-      number: 8514
-      protocol: TCP  
+    - name: ldap
+      number: 389
+      protocol: TCP
+
+env_vars:
+  ARCHIVE_HOST: "dcm4che-archive"
+  SYSLOG_HOST: "dcm4che-logstash"
+  SYSLOG_PORT: 8514
+  SYSLOG_PROTOCOL: "TLS"
 
 volumes:
-  - name: data
+  - name: ldap
     type: "hostPath"
     properties:
-      path: "/hashtree"
+      path: "/ldap"
       type: "DirectoryOrCreate"
+  - name: sldapd
+    type: "hostPath"
+    properties:
+      path: "/slapd.d"
+      type: "DirectoryOrCreate"      
 
 
 ingress:

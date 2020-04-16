@@ -42,16 +42,14 @@ spec:
             {{- range $key, $val := .Values.env_vars }}
             - name: {{ $key }}
               value: {{ $val | quote}}
-            {{- end}}          
-            # - name: ELASTICSEARCH_HOST
-            #   value: {{ .Values.elasticsearch.host | quote }}
+            {{- end}}
           volumeMounts:
           - name: vm-localtime
             mountPath: /etc/localtime            
           - name: vm-timezone
-            mountPath: /etc/timezone   
+            mountPath: /etc/timezone 
           - name: data
-            mountPath: /usr/share/logstash/data/filter-hashtree         
+            mountPath: /opt/keycloak/standalone            
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
           resources:
@@ -74,11 +72,11 @@ spec:
             path: /etc/localtime  
         - name: vm-timezone
           hostPath:
-            path: /etc/timezone   
+            path: /etc/timezone  
         {{- range $volume :=  .Values.volumes }}
         - name: {{ $volume.name }}
           {{ $volume.type }}:          
           {{- range $key, $val := $volume.properties }}
             {{$key}}: {{ $val | quote}}
           {{- end}}  
-        {{- end}}          
+        {{- end}}  

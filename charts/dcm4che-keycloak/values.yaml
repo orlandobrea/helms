@@ -5,15 +5,17 @@
 replicaCount: 1
 
 image:
-  repository: orlandobrea/dcm4che-logstash
+  repository: dcm4che/keycloak
   pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "dcm4che-logstash"
+fullnameOverride: "dcm4che-keycloak"
 
-elasticsearch:
-  host: "dcm4che-elastic"
+# logstash:
+#   host: "dcm4che-logstash"
+ldap:
+  host: "dcm4che-slapd"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -38,22 +40,33 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    - name: gelf
-      number: 12201
-      protocol: UDP
-    - name: syslog-udp
-      number: 8514
-      protocol: UDP
-    - name: syslog-tcp
-      number: 8514
-      protocol: TCP  
+    - name: http
+      number: 8880
+      protocol: TCP
+    - name: https
+      number: 8843
+      protocol: TCP
+    - name: management
+      number: 8990
+      protocol: TCP
+    - name: management-tls
+      number: 8993
+      protocol: TCP
+
+env_vars:
+  HTTP_PORT: 8880
+  HTTPS_PORT: 8843
+  MANAGEMENT_HTTP_PORT: 8990
+  MANAGEMENT_HTTPS_PORT: 8993
+  LOGSTASH_HOST: "dcm4che-logstash"
+  KEYCLOAK_WAIT_FOR: "dcm4che-slapd:389 dcm4che-logstash:8514"
 
 volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/hashtree"
-      type: "DirectoryOrCreate"
+      path: "/keycloak"
+      type: "DirectoryOrCreate"    
 
 
 ingress:
