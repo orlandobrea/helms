@@ -58,29 +58,36 @@ env_vars:
   HTTPS_PORT: 8843
   MANAGEMENT_HTTP_PORT: 8990
   MANAGEMENT_HTTPS_PORT: 8993
-  LOGSTASH_HOST: "dcm4che-logstash"
+  LOGSTASH_HOST: dcm4che-logstash
   KEYCLOAK_WAIT_FOR: "dcm4che-slapd:389 dcm4che-logstash:8514"
+  LDAP_URL: ldap://dcm4che-slapd:389
+  KEYCLOAK_USER: admin
+  KEYCLOAK_PASSWORD: admin
 
 volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/keycloak"
+      path: "/k8s/keycloak"
       type: "DirectoryOrCreate"    
 
-
 ingress:
-  enabled: false
+  enabled: true
+  withTLS: true
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
-      paths: []
+    nonTLS:
+    - host: keycloak.uno.172-16-80-1.nip.io
+      service: dcm4che-keycloak
+      port: 8880
+    TLS:
+    - host: keycloak.uno.172-16-80-1.nip.io
+      # paths: []
+      service: dcm4che-keycloak
+      port: 8843       
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

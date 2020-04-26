@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "dcm4che-kibana.fullname" . }}
+  name: {{ include "dcm4che-slapd.fullname" . }}
   labels:
-    {{- include "dcm4che-kibana.labels" . | nindent 4 }}
+    {{- include "dcm4che-slapd.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "dcm4che-kibana.selectorLabels" . | nindent 6 }}
+      {{- include "dcm4che-slapd.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "dcm4che-kibana.selectorLabels" . | nindent 8 }}
+        {{- include "dcm4che-slapd.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

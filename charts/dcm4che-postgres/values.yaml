@@ -50,7 +50,7 @@ volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/postgres"
+      path: "/k8s/postgres"
       type: "DirectoryOrCreate"    
 
 

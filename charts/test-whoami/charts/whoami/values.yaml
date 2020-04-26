@@ -1,0 +1,20 @@
+# Default values for dcm4che-kibana.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: jwilder/whoami
+  version: latest
+  pullPolicy: Never
+
+fullnameOverride: "whoami"
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      number: 8000
+      protocol: TCP
+   

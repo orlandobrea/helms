@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "dcm4che-kibana.fullname" . }}
+  name: {{ include "dcm4che-postgres.fullname" . }}
   labels:
-    {{- include "dcm4che-kibana.labels" . | nindent 4 }}
+    {{- include "dcm4che-postgres.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports: 
@@ -14,4 +14,4 @@ spec:
       protocol: {{ $port.protocol }}
     {{- end}}
   selector:
-    {{- include "dcm4che-kibana.selectorLabels" . | nindent 4 }}
+    {{- include "dcm4che-postgres.selectorLabels" . | nindent 4 }}

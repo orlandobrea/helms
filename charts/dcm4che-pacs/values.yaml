@@ -1,0 +1,128 @@
+# Default values for dcm4che-kibana.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: dcm4che/dcm4chee-arc-psql
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "dcm4che-pacs"
+
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      number: 8080
+      protocol: TCP
+    - name: https
+      number: 8443
+      protocol: TCP
+    - name: management
+      number: 9990
+      protocol: TCP
+    - name: management-tls
+      number: 9993
+      protocol: TCP
+    - name: dicom-tls
+      number: 2762
+      protocol: TCP
+    - name: hl7-tcp
+      number: 2575
+      protocol: TCP
+    - name: hl7-udp
+      number: 2575
+      protocol: UDP      
+    - name: other
+      number: 12575
+      protocol: TCP
+
+env_vars:
+  POSTGRES_HOST: "dcm4che-postgres"
+  POSTGRES_DB: "pacsdb"
+  POSTGRES_USER: "pacs"
+  POSTGRES_PASSWORD: "pacs"
+  LOGSTASH_HOST: "dcm4che-logstash"
+  AUTH_SERVER_URL: "http://keycloak.uno.172-16-80-1.nip.io:30080/auth"
+  WILDFLY_WAIT_FOR: "dcm4che-slapd:389 dcm4che-postgres:5432 dcm4che-logstash:8514"
+  LDAP_URL: "ldap://dcm4che-slapd:389"
+  HTTP_PORT: 8080
+  HTTPS_PORT: 8443
+  MANAGEMENT_HTTP_PORT: 9990
+  MANAGEMENT_HTTPS_PORT: 9993
+
+volumes:
+  - name: data
+    type: "hostPath"
+    properties:
+      path: "/k8s/pacs"
+      type: "DirectoryOrCreate"    
+
+
+ingress:
+  enabled: true
+  withTLS: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    nonTLS:
+    - host: pacs.uno.172-16-80-1.nip.io
+      service: dcm4che-pacs
+      port: 8080   
+    - host: console.pacs.uno.172-16-80-1.nip.io
+      service: dcm4che-pacs
+      port: 9993
+    TLS:
+    - host: pacs.uno.172-16-80-1.nip.io
+      service: dcm4che-pacs
+      port: 8443
+    - host: console.pacs.uno.172-16-80-1.nip.io
+      service: dcm4che-pacs
+      port: 9993                  
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

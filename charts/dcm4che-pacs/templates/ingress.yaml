@@ -1,0 +1,68 @@
+{{- if .Values.ingress.enabled -}}
+
+{{- $fullName := include "dcm4che-wildfly.fullname" . -}}
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-http
+spec:
+  entryPoints:
+    - web
+  routes:
+  {{- range .Values.ingress.hosts.nonTLS }}  
+  - match: Host(`{{ .host }}`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: {{ .port }}
+
+  {{- end }}
+
+
+{{- if .Values.ingress.withTLS }}
+
+---
+
+# Create cert
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: {{ $fullName }}
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ $fullName }}-cert
+spec:
+  commonName: {{ $fullName }}
+  secretName: {{ $fullName }}-cert
+  issuerRef:
+    name: {{ $fullName }}
+---   
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: Host(`{{ .host }}`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: {{ .port }}
+
+  {{- end }}
+  tls:
+    secretName: {{ $fullName }}-cert
+
+{{- end}}
+{{- end}}
+
+

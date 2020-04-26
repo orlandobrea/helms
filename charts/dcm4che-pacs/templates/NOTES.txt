@@ -1,8 +1,19 @@
-1. Get the application URL by running these commands:
+1. Ingresa a la aplicación con estas URLs:
 {{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
+
+{{- range $host := .Values.ingress.hosts.nonTLS }}
   {{- range .paths }}
   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+  {{- else }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}
+  {{- end }}
+{{- end }}
+
+{{- range $host := .Values.ingress.hosts.TLS }}
+  {{- range .paths }}
+  https{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
+  {{- else }}
+  https{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}
   {{- end }}
 {{- end }}
 {{- else if contains "NodePort" .Values.service.type }}

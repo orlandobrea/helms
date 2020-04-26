@@ -51,7 +51,7 @@ volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/elastic"
+      path: "/k8s/elastic"
       type: "DirectoryOrCreate"
 
 ingress:

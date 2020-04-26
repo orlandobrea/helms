@@ -5,12 +5,15 @@
 replicaCount: 1
 
 image:
-  repository: dcm4che/dcm4chee-arc-psql
+  repository: dcm4che/keycloak-gatekeeper
   pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "dcm4che-wildfly"
+fullnameOverride: "dcm4che-gatekeeper"
+
+# logstash:
+#   host: "dcm4che-logstash"
 
 
 serviceAccount:
@@ -36,65 +39,49 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    - name: http
-      number: 8880
-      protocol: TCP
     - name: https
-      number: 8843
+      number: 8643
       protocol: TCP
-    - name: management
-      number: 9990
-      protocol: TCP
-    - name: management-tls
-      number: 9993
-      protocol: TCP
-    - name: dicom-tls
-      number: 2762
-      protocol: TCP
-    - name: hl7-tcp
-      number: 2575
-      protocol: TCP
-    - name: hl7-udp
-      number: 2575
-      protocol: UDP      
-    - name: other
-      number: 12575
-      protocol: TCP
+  
 
-
-
+# ToDo validar puertos porque deberian ser los del ingress
 env_vars:
-  POSTGRES_DB: "pacsdb"
-  POSTGRES_USER: "pacs"
-  POSTGRES_PASSWORD: "pacs"
-  LOGSTASH_HOST: "logstash"
-  AUTH_SERVER_URL: "https://dcm4che-keycloak:8843/auth"
-  WILDFLY_WAIT_FOR: "dcm4che-slapd:389 dcm4che-postgres:5432 dcm4che-logstash:8514"
+  PROXY_LISTEN: ":8643"
+  PROXY_REDIRECTION_URL: https://gatekeeper.uno.172-16-80-1.nip.io:8643
+  PROXY_UPSTREAM_URL: http://dcm4che-kibana:5601
+  PROXY_DISCOVERY_URL: http://keycloak.uno.172-16-80-1.nip.io:30080/auth/realms/dcm4che
+  PROXY_CLIENT_ID: kibana
+  PROXY_CLIENT_SECRET: 774ab7a4-10c9-4935-bb39-fee2982541db
+  PROXY_ENCRYPTION_KEY: AgXa7xRcoClDEU0ZDSH4X0XhL5Qy2Z2j
 
-volumes:
-  - name: data
-    type: "hostPath"
-    properties:
-      path: "/wildfly"
-      type: "DirectoryOrCreate"    
 
+# volumes:
+#   - name: data
+#     type: "hostPath"
+#     properties:
+#       path: "/k8s/keycloak"
+#       type: "DirectoryOrCreate"    
 
 ingress:
-  enabled: false
+  enabled: true
+  withTLS: true
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
-      paths: []
+    nonTLS:
+    - host: gatekeeper.uno.172-16-80-1.nip.io
+      service: dcm4che-gatekeeper
+      port: 8643
+    TLS:
+    - host: gatekeeper.uno.172-16-80-1.nip.io
+      service: dcm4che-gatekeeper
+      port: 8643       
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
+  # choice for the user. This also increases chances charts run on envirkgponments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:

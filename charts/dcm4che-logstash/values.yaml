@@ -52,7 +52,7 @@ volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/hashtree"
+      path: "/k8s/hashtree"
       type: "DirectoryOrCreate"
 
 

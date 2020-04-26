@@ -52,12 +52,12 @@ volumes:
   - name: ldap
     type: "hostPath"
     properties:
-      path: "/ldap"
+      path: "/k8s/ldap"
       type: "DirectoryOrCreate"
   - name: sldapd
     type: "hostPath"
     properties:
-      path: "/slapd.d"
+      path: "/k8s/slapd.d"
       type: "DirectoryOrCreate"      
 
 
