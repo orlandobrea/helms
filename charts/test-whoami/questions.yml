@@ -14,7 +14,7 @@ questions:
     required: true
     description: "Habilitar Who Am I"
     group: "Who am I"
-    show_questions_if: true
+    show_subquestion_if: true
     subquestions:
         - variable: whoami.image.version
           label: Version
