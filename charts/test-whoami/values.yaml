@@ -8,6 +8,7 @@ global:
   prefix: uncharted
 
 whoami:
+  enabled: true
   image:
     version: latest
     pullPolicy: Always
