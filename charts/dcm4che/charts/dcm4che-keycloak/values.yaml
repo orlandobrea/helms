@@ -5,13 +5,18 @@
 replicaCount: 1
 
 image:
-  repository: dcm4che/dcm4chee-arc-psql
+  repository: dcm4che/keycloak
+  # repository: orlandobrea/dcm4che-keycloak
   pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "dcm4che-pacs"
+fullnameOverride: "dcm4che-keycloak"
 
+# logstash:
+#   host: "dcm4che-logstash"
+ldap:
+  host: "dcm4che-slapd"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -37,51 +42,35 @@ service:
   type: ClusterIP
   ports:
     - name: http
-      number: 8080
+      number: 8880
       protocol: TCP
     - name: https
-      number: 8443
+      number: 8843
       protocol: TCP
     - name: management
-      number: 9990
+      number: 8990
       protocol: TCP
     - name: management-tls
-      number: 9993
-      protocol: TCP
-    - name: dicom-tls
-      number: 2762
-      protocol: TCP
-    - name: hl7-tcp
-      number: 2575
-      protocol: TCP
-    - name: hl7-udp
-      number: 2575
-      protocol: UDP      
-    - name: other
-      number: 12575
+      number: 8993
       protocol: TCP
 
 env_vars:
-  POSTGRES_HOST: "dcm4che-postgres"
-  POSTGRES_DB: "pacsdb"
-  POSTGRES_USER: "pacs"
-  POSTGRES_PASSWORD: "pacs"
-  LOGSTASH_HOST: "dcm4che-logstash"
-  AUTH_SERVER_URL: "http://keycloak.uno.172-16-80-1.nip.io:30080/auth"
-  WILDFLY_WAIT_FOR: "dcm4che-slapd:389 dcm4che-postgres:5432 dcm4che-logstash:8514"
-  LDAP_URL: "ldap://dcm4che-slapd:389"
-  HTTP_PORT: 8080
-  HTTPS_PORT: 8443
-  MANAGEMENT_HTTP_PORT: 9990
-  MANAGEMENT_HTTPS_PORT: 9993
+  HTTP_PORT: 8880
+  HTTPS_PORT: 8843
+  MANAGEMENT_HTTP_PORT: 8990
+  MANAGEMENT_HTTPS_PORT: 8993
+  LOGSTASH_HOST: dcm4che-logstash
+  KEYCLOAK_WAIT_FOR: "dcm4che-slapd:389 dcm4che-logstash:8514"
+  LDAP_URL: ldap://dcm4che-slapd:389
+  # KEYCLOAK_USER: admin
+  # KEYCLOAK_PASSWORD: admin
 
 volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/k8s/pacs"
+      path: "/k8s/keycloak"
       type: "DirectoryOrCreate"    
-
 
 ingress:
   enabled: true
@@ -91,23 +80,14 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     nonTLS:
-    - host: pacs.uno.172-16-80-1.nip.io
-      service: dcm4che-pacs
-      port: 8080   
-    - host: console.pacs.uno.172-16-80-1.nip.io
-      service: dcm4che-pacs
-      port: 9993
+    - host: keycloak
+      service: dcm4che-keycloak
+      port: 8880
     TLS:
-    - host: pacs.uno.172-16-80-1.nip.io
-      service: dcm4che-pacs
-      port: 8443
-    - host: console.pacs.uno.172-16-80-1.nip.io
-      service: dcm4che-pacs
-      port: 9993                  
+    - host: keycloak
+      service: dcm4che-keycloak
+      port: 8843       
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

@@ -1,0 +1,4 @@
+
+global:
+  prefix: dcm4che
+  domain: smart.192-168-0-8.nip.io

@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 
-{{- $fullName := include "dcm4che-wildfly.fullname" . -}}
+{{- $fullName := include "dcm4che-pacs.fullname" . -}}
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -11,7 +11,7 @@ spec:
     - web
   routes:
   {{- range .Values.ingress.hosts.nonTLS }}  
-  - match: Host(`{{ .host }}`)
+  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
     kind: Rule
     services:
     - name:  {{ .service }}
@@ -41,6 +41,7 @@ spec:
   secretName: {{ $fullName }}-cert
   issuerRef:
     name: {{ $fullName }}
+  commonName: {{ .host }}.{{ $.Values.global.domain }}
 ---   
 
 apiVersion: traefik.containo.us/v1alpha1
@@ -52,15 +53,17 @@ spec:
     - websecure
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
-  - match: Host(`{{ .host }}`)
+  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
     kind: Rule
     services:
     - name:  {{ .service }}
       port: {{ .port }}
+      scheme: https
 
   {{- end }}
   tls:
     secretName: {{ $fullName }}-cert
+    hosts: {{ .host }}.{{ $.Values.global.domain }}
 
 {{- end}}
 {{- end}}

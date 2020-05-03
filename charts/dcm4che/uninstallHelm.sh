@@ -7,4 +7,4 @@ helm uninstall test-slapd
 helm uninstall test-keycloak
 helm uninstall test-postgres
 helm uninstall test-pacs
-helm uninstall test-gatekeeper
+#helm uninstall test-gatekeeper

@@ -5,17 +5,13 @@
 replicaCount: 1
 
 image:
-  repository: dcm4che/keycloak
+  repository: dcm4che/dcm4chee-arc-psql
   pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "dcm4che-keycloak"
+fullnameOverride: "dcm4che-pacs"
 
-# logstash:
-#   host: "dcm4che-logstash"
-ldap:
-  host: "dcm4che-slapd"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -41,35 +37,56 @@ service:
   type: ClusterIP
   ports:
     - name: http
-      number: 8880
+      number: 8080
       protocol: TCP
     - name: https
-      number: 8843
+      number: 8443
       protocol: TCP
     - name: management
-      number: 8990
+      number: 9990
       protocol: TCP
     - name: management-tls
-      number: 8993
+      number: 9993
       protocol: TCP
+    # - name: dicom-tls
+    #   number: 2762
+    #   protocol: TCP
+    # - name: hl7-tcp
+    #   number: 2575
+    #   protocol: TCP
+    # - name: hl7-udp
+    #   number: 2575
+    #   protocol: UDP      
+    # - name: other
+    #   number: 12575
+    #   protocol: TCP
 
 env_vars:
-  HTTP_PORT: 8880
-  HTTPS_PORT: 8843
-  MANAGEMENT_HTTP_PORT: 8990
-  MANAGEMENT_HTTPS_PORT: 8993
-  LOGSTASH_HOST: dcm4che-logstash
-  KEYCLOAK_WAIT_FOR: "dcm4che-slapd:389 dcm4che-logstash:8514"
-  LDAP_URL: ldap://dcm4che-slapd:389
-  KEYCLOAK_USER: admin
-  KEYCLOAK_PASSWORD: admin
+  POSTGRES_HOST: "dcm4che-postgres"
+  POSTGRES_DB: "pacsdb"
+  POSTGRES_USER: "pacs"
+  POSTGRES_PASSWORD: "pacs"
+  LOGSTASH_HOST: "dcm4che-logstash"
+  AUTH_SERVER_PROTOCOL: https
+  AUTH_SERVER_HOST: keycloak
+  AUTH_SERVER_PORT: 30443
+  AUTH_SERVER_PATH: /auth
+  #AUTH_SERVER_URL: protocol + domain + global.domain + port + path
+  WILDFLY_WAIT_FOR: "dcm4che-slapd:389 dcm4che-postgres:5432 dcm4che-logstash:8514"
+  LDAP_URL: "ldap://dcm4che-slapd:389"
+  HTTP_PORT: 8080
+  HTTPS_PORT: 8443
+  MANAGEMENT_HTTP_PORT: 9990
+  MANAGEMENT_HTTPS_PORT: 9993
+  # JAVA_OPTS: "-Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true -Dcom.sun.net.ssl.checkRevocation=false"
 
 volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/k8s/keycloak"
+      path: "/k8s/pacs"
       type: "DirectoryOrCreate"    
+
 
 ingress:
   enabled: true
@@ -79,15 +96,23 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     nonTLS:
-    - host: keycloak.uno.172-16-80-1.nip.io
-      service: dcm4che-keycloak
-      port: 8880
+    - host: pacs
+      service: dcm4che-pacs
+      port: 8080   
+    # - host: console.pacs
+    #   service: dcm4che-pacs
+    #   port: 9993
     TLS:
-    - host: keycloak.uno.172-16-80-1.nip.io
-      # paths: []
-      service: dcm4che-keycloak
-      port: 8843       
+    - host: pacs
+      service: dcm4che-pacs
+      port: 8443
+    - host: console.pacs
+      service: dcm4che-pacs
+      port: 9993                  
   tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

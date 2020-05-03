@@ -7,4 +7,4 @@ helm install test-slapd ./dcm4che-slapd
 helm install test-keycloak ./dcm4che-keycloak
 helm install test-postgres ./dcm4che-postgres
 helm install test-pacs ./dcm4che-pacs
-helm install test-gatekeeper ./dcm4che-gatekeeper
+#helm install test-gatekeeper ./dcm4che-gatekeeper

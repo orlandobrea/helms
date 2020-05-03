@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "dcm4che-wildfly.name" -}}
+{{- define "dcm4che-pacs.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "dcm4che-wildfly.fullname" -}}
+{{- define "dcm4che-pacs.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "dcm4che-wildfly.chart" -}}
+{{- define "dcm4che-pacs.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Common labels
 */}}
-{{- define "dcm4che-wildfly.labels" -}}
-helm.sh/chart: {{ include "dcm4che-wildfly.chart" . }}
-{{ include "dcm4che-wildfly.selectorLabels" . }}
+{{- define "dcm4che-pacs.labels" -}}
+helm.sh/chart: {{ include "dcm4che-pacs.chart" . }}
+{{ include "dcm4che-pacs.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,17 +46,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "dcm4che-wildfly.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "dcm4che-wildfly.name" . }}
+{{- define "dcm4che-pacs.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "dcm4che-pacs.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "dcm4che-wildfly.serviceAccountName" -}}
+{{- define "dcm4che-pacs.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include "dcm4che-wildfly.fullname" .) .Values.serviceAccount.name }}
+    {{ default (include "dcm4che-pacs.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}

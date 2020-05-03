@@ -1,6 +1,23 @@
 {{- if .Values.ingress.enabled -}}
 
 {{- $fullName := include "dcm4che-keycloak.fullname" . -}}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: cors-keycloak
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+    accessControlAllowOriginList:
+      - "https://console.pacs.smart.192-168-0-8.nip.io"
+      - "*"
+
+---
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -11,13 +28,15 @@ spec:
     - web
   routes:
   {{- range .Values.ingress.hosts.nonTLS }}  
-  - match: Host(`{{ .host }}`)
+  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
     kind: Rule
+    middlewares:
+    - name: cors-keycloak
     services:
     - name:  {{ .service }}
       port: {{ .port }}
-
   {{- end }}
+
 
 
 {{- if .Values.ingress.withTLS }}
@@ -31,6 +50,7 @@ metadata:
   name: {{ $fullName }}
 spec:
   selfSigned: {}
+
 ---
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
@@ -40,7 +60,10 @@ spec:
   commonName: {{ $fullName }}
   secretName: {{ $fullName }}-cert
   issuerRef:
-    name: {{ $fullName }}
+    name: selfSigned
+  dnsNames: 
+  - {{ .host }}.{{ $.Values.global.domain }}
+  
 ---   
 
 apiVersion: traefik.containo.us/v1alpha1
@@ -52,15 +75,24 @@ spec:
     - websecure
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
-  - match: Host(`{{ .host }}`)
+  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
     kind: Rule
+    middlewares:
+    - name: cors-keycloak  
     services:
     - name:  {{ .service }}
       port: {{ .port }}
-
+      scheme: https
   {{- end }}
   tls:
+    hosts: 
+      - {{ .host }}.{{ $.Values.global.domain }}
     secretName: {{ $fullName }}-cert
+    #secretName: {{ $fullName }}-cert
+    # certificates:
+    # - certFile: /opt/certs/keycloak/tls.cert
+    #   keyFile: /opt/certs/keycloak/tls.key
+
 
 {{- end}}
 {{- end}}

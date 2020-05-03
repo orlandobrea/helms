@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "dcm4che-wildfly.fullname" . }}
+  name: {{ include "dcm4che-pacs.fullname" . }}
   labels:
-    {{- include "dcm4che-wildfly.labels" . | nindent 4 }}
+    {{- include "dcm4che-pacs.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "dcm4che-wildfly.selectorLabels" . | nindent 6 }}
+      {{- include "dcm4che-pacs.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "dcm4che-wildfly.selectorLabels" . | nindent 8 }}
+        {{- include "dcm4che-pacs.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -43,6 +43,9 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote}}
             {{- end}}
+            - name: AUTH_SERVER_URL
+              #value: https://dcm4che-keycloak:8843/auth
+              value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}.{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
           volumeMounts:
           - name: vm-localtime
             mountPath: /etc/localtime            
@@ -50,6 +53,9 @@ spec:
             mountPath: /etc/timezone 
           - name: data
             mountPath: /opt/wildfly/standalone
+          - name: keycloak-certs
+            mountPath: /opt/certs/keycloak
+            readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
           resources:
@@ -73,6 +79,9 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone  
+        - name: keycloak-certs
+          secret:
+            secretName: {{ .Values.global.prefix}}-keycloak-cert
         {{- range $volume :=  .Values.volumes }}
         - name: {{ $volume.name }}
           {{ $volume.type }}:          
