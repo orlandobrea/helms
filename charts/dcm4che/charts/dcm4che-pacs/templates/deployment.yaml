@@ -44,7 +44,6 @@ spec:
               value: {{ $val | quote}}
             {{- end}}
             - name: AUTH_SERVER_URL
-              #value: https://dcm4che-keycloak:8843/auth
               value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}.{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
           volumeMounts:
           - name: vm-localtime

@@ -41,7 +41,10 @@ spec:
   secretName: {{ $fullName }}-cert
   issuerRef:
     name: {{ $fullName }}
-  commonName: {{ .host }}.{{ $.Values.global.domain }}
+  dnsNames: 
+  {{- range .Values.ingress.hosts.TLS }}  
+  - {{ .host }}.{{ $.Values.global.domain }}
+  {{- end}}
 ---   
 
 apiVersion: traefik.containo.us/v1alpha1
@@ -62,9 +65,11 @@ spec:
 
   {{- end }}
   tls:
+    hosts: 
+    {{- range .Values.ingress.hosts.TLS }}      
+      - {{ .host }}.{{ $.Values.global.domain }}
+    {{- end}}
     secretName: {{ $fullName }}-cert
-    hosts: {{ .host }}.{{ $.Values.global.domain }}
-
 {{- end}}
 {{- end}}
 

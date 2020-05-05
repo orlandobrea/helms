@@ -20,22 +20,36 @@ spec:
 ---
 
 apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+kind: Middleware
 metadata:
-  name: {{ $fullName }}-http
+  name: keycloak-redirect-https
 spec:
-  entryPoints:
-    - web
-  routes:
-  {{- range .Values.ingress.hosts.nonTLS }}  
-  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
-    kind: Rule
-    middlewares:
-    - name: cors-keycloak
-    services:
-    - name:  {{ .service }}
-      port: {{ .port }}
-  {{- end }}
+  redirectScheme:
+    scheme: https
+    port: 30443
+    permanent: true
+
+# ---
+
+
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: {{ $fullName }}-http
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#   {{- range .Values.ingress.hosts.nonTLS }}  
+#   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
+#     kind: Rule
+#     middlewares:
+#     - name: cors-keycloak
+#     - name: keycloak-redirect-https
+#     services:
+#     - name:  {{ .service }}
+#       port: {{ .port }}
+#   {{- end }}
 
 
 
@@ -60,9 +74,11 @@ spec:
   commonName: {{ $fullName }}
   secretName: {{ $fullName }}-cert
   issuerRef:
-    name: selfSigned
+    name: {{ $fullName }}
   dnsNames: 
+  {{- range .Values.ingress.hosts.TLS }}  
   - {{ .host }}.{{ $.Values.global.domain }}
+  {{- end}}
   
 ---   
 
@@ -86,7 +102,9 @@ spec:
   {{- end }}
   tls:
     hosts: 
+    {{- range .Values.ingress.hosts.TLS }}      
       - {{ .host }}.{{ $.Values.global.domain }}
+    {{- end}}
     secretName: {{ $fullName }}-cert
     #secretName: {{ $fullName }}-cert
     # certificates:

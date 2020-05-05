@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: dcm4che/dcm4chee-arc-psql
+  repository: orlandobrea/dcm4chee-arc-psql
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -78,7 +78,7 @@ env_vars:
   HTTPS_PORT: 8443
   MANAGEMENT_HTTP_PORT: 9990
   MANAGEMENT_HTTPS_PORT: 9993
-  # JAVA_OPTS: "-Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true -Dcom.sun.net.ssl.checkRevocation=false"
+  SSL_REQUIRED: all
 
 volumes:
   - name: data
