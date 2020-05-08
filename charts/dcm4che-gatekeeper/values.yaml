@@ -47,12 +47,13 @@ service:
 # ToDo validar puertos porque deberian ser los del ingress
 env_vars:
   PROXY_LISTEN: ":8643"
-  PROXY_REDIRECTION_URL: https://gatekeeper.uno.172-16-80-1.nip.io:8643
+  PROXY_REDIRECTION_URL: https://gatekeeper.smart.192-168-0-8.nip.io:30443
   PROXY_UPSTREAM_URL: http://dcm4che-kibana:5601
-  PROXY_DISCOVERY_URL: http://keycloak.uno.172-16-80-1.nip.io:30080/auth/realms/dcm4che
+  PROXY_DISCOVERY_URL: https://keycloak.smart.192-168-0-8.nip.io:30443/auth/realms/dcm4che
   PROXY_CLIENT_ID: kibana
-  PROXY_CLIENT_SECRET: 774ab7a4-10c9-4935-bb39-fee2982541db
+  PROXY_CLIENT_SECRET: f87cac0c-2516-42dd-9c04-f97ba8145d5d
   PROXY_ENCRYPTION_KEY: AgXa7xRcoClDEU0ZDSH4X0XhL5Qy2Z2j
+  LOGSTASH_SERVER: dcm4che-logstash
 
 
 # volumes:
@@ -69,24 +70,32 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    nonTLS:
-    - host: gatekeeper.uno.172-16-80-1.nip.io
-      service: dcm4che-gatekeeper
-      port: 8643
+    # nonTLS:
+    # - host: gatekeeper.smart.192-168-0-8.nip.io
+    #   service: dcm4che-gatekeeper
+    #   port: 8643
     TLS:
-    - host: gatekeeper.uno.172-16-80-1.nip.io
+    - host: gatekeeper.smart.192-168-0-8.nip.io
       service: dcm4che-gatekeeper
       port: 8643       
-  tls: []
+  # tls: []
+
+args:
+  - "--log-driver gelf"
+  - "--log-opt gelf-address=udp://$LOGSTASH_SERVER:12201"
+  - "--enable-refresh-tokens=true"
+  - "--skip-openid-provider-tls-verify=true" # ToDo improve this
+  - "--resources=uri=/*|roles=auditlog"
+  - "--openid-provider-timeout=120s"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on envirkgponments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
