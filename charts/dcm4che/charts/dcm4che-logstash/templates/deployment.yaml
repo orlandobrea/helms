@@ -43,8 +43,6 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote}}
             {{- end}}          
-            # - name: ELASTICSEARCH_HOST
-            #   value: {{ .Values.elasticsearch.host | quote }}
           volumeMounts:
           - name: vm-localtime
             mountPath: /etc/localtime            

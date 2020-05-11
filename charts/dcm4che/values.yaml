@@ -1,4 +1,17 @@
 
+# No cambiar el prefix
 global:
   prefix: dcm4che
   domain: smart.192-168-0-8.nip.io
+  
+fluentbit:
+  enabled: True
+
+# Fluentbit
+fluent-bit:
+  backend:
+    type: "forward"
+    forward:
+      host: "dcm4che-logstash"
+      port: 12201
+

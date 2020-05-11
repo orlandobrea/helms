@@ -81,8 +81,8 @@ ingress:
   # tls: []
 
 args:
-  - "--log-driver gelf"
-  - "--log-opt gelf-address=udp://$LOGSTASH_SERVER:12201"
+  # - "--log-driver gelf"
+  # - "--log-opt gelf-address=udp://$LOGSTASH_SERVER:12201"
   - "--enable-refresh-tokens=true"
   - "--skip-openid-provider-tls-verify=true" # ToDo improve this
   - "--resources=uri=/*|roles=auditlog"
@@ -93,9 +93,9 @@ resources: {}
   # choice for the user. This also increases chances charts run on envirkgponments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits:
-    cpu: 100m
-    memory: 128Mi
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
