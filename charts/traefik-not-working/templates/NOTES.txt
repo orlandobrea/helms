@@ -1,7 +1,0 @@
-1. La aplicación escucha en los siguientes puertos...
-
-
-{{- range $host := .Values.service.ports }}
-  {{ $host.nodePort }}/{{ $host.protocol }} - {{ $host.name }}
-{{- end }}
-
