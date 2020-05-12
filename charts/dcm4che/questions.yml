@@ -1,5 +1,5 @@
 questions:
-- variable: domain
+- variable: global.domain
   default: ""
   description: "Dominio en el cual va a correr la app (ej: hospi01.172-16-80-1.nip.io)"
   type: string
