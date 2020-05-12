@@ -1,0 +1,26 @@
+questions:
+- variable: domain
+  default: ""
+  description: "Dominio en el cual va a correr la app (ej: hospi01.172-16-80-1.nip.io)"
+  type: string
+  label: "Dominio a utilizar"
+  group: "General"
+- variable: fluentbit.enabled
+  default: True
+  description: "Instalar el DaemonSet de Fluentbit en el cluster (Se necesita Fluent-bit para poder enviar los logs a logstash)"
+  type: boolean
+  label: "Instalar Fluent bit"
+  group: "Logs"
+- variable: gatekeeper.enabled
+  default: False
+  description: "Habilitar gatekeeper para kibana (previamente se debe haber configurado keycloak para obtener el client_secret)"
+  type: boolean
+  label: "Instalar Gatekeeper para Kibana"
+  group: Seguridad
+  show_subquestion_if: True
+  subquestions:
+  - variable: gatekeeper.keycloak.client_secret
+    default: ""
+    description: "Client secret asignado por keycloak"
+    type: string
+    label: "Keycloak client secret"

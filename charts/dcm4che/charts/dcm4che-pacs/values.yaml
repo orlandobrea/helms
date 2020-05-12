@@ -48,18 +48,18 @@ service:
     - name: management-tls
       number: 9993
       protocol: TCP
-    # - name: dicom-tls
-    #   number: 2762
-    #   protocol: TCP
-    # - name: hl7-tcp
-    #   number: 2575
-    #   protocol: TCP
-    # - name: hl7-udp
-    #   number: 2575
-    #   protocol: UDP      
+    - name: dicom
+      number: 2762
+      protocol: TCP
+    - name: hl7
+      number: 2575
+      protocol: TCP
+    - name: hl7-udp
+      number: 2575
+      protocol: UDP      
     # - name: other
-    #   number: 12575
-    #   protocol: TCP
+      # number: 12575
+      # protocol: TCP
 
 env_vars:
   POSTGRES_HOST: "dcm4che-postgres"

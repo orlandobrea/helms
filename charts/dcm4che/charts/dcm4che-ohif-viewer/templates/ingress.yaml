@@ -61,7 +61,7 @@ spec:
     services:
     - name:  {{ .service }}
       port: {{ .port }}
-      scheme: https
+      scheme: http
 
   {{- end }}
   tls:

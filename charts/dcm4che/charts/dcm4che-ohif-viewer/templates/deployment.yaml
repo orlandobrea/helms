@@ -42,7 +42,7 @@ spec:
           volumeMounts:
           - name: default-js
             mountPath: config/default.js
-            readOnly: true          
+            readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
       {{- with .Values.nodeSelector }}
