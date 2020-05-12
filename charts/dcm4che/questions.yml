@@ -17,7 +17,7 @@ questions:
   type: boolean
   label: "Instalar Gatekeeper para Kibana"
   group: Seguridad
-  show_subquestion_if: True
+  show_subquestion_if: gatekeeper.enabled
   subquestions:
   - variable: gatekeeper.keycloak.client_secret
     default: ""
