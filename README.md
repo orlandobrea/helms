@@ -6,4 +6,6 @@ Prueba de catalogo para rancher
 
 ## Pendientes
 
-- Slapd ver si se puede configurar log desde helm (no creo porque se debe usar k8s)
+- Probar puertos hl7 + dicom
+- Probar configuración desde Rancher
+- Cambiar forma de agregar a los certificados en JAVA
