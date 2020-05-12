@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "dcm4che-gatekeeper.fullname" . }}
+  name: {{ include "dcm4che-postgres.fullname" . }}
   labels:
-    {{- include "dcm4che-gatekeeper.labels" . | nindent 4 }}
+    {{- include "dcm4che-postgres.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "dcm4che-gatekeeper.selectorLabels" . | nindent 6 }}
+      {{- include "dcm4che-postgres.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "dcm4che-gatekeeper.selectorLabels" . | nindent 8 }}
+        {{- include "dcm4che-postgres.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -25,10 +25,6 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args:
-            {{- range $arg := .Values.args }}
-            - {{ $arg }}
-            {{- end}}
           ports:
             {{- range $port :=  .Values.service.ports }}
             - containerPort: {{ $port.number }}
@@ -47,13 +43,13 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote}}
             {{- end}}
-          # volumeMounts:
-          # - name: vm-localtime
-          #   mountPath: /etc/localtime            
-          # - name: vm-timezone
-          #   mountPath: /etc/timezone 
-          # - name: data
-          #   mountPath: /opt/gatekeeper/standalone            
+          volumeMounts:
+          - name: vm-localtime
+            mountPath: /etc/localtime            
+          - name: vm-timezone
+            mountPath: /etc/timezone 
+          - name: data
+            mountPath: /var/lib/postgresql/data
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
       {{- with .Values.nodeSelector }}
@@ -68,17 +64,17 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      # volumes:
-      #   - name: vm-localtime
-      #     hostPath:
-      #       path: /etc/localtime  
-      #   - name: vm-timezone
-      #     hostPath:
-      #       path: /etc/timezone  
-      #   {{- range $volume :=  .Values.volumes }}
-      #   - name: {{ $volume.name }}
-      #     {{ $volume.type }}:          
-      #     {{- range $key, $val := $volume.properties }}
-      #       {{$key}}: {{ $val | quote}}
-      #     {{- end}}  
-      #   {{- end}}  
+      volumes:
+        - name: vm-localtime
+          hostPath:
+            path: /etc/localtime  
+        - name: vm-timezone
+          hostPath:
+            path: /etc/timezone  
+        {{- range $volume :=  .Values.volumes }}
+        - name: {{ $volume.name }}
+          {{ $volume.type }}:          
+          {{- range $key, $val := $volume.properties }}
+            {{$key}}: {{ $val | quote}}
+          {{- end}}  
+        {{- end}}  

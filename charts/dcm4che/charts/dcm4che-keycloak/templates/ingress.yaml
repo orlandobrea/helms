@@ -1,0 +1,123 @@
+{{- if .Values.ingress.enabled -}}
+
+{{- $fullName := include "dcm4che-keycloak.fullname" . -}}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: cors-keycloak
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+    accessControlAllowOriginList:
+      - "https://pacs.smart.192-168-0-8.nip.io:30443"
+      - "https://console.pacs.smart.192-168-0-8.nip.io:30443"
+      - "https://keycloak.smart.192-168-0-8.nip.io:30443"
+    accessControlAllowHeaders:
+      - "authorization"
+    addVaryHeader: "true"
+    accessControlAllowCredentials: "true"
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: keycloak-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    port: 30443
+    permanent: true
+
+# ---
+
+
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: {{ $fullName }}-http
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#   {{- range .Values.ingress.hosts.nonTLS }}  
+#   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
+#     kind: Rule
+#     middlewares:
+#     - name: cors-keycloak
+#     - name: keycloak-redirect-https
+#     services:
+#     - name:  {{ .service }}
+#       port: {{ .port }}
+#   {{- end }}
+
+
+
+{{- if .Values.ingress.withTLS }}
+
+---
+
+# Create cert
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: {{ $fullName }}
+spec:
+  selfSigned: {}
+
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ $fullName }}-cert
+spec:
+  commonName: {{ $fullName }}
+  secretName: {{ $fullName }}-cert
+  issuerRef:
+    name: {{ $fullName }}
+  dnsNames: 
+  {{- range .Values.ingress.hosts.TLS }}  
+  - {{ .host }}.{{ $.Values.global.domain }}
+  {{- end}}
+  
+---   
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
+    kind: Rule
+    middlewares:
+    - name: cors-keycloak  
+    services:
+    - name:  {{ .service }}
+      port: {{ .port }}
+      scheme: https
+  {{- end }}
+  tls:
+    hosts: 
+    {{- range .Values.ingress.hosts.TLS }}      
+      - {{ .host }}.{{ $.Values.global.domain }}
+    {{- end}}
+    secretName: {{ $fullName }}-cert
+    #secretName: {{ $fullName }}-cert
+    # certificates:
+    # - certFile: /opt/certs/keycloak/tls.cert
+    #   keyFile: /opt/certs/keycloak/tls.key
+
+
+{{- end}}
+{{- end}}
+
+

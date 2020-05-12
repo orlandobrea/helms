@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled -}}
 
-{{- $fullName := include "dcm4che-gatekeeper.fullname" . -}}
+{{- $fullName := include "dcm4che-ohif.fullname" . -}}
 
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRoute
@@ -11,7 +11,7 @@
 #     - web
 #   routes:
 #   {{- range .Values.ingress.hosts.nonTLS }}  
-#   - match: Host(`{{ .host }}`)
+#   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
 #     kind: Rule
 #     services:
 #     - name:  {{ .service }}
@@ -23,6 +23,7 @@
 {{- if .Values.ingress.withTLS }}
 
 ---
+
 # Create cert
 apiVersion: cert-manager.io/v1alpha2
 kind: Issuer
@@ -30,7 +31,6 @@ metadata:
   name: {{ $fullName }}
 spec:
   selfSigned: {}
-
 ---
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
@@ -43,9 +43,8 @@ spec:
     name: {{ $fullName }}
   dnsNames: 
   {{- range .Values.ingress.hosts.TLS }}  
-  - {{ .host }}
+  - {{ .host }}.{{ $.Values.global.domain }}
   {{- end}}
-  
 ---   
 
 apiVersion: traefik.containo.us/v1alpha1
@@ -57,20 +56,20 @@ spec:
     - websecure
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
-  - match: Host(`{{ .host }}`)
+  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
     kind: Rule
     services:
     - name:  {{ .service }}
       port: {{ .port }}
       scheme: http
+
   {{- end }}
   tls:
     hosts: 
     {{- range .Values.ingress.hosts.TLS }}      
-      - {{ .host }}
+      - {{ .host }}.{{ $.Values.global.domain }}
     {{- end}}
     secretName: {{ $fullName }}-cert
-
 {{- end}}
 {{- end}}
 
