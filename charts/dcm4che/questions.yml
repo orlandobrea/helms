@@ -6,18 +6,18 @@ questions:
   label: "Dominio a utilizar"
   group: "General"
 - variable: fluentbit.enabled
-  default: True
+  default: "true"
   description: "Instalar el DaemonSet de Fluentbit en el cluster (Se necesita Fluent-bit para poder enviar los logs a logstash)"
   type: boolean
   label: "Instalar Fluent bit"
   group: "Logs"
 - variable: gatekeeper.enabled
-  default: False
+  default: "false"
   description: "Habilitar gatekeeper para kibana (previamente se debe haber configurado keycloak para obtener el client_secret)"
   type: boolean
   label: "Instalar Gatekeeper para Kibana"
   group: Seguridad
-  show_subquestion_if: gatekeeper.enabled
+  show_subquestion_if: true
   subquestions:
   - variable: gatekeeper.keycloak.client_secret
     default: ""
