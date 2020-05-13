@@ -11,7 +11,7 @@ questions:
   type: boolean
   label: "Instalar Fluent bit"
   group: "Logs"
-- variable: gatekeeper.enabled
+- variable: dcm4che-gatekeeper.enabled
   default: "false"
   description: "Habilitar gatekeeper para kibana (previamente se debe haber configurado keycloak para obtener el client_secret)"
   type: boolean
