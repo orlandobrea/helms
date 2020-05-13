@@ -4,6 +4,8 @@
 
 replicaCount: 1
 
+enabled: false
+
 keycloak:
   client_secret: ''
 
