@@ -7,7 +7,7 @@ global:
 
 # Fluentbit
 fluent-bit:
-  enabled: True
+  enabled: true
   backend:
     type: "forward"
     forward:
@@ -16,7 +16,7 @@ fluent-bit:
 
   
 dcm4che-gatekeeper:
-  enabled: False
+  enabled: false
   keycloak:
     client_secret: ''
 

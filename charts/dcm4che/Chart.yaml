@@ -28,4 +28,4 @@ dependencies:
   condition: fluent-bit.enabled
 - name: "dcm4che-gatekeeper"
   version: 9.0.2
-  condition: gatekeeper.enabled
+  condition: dcm4che-gatekeeper.enabled
