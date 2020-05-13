@@ -15,7 +15,7 @@ fluent-bit:
       port: 12201
 
   
-gatekeeper:
+dcm4che-gatekeeper:
   enabled: False
   keycloak:
     client_secret: ''

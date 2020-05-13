@@ -19,7 +19,7 @@ questions:
   group: Seguridad
   show_subquestion_if: true
   subquestions:
-  - variable: gatekeeper.keycloak.client_secret
+  - variable: dcm4che-gatekeeper.keycloak.client_secret
     default: ""
     description: "Client secret asignado por keycloak"
     type: string
