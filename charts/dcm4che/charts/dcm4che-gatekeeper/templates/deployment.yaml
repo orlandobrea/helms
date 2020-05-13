@@ -50,9 +50,9 @@ spec:
             - name: PROXY_REDIRECTION_URL
               value: "https://kibana.{{ .Values.global.domain }}:30443"
             - name: PROXY_DISCOVERY_URL
-              value: https://keycloak.{{ .Values.global.domain }}:30443/auth/realms/dcm4che
+              value: "https://keycloak.{{ .Values.global.domain }}:30443/auth/realms/dcm4che"
             - name: PROXY_CLIENT_SECRET
-              value: {{ .Values.keycloak.client_secret }}
+              value: "{{ .Values.keycloak.client_secret }}"
           # volumeMounts:
           # - name: vm-localtime
           #   mountPath: /etc/localtime            
