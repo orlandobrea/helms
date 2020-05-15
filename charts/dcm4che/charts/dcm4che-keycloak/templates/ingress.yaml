@@ -19,8 +19,8 @@ spec:
       - "https://keycloak.{{ .Values.global.domain }}:30443"
     accessControlAllowHeaders:
       - "authorization"
-    addVaryHeader: "true"
-    accessControlAllowCredentials: "true"
+    addVaryHeader: true
+    accessControlAllowCredentials: true
 
 ---
 
