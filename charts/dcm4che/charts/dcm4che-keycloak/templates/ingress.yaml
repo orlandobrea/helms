@@ -6,7 +6,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: cors-keycloak
-  namespace: default
 spec:
   headers:
     accessControlAllowMethods:
@@ -29,7 +28,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: keycloak-redirect-https
-  namespace: default
 spec:
   redirectScheme:
     scheme: https
