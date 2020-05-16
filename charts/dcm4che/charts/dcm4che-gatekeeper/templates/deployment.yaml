@@ -50,7 +50,7 @@ spec:
               value: {{ $val | quote}}
             {{- end}}
             - name: PROXY_REDIRECTION_URL
-              value: "https://kibana.{{ .Values.global.domain }}:30443"
+              value: "https://{{ .Values.global.prefix }}.kibana"
             - name: PROXY_DISCOVERY_URL
               value: "https://keycloak.{{ .Values.global.domain }}:30443/auth/realms/dcm4che"
             - name: PROXY_CLIENT_SECRET
