@@ -2,22 +2,22 @@
 
 {{- $fullName := include "dcm4che-pacs.fullname" . -}}
 
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: {{ $fullName }}-http
-spec:
-  entryPoints:
-    - web
-  routes:
-  {{- range .Values.ingress.hosts.nonTLS }}  
-  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
-    kind: Rule
-    services:
-    - name:  {{ .service }}
-      port: {{ .port }}
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: {{ $fullName }}-http
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#   {{- range .Values.ingress.hosts.nonTLS }}  
+#   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
+#     kind: Rule
+#     services:
+#     - name:  {{ .service }}
+#       port: {{ .port }}
 
-  {{- end }}
+#   {{- end }}
 
 
 {{- if .Values.ingress.withTLS }}
@@ -62,7 +62,6 @@ spec:
     - name:  {{ .service }}
       port: {{ .port }}
       scheme: https
-
   {{- end }}
   tls:
     hosts: 

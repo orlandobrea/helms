@@ -95,10 +95,10 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    nonTLS:
-    - host: pacs
-      service: dcm4che-pacs
-      port: 8080   
+    # nonTLS:
+    # - host: pacs
+    #   service: dcm4che-pacs
+    #   port: 8080   
     # - host: console.pacs
     #   service: dcm4che-pacs
     #   port: 9993
