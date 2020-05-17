@@ -42,7 +42,7 @@ spec:
             - name: ELASTICSEARCH_HOSTS
               value: {{ .Values.elasticsearch.host | quote }}
             - name: CSP_STRICT
-              value: false
+              value: "false"
           volumeMounts:
           - name: vm-localtime
             mountPath: /etc/localtime            
