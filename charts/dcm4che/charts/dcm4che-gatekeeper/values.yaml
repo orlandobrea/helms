@@ -82,7 +82,7 @@ ingress:
     #   service: dcm4che-gatekeeper
     #   port: 8643
     TLS:
-    - host: kibana.smart.192-168-0-8.nip.io
+    - host: kibana
       service: dcm4che-gatekeeper
       port: 8643       
   # tls: []

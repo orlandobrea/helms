@@ -45,7 +45,7 @@ spec:
     name: {{ $fullName }}
   dnsNames: 
   {{- range .Values.ingress.hosts.TLS }}  
-  - {{ .host }}
+  - {{ .host }}.{{ $.Values.global.domain }}
   {{- end}}
 
 ---
