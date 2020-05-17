@@ -50,11 +50,13 @@ spec:
               value: {{ $val | quote}}
             {{- end}}
             - name: PROXY_REDIRECTION_URL
-              value: "https://{{ .Values.global.prefix }}-kibana"
+              value: "https://{{ .Values.global.prefix }}.{{ $.Values.global.domain }}"
             - name: PROXY_DISCOVERY_URL
               value: "https://keycloak.{{ .Values.global.domain }}:30443/auth/realms/dcm4che"
             - name: PROXY_CLIENT_SECRET
               value: "{{ .Values.keycloak.client_secret }}"
+            - name: PROXY_UPSTREAM_URL
+              value: http://{{ .Values.global.prefix }}-kibana:5601
           # volumeMounts:
           # - name: vm-localtime
           #   mountPath: /etc/localtime            
