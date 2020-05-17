@@ -41,13 +41,8 @@ kind: TLSOption
 metadata:
   name: keycloak-tls-options
 spec:
-  cipherSuites:
-  - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-  - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
-  - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
-  - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-  - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-  minVersion: VersionTLS13
+  minVersion: VersionTLS12
+  sniStrict: true
 
 
 
@@ -127,15 +122,11 @@ spec:
     {{- range .Values.ingress.hosts.TLS }}      
       - {{ .host }}.{{ $.Values.global.domain }}
     {{- end}}
-    #secretName: {{ $fullName }}-cert
+    secretName: {{ $fullName }}-cert
     passthrough: false
     options:
       name: keycloak-tls-options
-    #secretName: {{ $fullName }}-cert
-    # certificates:
-    # - certFile: /opt/certs/keycloak/tls.cert
-    #   keyFile: /opt/certs/keycloak/tls.key
-
+  
 
 {{- end}}
 {{- end}}
