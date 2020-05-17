@@ -41,7 +41,7 @@ spec:
           env:
             - name: ELASTICSEARCH_HOSTS
               value: {{ .Values.elasticsearch.host | quote }}
-            - name: CSP.STRICT
+            - name: CSP_STRICT
               value: false
           volumeMounts:
           - name: vm-localtime
