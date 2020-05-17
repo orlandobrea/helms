@@ -53,7 +53,7 @@ service:
 env_vars:
   PROXY_LISTEN: ":8643"
   #PROXY_REDIRECTION_URL: https://gatekeeper.smart.192-168-0-8.nip.io:30443
-  #PROXY_UPSTREAM_URL: kibana
+  #PROXY_UPSTREAM_URL: http://dcm4che-kibana:5601
   #PROXY_DISCOVERY_URL: https://keycloak.smart.192-168-0-8.nip.io:30443/auth/realms/dcm4che
   PROXY_CLIENT_ID: kibana
   #PROXY_CLIENT_SECRET: f87cac0c-2516-42dd-9c04-f97ba8145d5d

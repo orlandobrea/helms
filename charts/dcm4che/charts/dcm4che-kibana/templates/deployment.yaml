@@ -45,7 +45,10 @@ spec:
           - name: vm-localtime
             mountPath: /etc/localtime            
           - name: vm-timezone
-            mountPath: /etc/timezone             
+            mountPath: /etc/timezone   
+          - name: kibana-yml
+            mountPath: /usr/share/kibana/config/kibana.yml
+            readOnly: true                      
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
       {{- with .Values.nodeSelector }}
@@ -67,3 +70,6 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone   
+        - name: kibana-yml
+          configMap:
+            name: "kibana-configmap"            
