@@ -47,8 +47,9 @@ spec:
   {{- range .Values.ingress.hosts.TLS }}  
   - {{ .host }}
   {{- end}}
-  
----   
+
+---
+
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute

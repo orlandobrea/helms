@@ -34,6 +34,18 @@ spec:
     port: "30443"
     permanent: true
 
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: TLSOption
+metadata:
+  name: keycloak-tls-options
+  namespace: default
+spec:
+  minVersion: VersionTLS13
+
+
+
 # ---
 
 
@@ -111,6 +123,8 @@ spec:
       - {{ .host }}.{{ $.Values.global.domain }}
     {{- end}}
     secretName: {{ $fullName }}-cert
+    options:
+      name: keycloak-tls-options
     #secretName: {{ $fullName }}-cert
     # certificates:
     # - certFile: /opt/certs/keycloak/tls.cert
