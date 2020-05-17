@@ -127,7 +127,7 @@ spec:
     {{- range .Values.ingress.hosts.TLS }}      
       - {{ .host }}.{{ $.Values.global.domain }}
     {{- end}}
-    secretName: {{ $fullName }}-cert
+    #secretName: {{ $fullName }}-cert
     passthrough: false
     options:
       name: keycloak-tls-options
