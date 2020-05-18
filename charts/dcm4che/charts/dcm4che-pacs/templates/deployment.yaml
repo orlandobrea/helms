@@ -1,18 +1,3 @@
-
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pacs-pv-claim
-  # labels:
-  #   app: pacs
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -96,10 +81,8 @@ spec:
             secretName: {{ .Values.global.prefix}}-keycloak-cert
         {{- range $volume :=  .Values.volumes }}
         - name: {{ $volume.name }}
-          persistentVolumeClaim:
-            claimName: "pacs-pv-claim"
-          #{{ $volume.type }}:          
-          # {{- range $key, $val := $volume.properties }}
-            # {{$key}}: {{ $val | quote}}
-          # {{- end}}  
+          {{ $volume.type }}:          
+          {{- range $key, $val := $volume.properties }}
+            {{$key}}: {{ $val | quote}}
+          {{- end}}  
         {{- end}}  

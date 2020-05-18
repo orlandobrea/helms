@@ -83,9 +83,10 @@ env_vars:
 
 volumes:
   - name: data
+    type: "hostPath"
     properties:
-      # persistentVolumeClaim:
-      #   claimName: "pacs-pv-claim"
+      path: "/k8s/pacs"
+      type: "DirectoryOrCreate"    
 
 
 ingress:
