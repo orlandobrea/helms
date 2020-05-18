@@ -14,10 +14,10 @@ data:
     servers: {
         dicomWeb: [
         {
-            name: 'DCM4CHEE',
-            wadoUriRoot: 'https://pacs.{{ .Values.global.domain }}/dcm4chee-arc/aets/DCM4CHEE/wado',
-            qidoRoot: 'https://pacs.{{ .Values.global.domain }}/dcm4chee-arc/aets/DCM4CHEE/rs',
-            wadoRoot: 'https://pacs.{{ .Values.global.domain }}/dcm4chee-arc/aets/DCM4CHEE/rs',
+            name: 'PACS prueba',
+            wadoUriRoot: 'https://pacs.{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/SynapseDicomSCP/wado',
+            qidoRoot: 'https://pacs.{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/SynapseDicomSCP/rs',
+            wadoRoot: 'https://pacs.{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/SynapseDicomSCP/rs',
             qidoSupportsIncludeField: true,
             imageRendering: 'wadors',
             thumbnailRendering: 'wadors',
