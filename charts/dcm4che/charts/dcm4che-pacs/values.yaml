@@ -83,10 +83,8 @@ env_vars:
 
 volumes:
   - name: data
-    type: "hostPath"
-    properties:
-      persistentVolumeClaim:
-        claimName: pacs-pv-claim
+    persistentVolumeClaim:
+      claimName: pacs-pv-claim
 
 
 ingress:
