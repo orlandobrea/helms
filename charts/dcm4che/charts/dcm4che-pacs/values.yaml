@@ -85,8 +85,8 @@ volumes:
   - name: data
     type: "hostPath"
     properties:
-      path: "/k8s/pacs"
-      type: "DirectoryOrCreate"    
+      persistentVolumeClaim:
+        claimName: pacs-pv-claim
 
 
 ingress:
