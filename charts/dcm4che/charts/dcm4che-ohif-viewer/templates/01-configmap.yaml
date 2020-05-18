@@ -29,7 +29,7 @@ data:
     {                                                                                                             
         // ~ REQUIRED                                                                                               
         // Authorization Server URL                                                                                 
-        authority: 'https://pacs.{{ .Values.global.domain }}:30443/auth/realms/dcm4che',                                                   
+        authority: 'https://keycloak.{{ .Values.global.domain }}:30443/auth/realms/dcm4che',                                                   
         client_id: 'ohif',                                                                                          
         //client_secret: ${CLIENT_SECRET},                                                                          
         redirect_uri: 'https://ohif.{{ .Values.global.domain }}:30443/callback', // `OHIFStandaloneViewer.js`                                   
