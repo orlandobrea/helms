@@ -83,9 +83,9 @@ env_vars:
 
 volumes:
   - name: data
-    type: VsphereVolume
-    persistentVolumeClaim:
-      claimName: pacs-pv-claim
+    properties:
+      # persistentVolumeClaim:
+      #   claimName: "pacs-pv-claim"
 
 
 ingress:

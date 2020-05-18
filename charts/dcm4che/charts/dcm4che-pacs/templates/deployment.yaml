@@ -81,8 +81,10 @@ spec:
             secretName: {{ .Values.global.prefix}}-keycloak-cert
         {{- range $volume :=  .Values.volumes }}
         - name: {{ $volume.name }}
-          {{ $volume.type }}:          
-          {{- range $key, $val := $volume.properties }}
-            {{$key}}: {{ $val | quote}}
-          {{- end}}  
+          persistentVolumeClaim:
+            claimName: "pacs-pv-claim"
+          #{{ $volume.type }}:          
+          # {{- range $key, $val := $volume.properties }}
+            # {{$key}}: {{ $val | quote}}
+          # {{- end}}  
         {{- end}}  
