@@ -41,7 +41,7 @@ spec:
           #     port: http
           volumeMounts:
           - name: config-files
-            mountPath: config/default.js
+            mountPath: /usr/share/nginx/html/app-config.js
             subPath: default.js
             readOnly: true
           resources:
