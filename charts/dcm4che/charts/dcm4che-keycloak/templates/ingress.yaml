@@ -17,6 +17,7 @@ spec:
       - "https://pacs.{{ .Values.global.domain }}:30443"
       - "https://console.pacs.{{ .Values.global.domain }}:30443"
       - "https://keycloak.{{ .Values.global.domain }}:30443"
+      - "https://ohif.{{ .Values.global.domain }}:30443"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
