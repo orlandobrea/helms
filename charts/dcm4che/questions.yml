@@ -5,6 +5,34 @@ questions:
   type: string
   label: "Dominio a utilizar"
   group: "General"
+
+- variable: traefik.enabled
+  default: "true"
+  description: "Instalar Traefik como ingress controller"
+  type: boolean
+  label: "Instalar Traefik"
+  group: "Ingress"
+
+- variable: tls.custom_cert
+  default: "true"
+  description: "Usar certificados propios (Ej: ya generados por let's encrypt)"
+  type: boolean
+  label: "Usar certificados propios"
+  group: "Certificados"
+  subquestions:  
+  - variable: tls.key
+    default: ""
+    description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    type: multiline
+    label: "Key (privkey.pem)"
+    group: "Certificados"
+  - variable: tls.key
+    default: ""
+    description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    type: multiline
+    label: "Certificado (fullchain.pem)"
+    group: "Certificados"  
+
 - variable: fluentbit.enabled
   default: "true"
   description: "Instalar el DaemonSet de Fluentbit en el cluster (Se necesita Fluent-bit para poder enviar los logs a logstash)"

@@ -1,6 +1,6 @@
 apiVersion: v2
-name: dcm4che
-description: Aplicación DCM4Che
+name: traefik
+description: Traefik
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -18,17 +18,4 @@ version: 0.1.1
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application.
-appVersion: 0.1.1
-
-
-dependencies:
-- name: "fluent-bit"
-  version: "2.8.13"
-  repository: "https://kubernetes-charts.storage.googleapis.com/"
-  condition: fluent-bit.enabled
-- name: "dcm4che-gatekeeper"
-  version: 9.0.2
-  condition: dcm4che-gatekeeper.enabled
-- name: "traefik"
-  version: 2.2
-  condition: traefik.enabled  
+appVersion: v2.2
