@@ -1,0 +1,20 @@
+questions:
+- variable: tls.custom_cert
+  default: "true"
+  description: "Usar certificados propios (Ej: ya generados por let's encrypt)"
+  type: boolean
+  label: "Usar certificados propios"
+  group: "Certificados"
+  subquestions:  
+  - variable: tls.key
+    default: ""
+    description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    type: multiline
+    label: "Key (privkey.pem)"
+    group: "Certificados"
+  - variable: tls.key
+    default: ""
+    description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    type: multiline
+    label: "Certificado (fullchain.pem)"
+    group: "Certificados"  

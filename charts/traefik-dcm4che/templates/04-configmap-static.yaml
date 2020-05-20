@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: traefik-config-static
+data:
+  traefik.yaml: |+
+    api:
+      insecure: true
+      dashboard: true
+    serversTransport:
+      insecureSkipVerify: true
+    log:
+      level: debug
+    entryPoints:
+      web:
+        address: ":80"
+      websecure:
+        address: ":443"
+      traefik:
+        address: ":8100"
+      tcp:
+        address: ":8000"
+      udp:
+        address: ":9000/udp"
+      hl7:
+        address: ":2575"
+      hl7udp:
+        address: ":2575/udp"
+      dicom:
+        address: ":2762"
+    providers:
+      providersThrottleDuration: 10s
+      kubernetescrd: true
+      kubernetesingress: true
+      file:
+        directory: /config
+        watch: true
