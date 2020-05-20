@@ -50,9 +50,9 @@ spec:
             mountPath: /etc/timezone 
           - name: data
             mountPath: /opt/keycloak/standalone  
-          - name: keycloak-certs
-            mountPath: /opt/certs/keycloak
-            readOnly: true                      
+          # - name: keycloak-certs
+            # mountPath: /opt/certs/keycloak
+            # readOnly: true                      
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
       {{- with .Values.nodeSelector }}
@@ -74,9 +74,9 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone  
-        - name: keycloak-certs
-          secret:
-            secretName: {{ .Values.global.prefix}}-keycloak-cert            
+        # - name: keycloak-certs
+          # secret:
+            # secretName: {{ .Values.global.prefix}}-keycloak-cert            
         {{- range $volume :=  .Values.volumes }}
         - name: {{ $volume.name }}
           {{ $volume.type }}:          

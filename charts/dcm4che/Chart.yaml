@@ -29,6 +29,3 @@ dependencies:
 - name: "dcm4che-gatekeeper"
   version: 9.0.2
   condition: dcm4che-gatekeeper.enabled
-- name: "traefik"
-  version: 2.2
-  condition: traefik.enabled  

@@ -2,24 +2,8 @@
 # No cambiar el prefix
 global:
   prefix: dcm4che
-  domain: smart.192-168-0-8.nip.io
-
-traefik:
-  enabled: true
-  ports:
-    https: 30443
-    http: 30080
-    dashboard: 30800
-    hl7: 32575
-    hl7udp: 32576
-    dicom: 32762
-
-
-tls:
-  custom_cert: true
-  key: ''
-  certificate: ''
-
+  domain: smart.andes.gob.ar
+    
 # Fluentbit
 fluent-bit:
   enabled: true

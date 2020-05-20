@@ -24,7 +24,6 @@ spec:
     accessControlAllowCredentials: true
 
 ---
-
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
@@ -36,16 +35,13 @@ spec:
     permanent: true
 
 ---
-
 apiVersion: traefik.containo.us/v1alpha1
 kind: TLSOption
 metadata:
   name: keycloak-tls-options
 spec:
   minVersion: VersionTLS12
-  sniStrict: true
-
-
+  sniStrict: false
 
 # ---
 
@@ -123,11 +119,16 @@ spec:
     {{- range .Values.ingress.hosts.TLS }}      
       - {{ .host }}.{{ $.Values.global.domain }}
     {{- end}}
-    secretName: {{ $fullName }}-cert
+    # secretName: {{ $fullName }}-cert
+    #secretName: dcm4che-certs
     passthrough: false
     options:
       name: keycloak-tls-options
-  
+    # stores:
+    #   default:
+    #     defaultCertificate:
+    #       certFile: /certs/tls.crt
+    #       keyFile: /certs/tls.key
 
 {{- end}}
 {{- end}}
