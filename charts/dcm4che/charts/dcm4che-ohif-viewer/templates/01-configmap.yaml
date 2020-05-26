@@ -15,9 +15,9 @@ data:
         dicomWeb: [
         {
             name: 'PACS prueba',
-            wadoUriRoot: 'https://pacs.{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/wado',
-            qidoRoot: 'https://pacs.{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
-            wadoRoot: 'https://pacs.{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
+            wadoUriRoot: 'https://pacs-{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/wado',
+            qidoRoot: 'https://pacs-{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
+            wadoRoot: 'https://pacs-{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
             qidoSupportsIncludeField: true,
             imageRendering: 'wadors',
             thumbnailRendering: 'wadors',
@@ -29,12 +29,10 @@ data:
     {                                                                                                             
         // ~ REQUIRED                                                                                               
         // Authorization Server URL                                                                                 
-        authority: 'https://keycloak.{{ .Values.global.domain }}:30443/auth/realms/dcm4che',                                                   
+        authority: 'https://keycloak-{{ .Values.global.domain }}:30443/auth/realms/dcm4che',                                                   
         client_id: 'ohif',                                                                                          
-        //client_secret: 'c2ec1065-8223-4395-bf6c-b982ad0ad574',                                                                          
-        redirect_uri: 'https://ohif.{{ .Values.global.domain }}:30443/callback', // `OHIFStandaloneViewer.js`                                   
+        redirect_uri: 'https://ohif-{{ .Values.global.domain }}:30443/callback', // `OHIFStandaloneViewer.js`                                   
         // "Authorization Code Flow"                                                                                
-        // Resource: https://medium.com/@darutk/diagrams-of-all-the-openid-connect-flows-6968e3990660               
         response_type: 'code',                                                                                      
         scope: 'openid', // email profile openid                                                                    
         // ~ OPTIONAL                                                                                               

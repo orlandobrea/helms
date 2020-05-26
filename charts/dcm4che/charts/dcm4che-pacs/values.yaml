@@ -104,7 +104,7 @@ ingress:
     - host: pacs
       service: dcm4che-pacs
       port: 8443
-    - host: console.pacs
+    - host: console-pacs
       service: dcm4che-pacs
       port: 9993                  
   tls: []
