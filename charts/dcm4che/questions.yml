@@ -14,12 +14,14 @@ questions:
     - "PVC"
   label: "Tipo de persistencia a utilizar (volume claim / path en el nodo)"
   group: "Persistencia"
-  subquestions:
-    - variable: global.persistence.storageClass
-      default: ""
-      description: "StorageClass a utilizar para solicitar volumenes (solo si habilito PVC)"
-      type: string
-      label: "Storage Class"
+
+  
+- variable: global.persistence.storageClass
+  default: ""
+  description: "StorageClass a utilizar para solicitar volumenes (solo si habilito PVC)"
+  type: string
+  label: "Storage Class"
+  group: "Persistencia"
 
 - variable: dcm4che-elastic.volumes[0].size
   default: "10Gi"
