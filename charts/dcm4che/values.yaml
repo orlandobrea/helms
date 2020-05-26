@@ -2,7 +2,12 @@
 # No cambiar el prefix
 global:
   prefix: dcm4che
-  domain: smart.andes.gob.ar
+  domain: dummy.domain.com
+  persistence:
+    enabled: true
+    type: "PVC"
+    storageClass: ""
+    # path: "/k8s"
     
 # Fluentbit
 fluent-bit:

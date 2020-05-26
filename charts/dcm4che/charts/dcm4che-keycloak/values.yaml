@@ -67,10 +67,8 @@ env_vars:
 
 volumes:
   - name: data
-    type: "hostPath"
-    properties:
-      path: "/k8s/keycloak"
-      type: "DirectoryOrCreate"    
+    size: 10Gi
+    path: "/keycloak"
 
 ingress:
   enabled: true

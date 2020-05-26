@@ -1,0 +1,22 @@
+{{ if eq .Values.global.persistence.type "PVC" }}
+
+{{- $fullName := include "dcm4che-postgres.fullname" . -}}
+
+{{- range $volume :=  .Values.volumes }}
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $fullName }}-{{ $volume.name }}
+spec:
+  storageClassName: {{ $.Values.global.persistence.storageClass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $volume.size }}
+
+{{- end -}}
+
+{{ end }}

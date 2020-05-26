@@ -48,10 +48,8 @@ env_vars:
 
 volumes:
   - name: data
-    type: "hostPath"
-    properties:
-      path: "/k8s/postgres"
-      type: "DirectoryOrCreate"    
+    path: "/postgres"
+    size: 10Gi
 
 
 ingress:

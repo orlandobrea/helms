@@ -83,11 +83,8 @@ env_vars:
 
 volumes:
   - name: data
-    type: "hostPath"
-    properties:
-      path: "/k8s/pacs"
-      type: "DirectoryOrCreate"    
-
+    path: "/pacs"
+    size: 10Gi
 
 ingress:
   enabled: true

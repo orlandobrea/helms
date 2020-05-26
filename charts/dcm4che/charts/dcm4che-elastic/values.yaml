@@ -49,10 +49,8 @@ env_vars:
 
 volumes:
   - name: data
-    type: "hostPath"
-    properties:
-      path: "/k8s/elastic"
-      type: "DirectoryOrCreate"
+    size: 10Gi
+    path: "/elastic"
 
 ingress:
   enabled: false

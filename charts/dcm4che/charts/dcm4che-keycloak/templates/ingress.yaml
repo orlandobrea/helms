@@ -14,10 +14,10 @@ spec:
       - "PUT"
       - "POST"
     accessControlAllowOriginList:
-      - "https://pacs.{{ .Values.global.domain }}:30443"
-      - "https://console.pacs.{{ .Values.global.domain }}:30443"
-      - "https://keycloak.{{ .Values.global.domain }}:30443"
-      - "https://ohif.{{ .Values.global.domain }}:30443"
+      - "https://pacs-{{ .Values.global.domain }}:30443"
+      - "https://console-pacs-{{ .Values.global.domain }}:30443"
+      - "https://keycloak-{{ .Values.global.domain }}:30443"
+      - "https://ohif-{{ .Values.global.domain }}:30443"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
@@ -105,7 +105,7 @@ spec:
     - websecure
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
-  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
+  - match: Host(`{{ .host }}-{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
     - name: cors-keycloak  
@@ -117,7 +117,7 @@ spec:
   tls:
     hosts: 
     {{- range .Values.ingress.hosts.TLS }}      
-      - {{ .host }}.{{ $.Values.global.domain }}
+      - {{ .host }}-{{ $.Values.global.domain }}
     {{- end}}
     # secretName: {{ $fullName }}-cert
     #secretName: dcm4che-certs

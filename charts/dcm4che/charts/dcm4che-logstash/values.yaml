@@ -50,10 +50,8 @@ service:
 
 volumes:
   - name: data
-    type: "hostPath"
-    properties:
-      path: "/k8s/hashtree"
-      type: "DirectoryOrCreate"
+    path: "/hashtree"
+    size: 10Gi
 
 
 ingress:

@@ -24,29 +24,29 @@
 
 {{- if .Values.ingress.withTLS }}
 
----
-# Create cert
-apiVersion: cert-manager.io/v1alpha2
-kind: Issuer
-metadata:
-  name: {{ $fullName }}
-spec:
-  selfSigned: {}
+# ---
+# # Create cert
+# apiVersion: cert-manager.io/v1alpha2
+# kind: Issuer
+# metadata:
+#   name: {{ $fullName }}
+# spec:
+#   selfSigned: {}
 
----
-apiVersion: cert-manager.io/v1alpha2
-kind: Certificate
-metadata:
-  name: {{ $fullName }}-cert
-spec:
-  commonName: {{ $fullName }}
-  secretName: {{ $fullName }}-cert
-  issuerRef:
-    name: {{ $fullName }}
-  dnsNames: 
-  {{- range .Values.ingress.hosts.TLS }}  
-  - {{ .host }}.{{ $.Values.global.domain }}
-  {{- end}}
+# ---
+# apiVersion: cert-manager.io/v1alpha2
+# kind: Certificate
+# metadata:
+#   name: {{ $fullName }}-cert
+# spec:
+#   commonName: {{ $fullName }}
+#   secretName: {{ $fullName }}-cert
+#   issuerRef:
+#     name: {{ $fullName }}
+#   dnsNames: 
+#   {{- range .Values.ingress.hosts.TLS }}  
+#   - {{ .host }}.{{ $.Values.global.domain }}
+#   {{- end}}
 
 ---
 
@@ -60,7 +60,7 @@ spec:
     - websecure
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
-  - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
+  - match: Host(`{{ .host }}-{{ $.Values.global.domain }}`)
     kind: Rule
     services:
     - name:  {{ .service }}
@@ -72,7 +72,9 @@ spec:
     {{- range .Values.ingress.hosts.TLS }}      
       - {{ .host }}
     {{- end}}
-    secretName: {{ $fullName }}-cert
+    passthrough: false
+    options:
+      name: keycloak-tls-options
 
 {{- end}}
 {{- end}}

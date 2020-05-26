@@ -1,3 +1,5 @@
+{{- $fullName := include "dcm4che-keycloak.fullname" . -}}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -73,9 +75,13 @@ spec:
             path: /etc/timezone   
         {{- range $volume :=  .Values.volumes }}
         - name: {{ $volume.name }}
-          {{ $volume.type }}:          
-          {{- range $key, $val := $volume.properties }}
-            {{$key}}: {{ $val | quote}}
-          {{- end}}  
-        {{- end}}  
-
+          {{ if eq $.Values.global.persistence.type "PVC" }}
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-{{ $volume.name }}
+          {{ end }}
+          {{ if eq $.Values.global.persistence.type "PATH" }}
+          hostPath:  
+            path: {{ $.Values.global.persistence.path }}{{ $volume.path }}
+            type: DirectoryOrCreate
+          {{ end }}
+        {{- end -}}  

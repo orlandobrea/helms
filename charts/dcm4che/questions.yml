@@ -6,6 +6,64 @@ questions:
   label: "Dominio a utilizar"
   group: "General"
 
+- variable: global.persistence.type
+  default: "pvc"
+  description: "Tipo de persistencia"
+  type: enum
+  options:
+    - "PVC"
+  label: "Tipo de persistencia a utilizar (volume claim / path en el nodo)"
+  group: "Persistencia"
+  subquestions:
+    - variable: global.persistence.storageClass
+      default: ""
+      description: "StorageClass a utilizar para solicitar volumenes (solo si habilito PVC)"
+      type: string
+      label: "Storage Class"
+
+- variable: dcm4che-elastic.volumes[0].size
+  default: "10Gi"
+  description: "Tamaño del volumen de Elastic"
+  type: string
+  label: "Tamaño del volumen de Elastic"
+  group: "Persistencia"
+- variable: dcm4che-logstash.volumes[0].size
+  default: "10Gi"
+  description: "Tamaño del volumen de Logstash"
+  type: string
+  label: "Tamaño del volumen de Logstash"
+  group: "Persistencia"    
+- variable: dcm4che-keycloak.volumes[0].size
+  default: "10Gi"
+  description: "Tamaño del volumen de Keycloak"
+  type: string
+  label: "Tamaño del volumen de Keycloak"
+  group: "Persistencia"  
+- variable: dcm4che-postgres.volumes[0].size
+  default: "10Gi"
+  description: "Tamaño del volumen de Postgres"
+  type: string
+  label: "Tamaño del volumen de Postgres"
+  group: "Persistencia"    
+- variable: dcm4che-slapd.volumes[0].size
+  default: "10Gi"
+  description: "Tamaño del volumen de LDAP"
+  type: string
+  label: "Tamaño del volumen de LDAP"
+  group: "Persistencia"   
+- variable: dcm4che-slapd.volumes[1].size
+  default: "10Gi"
+  description: "Tamaño del volumen de SLDAP"
+  type: string
+  label: "Tamaño del volumen de SLDAP"
+  group: "Persistencia"        
+- variable: dcm4che-pacs.volumes[0].size
+  default: "10Gi"
+  description: "Tamaño del volumen de PACS"
+  type: string
+  label: "Tamaño del volumen de PACS"
+  group: "Persistencia"    
+
 - variable: traefik.enabled
   default: "true"
   description: "Instalar Traefik como ingress controller"

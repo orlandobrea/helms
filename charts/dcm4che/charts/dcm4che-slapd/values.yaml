@@ -50,15 +50,11 @@ env_vars:
 
 volumes:
   - name: ldap
-    type: "hostPath"
-    properties:
-      path: "/k8s/ldap"
-      type: "DirectoryOrCreate"
+    path: "/ldap"
+    size: 5Gi
   - name: sldapd
-    type: "hostPath"
-    properties:
-      path: "/k8s/slapd.d"
-      type: "DirectoryOrCreate"      
+    path: "/slapd.d"
+    size: 5Gi  
 
 
 ingress:
