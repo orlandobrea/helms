@@ -79,6 +79,7 @@ questions:
   type: boolean
   label: "Usar certificados propios"
   group: "Certificados"
+  show_subquestion_if: true
   subquestions:  
   - variable: tls.key
     default: ""
