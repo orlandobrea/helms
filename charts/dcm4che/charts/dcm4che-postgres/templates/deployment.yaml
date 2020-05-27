@@ -55,7 +55,7 @@ spec:
             {{ if eq $.Values.global.persistence.type "PVC" }}
             # For PVC we must create a folder, because the lost+found default folder on the root directory
             # makes postgres to throw an error
-            subpath: /data
+            subPath: data
             {{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
