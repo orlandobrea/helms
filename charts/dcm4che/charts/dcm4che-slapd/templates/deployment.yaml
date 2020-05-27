@@ -1,4 +1,4 @@
-{{- $fullName := include "dcm4che-keycloak.fullname" . -}}
+{{- $fullName := include "dcm4che-slapd.fullname" . -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
