@@ -28,9 +28,9 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            {{- range $port :=  .Values.service.ports }}
-            - containerPort: {{ $port.number }}
-              protocol: {{ $port.protocol }}
+            {{- range  .Values.service.ports }}
+            - containerPort: {{ .number }}
+              protocol: {{ .protocol }}
             {{- end}}            
           # livenessProbe:
           #   httpGet:
@@ -73,11 +73,11 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone   
-        {{- range $volume :=  .Values.volumes }}
+        {{- range .Values.volumes }}
         - name: {{ $volume.name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
-            claimName: {{ $fullName }}-v{{ $volume.name }}
+            claimName: {{ $fullName }}-v{{ .name }}
           {{ end }}
           {{ if eq $.Values.global.persistence.type "PATH" }}
           hostPath:  
