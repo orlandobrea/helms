@@ -81,20 +81,20 @@ questions:
   group: "Certificados"
   show_subquestion_if: true
   subquestions:  
-  - variable: tls.key
+  - variable: traefik-dcm4che.tls.privkey
     default: ""
     description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
     type: multiline
     label: "Key (privkey.pem)"
     group: "Certificados"
-  - variable: tls.key
+  - variable: traefik-dcm4che.tls.fullchain
     default: ""
     description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
     type: multiline
     label: "Certificado (fullchain.pem)"
     group: "Certificados"  
 
-- variable: fluentbit.enabled
+- variable: fluent-bit.enabled
   default: "true"
   description: "Instalar el DaemonSet de Fluentbit en el cluster (Se necesita Fluent-bit para poder enviar los logs a logstash)"
   type: boolean
