@@ -1,6 +1,6 @@
-{{ if eq .Values.global.persistence.type "PVC" }}
-
 {{- $fullName := include "dcm4che-elastic.fullname" . -}}
+
+{{ if eq .Values.global.persistence.type "PVC" }}
 
 {{- range $volume :=  .Values.volumes }}
 
