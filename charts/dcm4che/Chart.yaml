@@ -20,7 +20,7 @@ version: 0.1.1
 # incremented each time you make changes to the application.
 appVersion: 0.1.1
 
-icon: https://www.andes.gob.ar/images/andes_logo_desktop.svg
+icon: file:://logo.svg
 
 
 dependencies:
