@@ -1,13 +1,13 @@
 questions:
 - variable: global.domain
   default: ""
-  description: "Dominio en el cual va a correr la app (ej: hospi01.172-16-80-1.nip.io)"
+  description: "Dominio en el cual va a correr la app (ej: hospi01.andes.gob.ar)"
   type: string
   label: "Dominio a utilizar"
   group: "General"
 
 - variable: global.persistence.type
-  default: "pvc"
+  default: "PVC"
   description: "Tipo de persistencia"
   type: enum
   options:
@@ -67,7 +67,7 @@ questions:
   group: "Persistencia"    
 
 - variable: traefik.enabled
-  default: "true"
+  default: "false"
   description: "Instalar Traefik como ingress controller"
   type: boolean
   label: "Instalar Traefik"
