@@ -77,7 +77,7 @@ spec:
         - name: {{ $volume.name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
-            claimName: {{ $fullName }}-{{ $volume.name }}
+            claimName: {{ $fullName }}-v{{ $volume.name }}
           {{ end }}
           {{ if eq $.Values.global.persistence.type "PATH" }}
           hostPath:  
