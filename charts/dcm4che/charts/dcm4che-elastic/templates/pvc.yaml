@@ -5,13 +5,13 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "algo-{{ .Values.volumes.name }}"
+  name: "algo-{{ .Values.volume.name }}"
 spec:
   storageClassName: {{ $.Values.global.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.volumes.size }}
+      storage: {{ .Values.volume.size }}
 
 {{ end }}
