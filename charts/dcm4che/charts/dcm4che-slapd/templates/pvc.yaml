@@ -1,5 +1,5 @@
 {{ if eq .Values.global.persistence.type "PVC" }}
-
+{{- $fullName := include "dcm4che-postgres.fullname" . -}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
