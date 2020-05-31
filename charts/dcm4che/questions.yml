@@ -23,48 +23,48 @@ questions:
   label: "Storage Class"
   group: "Persistencia"
 
-- variable: dcm4che-elastic.volumes[0].size
-  default: "10Gi"
-  description: "Tamaño del volumen de Elastic"
-  type: string
-  label: "Tamaño del volumen de Elastic"
-  group: "Persistencia"
-- variable: dcm4che-logstash.volumes[0].size
-  default: "10Gi"
-  description: "Tamaño del volumen de Logstash"
-  type: string
-  label: "Tamaño del volumen de Logstash"
-  group: "Persistencia"    
-- variable: dcm4che-keycloak.volumes[0].size
-  default: "10Gi"
-  description: "Tamaño del volumen de Keycloak"
-  type: string
-  label: "Tamaño del volumen de Keycloak"
-  group: "Persistencia"  
-- variable: dcm4che-postgres.volumes[0].size
-  default: "10Gi"
-  description: "Tamaño del volumen de Postgres"
-  type: string
-  label: "Tamaño del volumen de Postgres"
-  group: "Persistencia"    
-- variable: dcm4che-slapd.volumes[0].size
-  default: "10Gi"
-  description: "Tamaño del volumen de LDAP"
-  type: string
-  label: "Tamaño del volumen de LDAP"
-  group: "Persistencia"   
-- variable: dcm4che-slapd.volumes[1].size
-  default: "10Gi"
-  description: "Tamaño del volumen de SLDAP"
-  type: string
-  label: "Tamaño del volumen de SLDAP"
-  group: "Persistencia"        
-- variable: dcm4che-pacs.volumes[0].size
-  default: "10Gi"
-  description: "Tamaño del volumen de PACS"
-  type: string
-  label: "Tamaño del volumen de PACS"
-  group: "Persistencia"    
+# - variable: dcm4che-elastic.volumes[0].size
+#   default: "10Gi"
+#   description: "Tamaño del volumen de Elastic"
+#   type: string
+#   label: "Tamaño del volumen de Elastic"
+#   group: "Persistencia"
+# - variable: dcm4che-logstash.volumes[0].size
+#   default: "10Gi"
+#   description: "Tamaño del volumen de Logstash"
+#   type: string
+#   label: "Tamaño del volumen de Logstash"
+#   group: "Persistencia"    
+# - variable: dcm4che-keycloak.volumes[0].size
+#   default: "10Gi"
+#   description: "Tamaño del volumen de Keycloak"
+#   type: string
+#   label: "Tamaño del volumen de Keycloak"
+#   group: "Persistencia"  
+# - variable: dcm4che-postgres.volumes[0].size
+#   default: "10Gi"
+#   description: "Tamaño del volumen de Postgres"
+#   type: string
+#   label: "Tamaño del volumen de Postgres"
+#   group: "Persistencia"    
+# - variable: dcm4che-slapd.volumes[0].size
+#   default: "10Gi"
+#   description: "Tamaño del volumen de LDAP"
+#   type: string
+#   label: "Tamaño del volumen de LDAP"
+#   group: "Persistencia"   
+# - variable: dcm4che-slapd.volumes[1].size
+#   default: "10Gi"
+#   description: "Tamaño del volumen de SLDAP"
+#   type: string
+#   label: "Tamaño del volumen de SLDAP"
+#   group: "Persistencia"        
+# - variable: dcm4che-pacs.volumes[0].size
+#   default: "10Gi"
+#   description: "Tamaño del volumen de PACS"
+#   type: string
+#   label: "Tamaño del volumen de PACS"
+#   group: "Persistencia"    
 
 - variable: traefik.enabled
   default: "false"
