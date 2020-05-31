@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{- include "dcm4che-elastic.fullname" . }}
+  name: {{ $fullName }}
   labels:
     {{- include "dcm4che-elastic.labels" . | nindent 4 }}
 spec:
