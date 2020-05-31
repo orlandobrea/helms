@@ -2,13 +2,13 @@
 
 {{- if eq .Values.global.persistence.type "PVC" }}
 
-{{- range $volume :=  .Values.volumes }}
+{{- range .Values.volumes }}
 
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ $fullName }}-{{ $volume.name }}
+  name: {{ $fullName }}-{{ .name }}
 spec:
   storageClassName: {{ $.Values.global.persistence.storageClass }}
   accessModes:
