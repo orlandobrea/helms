@@ -1,6 +1,6 @@
 {{- $fullName := include "dcm4che-elastic.fullname" . -}}
 
-{{ if eq .Values.global.persistence.type "PVC" }}
+
 {{- range .Values.volumes }}
 ---
 kind: PersistentVolumeClaim
@@ -15,4 +15,3 @@ spec:
     requests:
       storage: {{ .size }}
 {{- end }}
-{{ end }}
