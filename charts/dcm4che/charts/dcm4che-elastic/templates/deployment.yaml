@@ -1,3 +1,4 @@
+{{- $fullName := include "dcm4che-keycloak.fullname" . -}}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -76,7 +77,7 @@ spec:
         - name: {{ .name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
-            claimName: {{- include "dcm4che-elastic.fullname" . }}-{{ .name }}
+            claimName: {{ $fullName }}-{{ .name }}
           {{ end }}
           {{ if eq $.Values.global.persistence.type "PATH" }}
           hostPath:
