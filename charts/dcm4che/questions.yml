@@ -24,6 +24,14 @@ questions:
   group: "Persistencia"
   show_if: "global.persistence.type=PVC"
 
+- variable: dcm4che-elastic.volumes[0].name
+  default: "10Gi"
+  description: "Nombre del volumen de Elastic"
+  type: string
+  show_if: "global.persistence.type=PVC"
+  label: "Nombre del volumen de Elastic"
+  group: "Persistencia"  
+
 - variable: dcm4che-elastic.volumes[0].size
   default: "10Gi"
   description: "Tamaño del volumen de Elastic"
