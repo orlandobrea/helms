@@ -1,18 +1,17 @@
 {{- $fullName := include "dcm4che-elastic.fullname" . -}}
 
 {{ if eq .Values.global.persistence.type "PVC" }}
-{{- range .Values.volumes }}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "algo-{{ .name }}"
+  name: "algo-{{ .Values.volumes.name }}"
 spec:
   storageClassName: {{ $.Values.global.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .size }}
-{{- end }}
+      storage: {{ .Values.volumes.size }}
+
 {{ end }}

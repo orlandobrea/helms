@@ -47,8 +47,8 @@ env_vars:
   TAKE_FILE_OWNERSHIP: "1"
   discovery.type: "single-node"
 
-volumes:
-  - name: data
+volume:
+    name: data
     size: 10Gi
     path: "/elastic"
 
