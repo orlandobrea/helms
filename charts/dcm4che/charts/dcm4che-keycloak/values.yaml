@@ -65,8 +65,8 @@ env_vars:
   # KEYCLOAK_USER: admin
   # KEYCLOAK_PASSWORD: admin
 
-volumes:
-  - name: data
+volume:
+    name: data
     size: 10Gi
     path: "/keycloak"
 

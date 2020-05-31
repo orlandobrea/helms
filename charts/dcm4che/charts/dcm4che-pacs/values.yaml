@@ -81,8 +81,8 @@ env_vars:
   SSL_REQUIRED: all
   ALLOW_ANY_HOSTNAME: false
 
-volumes:
-  - name: data
+volume:
+    name: data
     path: "/pacs"
     size: 10Gi
 

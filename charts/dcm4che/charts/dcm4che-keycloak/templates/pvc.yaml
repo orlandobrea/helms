@@ -1,22 +1,16 @@
 {{ if eq .Values.global.persistence.type "PVC" }}
 
 {{- $fullName := include "dcm4che-keycloak.fullname" . -}}
-
-{{- range $volume :=  .Values.volumes }}
-
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ $fullName }}-v{{ $volume.name }}
+  name: {{ $fullName }}-{{ .Values.volume.name }}
 spec:
   storageClassName: {{ $.Values.global.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ $volume.size }}
-
-{{- end -}}
-
+      storage: {{ .Values.volume.size }}
 {{ end }}

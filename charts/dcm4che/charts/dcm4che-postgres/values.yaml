@@ -46,8 +46,8 @@ env_vars:
   POSTGRES_PASSWORD: "pacs" #@ToDo sacara a secrets
 
 
-volumes:
-  - name: data
+volume:
+   name: data
     path: "/postgres"
     size: 10Gi
 

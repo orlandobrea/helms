@@ -48,8 +48,8 @@ service:
       number: 8514
       protocol: TCP  
 
-volumes:
-  - name: data
+volume:
+    name: data
     path: "/hashtree"
     size: 10Gi
 
