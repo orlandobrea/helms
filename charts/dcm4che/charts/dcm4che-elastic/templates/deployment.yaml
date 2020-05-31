@@ -76,7 +76,7 @@ spec:
         - name: {{ .name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
-            claimName: {{- include "dcm4che-elastic.fullname" . }}-v{{ .name }}
+            claimName: {{- include "dcm4che-elastic.fullname" . }}-{{ .name }}
           {{ end }}
           {{ if eq $.Values.global.persistence.type "PATH" }}
           hostPath:
