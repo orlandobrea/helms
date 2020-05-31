@@ -47,7 +47,7 @@ env_vars:
 
 
 volume:
-   name: data
+    name: data
     path: "/postgres"
     size: 10Gi
 
