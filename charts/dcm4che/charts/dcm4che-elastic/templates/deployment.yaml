@@ -73,13 +73,13 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone   
-        - name: {{ .Values.volumes.name }}
+        - name: {{ .Values.volume.name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
-            claimName: {{ $fullName }}-{{ .Values.volumes.name }}
+            claimName: {{ $fullName }}-{{ .Values.volume.name }}
           {{ end }}
           {{ if eq $.Values.global.persistence.type "PATH" }}
           hostPath:
-            path: {{ $.Values.global.persistence.path }}{{ .Values.volumes.path }}
+            path: {{ $.Values.global.persistence.path }}{{ .Values.volume.path }}
             type: DirectoryOrCreate
           {{ end }}
