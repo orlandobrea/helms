@@ -28,10 +28,9 @@ questions:
   default: "10Gi"
   description: "Tamaño del volumen de Elastic"
   type: size
-  required: true
   show_if: "global.persistence.type=PVC"
-#   label: "Tamaño del volumen de Elastic"
-#   group: "Persistencia"
+  label: "Tamaño del volumen de Elastic"
+  group: "Persistencia"
 # - variable: dcm4che-logstash.volumes[0].size
 #   default: "10Gi"
 #   description: "Tamaño del volumen de Logstash"
