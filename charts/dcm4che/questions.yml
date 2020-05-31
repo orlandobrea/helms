@@ -22,11 +22,14 @@ questions:
   type: string
   label: "Storage Class"
   group: "Persistencia"
+  show_if: "global.persistence.type=PVC"
 
-# - variable: dcm4che-elastic.volumes[0].size
-#   default: "10Gi"
-#   description: "Tamaño del volumen de Elastic"
-#   type: string
+- variable: dcm4che-elastic.volumes[0]
+  default: "10Gi"
+  description: "Tamaño del volumen de Elastic"
+  type: size
+  required: true
+  show_if: "global.persistence.type=PVC"
 #   label: "Tamaño del volumen de Elastic"
 #   group: "Persistencia"
 # - variable: dcm4che-logstash.volumes[0].size
