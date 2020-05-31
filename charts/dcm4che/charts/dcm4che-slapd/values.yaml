@@ -48,11 +48,11 @@ env_vars:
   SYSLOG_PORT: 8514
   SYSLOG_PROTOCOL: "TLS"
 
-volume-ldap:
+volume_ldap:
     name: ldap
     path: "/ldap"
     size: 5Gi
-volume-slapd:    
+volume_slapd:    
     name: sldapd
     path: "/slapd.d"
     size: 5Gi  

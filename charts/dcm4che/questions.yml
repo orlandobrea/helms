@@ -61,7 +61,7 @@ questions:
   group: "Persistencia"
 
   # LDAP
-- variable: dcm4che-ldap.volume-ldap.size
+- variable: dcm4che-ldap.volume_ldap.size
   default: "10Gi"
   description: "Tamaño del volumen de LDAP"
   type: string
@@ -71,7 +71,7 @@ questions:
 
 
   # SLAPD
-- variable: dcm4che-ldap.volume-slapd.size
+- variable: dcm4che-ldap.volume_slapd.size
   default: "10Gi"
   description: "Tamaño del volumen de SLAPD"
   type: string

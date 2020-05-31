@@ -4,26 +4,26 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ $fullName }}-{{ .Values.volume-ldap.name }}
+  name: {{ $fullName }}-{{ .Values.volume_ldap.name }}
 spec:
   storageClassName: {{ $.Values.global.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.volume-ldap.size }}
+      storage: {{ .Values.volume_ldap.size }}
 
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ $fullName }}-{{ .Values.volume-slapd.name }}
+  name: {{ $fullName }}-{{ .Values.volume_slapd.name }}
 spec:
   storageClassName: {{ $.Values.global.persistence.storageClass }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.volume-slapd.size }}
+      storage: {{ .Values.volume_slapd.size }}
 
 {{ end }}

@@ -73,23 +73,23 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone  
-        - name: {{ .Values.volume-ldap.name }}
+        - name: {{ .Values.volume_ldap.name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
-            claimName: {{ $fullName }}-{{ .Values.volume-ldap.name }}
+            claimName: {{ $fullName }}-{{ .Values.volume_ldap.name }}
           {{ end }}
           {{ if eq $.Values.global.persistence.type "PATH" }}
           hostPath:
-            path: {{ $.Values.global.persistence.path }}{{ .Values.volume-ldap.path }}
+            path: {{ $.Values.global.persistence.path }}{{ .Values.volume_ldap.path }}
             type: DirectoryOrCreate
           {{ end }}  
-        - name: {{ .Values.volume-slapd.name }}
+        - name: {{ .Values.volume_slapd.name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
-            claimName: {{ $fullName }}-{{ .Values.volume-slapd.name }}
+            claimName: {{ $fullName }}-{{ .Values.volume_slapd.name }}
           {{ end }}
           {{ if eq $.Values.global.persistence.type "PATH" }}
           hostPath:
-            path: {{ $.Values.global.persistence.path }}{{ .Values.volume-slapd.path }}
+            path: {{ $.Values.global.persistence.path }}{{ .Values.volume_slapd.path }}
             type: DirectoryOrCreate
           {{ end }}            
