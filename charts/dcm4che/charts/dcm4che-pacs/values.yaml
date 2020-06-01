@@ -79,7 +79,7 @@ env_vars:
   MANAGEMENT_HTTP_PORT: 9990
   MANAGEMENT_HTTPS_PORT: 9993
   SSL_REQUIRED: all
-  ALLOW_ANY_HOSTNAME: false
+  ALLOW_ANY_HOSTNAME: true
 
 volume:
     name: data
