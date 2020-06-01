@@ -5,7 +5,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: "algo-{{ .Values.volume.name }}"
+  name: "{{ $fullName }}-{{ .Values.volume.name }}"
 spec:
   storageClassName: {{ $.Values.global.persistence.storageClass }}
   accessModes:
