@@ -88,33 +88,33 @@ questions:
   label: "Tamaño del volumen de PACS"
   group: "Persistencia"
 
-- variable: traefik.enabled
-  default: "false"
-  description: "Instalar Traefik como ingress controller"
-  type: boolean
-  label: "Instalar Traefik"
-  group: "Ingress"
+# - variable: traefik.enabled
+#   default: "false"
+#   description: "Instalar Traefik como ingress controller"
+#   type: boolean
+#   label: "Instalar Traefik"
+#   group: "Ingress"
 
-- variable: tls.custom_cert
-  default: "true"
-  description: "Usar certificados propios (Ej: ya generados por let's encrypt)"
-  type: boolean
-  label: "Usar certificados propios"
-  group: "Certificados"
-  show_subquestion_if: true
-  subquestions:  
-  - variable: traefik-dcm4che.tls.privkey
-    default: ""
-    description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
-    type: multiline
-    label: "Key (privkey.pem)"
-    group: "Certificados"
-  - variable: traefik-dcm4che.tls.fullchain
-    default: ""
-    description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
-    type: multiline
-    label: "Certificado (fullchain.pem)"
-    group: "Certificados"  
+# - variable: tls.custom_cert
+#   default: "true"
+#   description: "Usar certificados propios (Ej: ya generados por let's encrypt)"
+#   type: boolean
+#   label: "Usar certificados propios"
+#   group: "Certificados"
+#   show_subquestion_if: true
+#   subquestions:  
+#   - variable: traefik-dcm4che.tls.privkey
+#     default: ""
+#     description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+#     type: multiline
+#     label: "Key (privkey.pem)"
+#     group: "Certificados"
+#   - variable: traefik-dcm4che.tls.fullchain
+#     default: ""
+#     description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+#     type: multiline
+#     label: "Certificado (fullchain.pem)"
+#     group: "Certificados"  
 
 - variable: fluent-bit.enabled
   default: "true"
