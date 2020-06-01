@@ -11,6 +11,14 @@ spec:
   selector:
     matchLabels:
       {{- include "dcm4che-pacs.selectorLabels" . | nindent 6 }}
+  {{ if .Values.host_alias.enabled }}
+  hostAliases:
+    - ip: "{{ .Values.host_alias.ip }}"
+      hostnames:
+        {{- range .Values.host_alias.hostnames }}
+        - {{ . }}-{{ $.Values.global.domain }}
+        {{- end }}
+  {{ end }}
   template:
     metadata:
       labels:

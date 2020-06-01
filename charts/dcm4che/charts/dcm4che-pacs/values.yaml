@@ -81,6 +81,12 @@ env_vars:
   SSL_REQUIRED: all
   ALLOW_ANY_HOSTNAME: true
 
+host_alias:
+  enabled: true
+  ip: "192.168.68.3"
+  hostnames:
+    - "keycloak"
+
 volume:
     name: data
     path: "/pacs"
