@@ -57,7 +57,7 @@ spec:
     - websecure
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
-  - match: Host(`{{ .host }}-{{ $.Values.global.domain }}`)
+  - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     services:
     - name:  {{ .service }}
@@ -68,7 +68,7 @@ spec:
   tls:
     hosts: 
     {{- range .Values.ingress.hosts.TLS }}      
-      - {{ .host }}-{{ $.Values.global.domain }}
+      - {{ .host }}{{ $.Values.global.domain }}
     {{- end}}
     passthrough: false
     options:

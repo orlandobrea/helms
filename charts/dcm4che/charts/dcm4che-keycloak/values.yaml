@@ -82,7 +82,7 @@ ingress:
       service: dcm4che-keycloak
       port: 8880
     TLS:
-    - host: keycloak
+    - host: keycloak-pacs
       service: dcm4che-keycloak
       port: 8843       
   tls: []

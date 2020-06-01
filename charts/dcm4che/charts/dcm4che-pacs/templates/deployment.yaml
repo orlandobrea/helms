@@ -11,14 +11,6 @@ spec:
   selector:
     matchLabels:
       {{- include "dcm4che-pacs.selectorLabels" . | nindent 6 }}
-  {{ if .Values.host_alias.enabled }}
-  hostAliases:
-    - ip: "{{ .Values.host_alias.ip }}"
-      hostnames:
-        {{- range .Values.host_alias.hostnames }}
-        - {{ . }}-{{ $.Values.global.domain }}
-        {{- end }}
-  {{ end }}
   template:
     metadata:
       labels:
@@ -54,7 +46,7 @@ spec:
               value: {{ $val | quote}}
             {{- end}}
             - name: AUTH_SERVER_URL
-              value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}-{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
+              value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
           volumeMounts:
           - name: vm-localtime
             mountPath: /etc/localtime            

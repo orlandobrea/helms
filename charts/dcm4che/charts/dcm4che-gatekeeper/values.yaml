@@ -81,7 +81,7 @@ ingress:
     #   service: dcm4che-gatekeeper
     #   port: 8643
     TLS:
-    - host: kibana
+    - host: kibana-pacs
       service: dcm4che-gatekeeper
       port: 8643       
   # tls: []

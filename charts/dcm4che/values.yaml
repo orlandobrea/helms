@@ -1,17 +1,17 @@
 
 # Tomando como ejemplo hospital.test.com para el nombre de dominio
 # Se generan las siguientes rutas en el ingress
-#   - kibana-hospital.test.com
-#   - keycloak-hospital.test.com
-#   - ohif-hospital.test.com
-#   - pacs-hospital.test.com
-#   - console-pacs-hospital.test.com
+#   - kibana-pacshospital.test.com
+#   - keycloak-pacshospital.test.com
+#   - visorhospital.test.com
+#   - pacshospital.test.com
+#   - console-pacshospital.test.com
 
 
 # No cambiar el prefix
 global:
   prefix: dcm4che
-  domain: dummy.domain.com
+  domain: hpn.andes.gob.ar
   persistence:
     enabled: true
     type: "PVC"

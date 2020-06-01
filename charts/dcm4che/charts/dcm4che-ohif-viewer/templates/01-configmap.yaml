@@ -15,9 +15,9 @@ data:
         dicomWeb: [
         {
             name: 'PACS prueba',
-            wadoUriRoot: 'https://pacs-{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/wado',
-            qidoRoot: 'https://pacs-{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
-            wadoRoot: 'https://pacs-{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
+            wadoUriRoot: 'https://pacs{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/wado',
+            qidoRoot: 'https://pacs{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
+            wadoRoot: 'https://pacs{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
             qidoSupportsIncludeField: true,
             imageRendering: 'wadors',
             thumbnailRendering: 'wadors',
@@ -29,9 +29,9 @@ data:
     {                                                                                                             
         // ~ REQUIRED                                                                                               
         // Authorization Server URL                                                                                 
-        authority: 'https://keycloak-{{ .Values.global.domain }}:30443/auth/realms/dcm4che',                                                   
+        authority: 'https://keycloak-pacs{{ .Values.global.domain }}:30443/auth/realms/dcm4che',                                                   
         client_id: 'ohif',                                                                                          
-        redirect_uri: 'https://ohif-{{ .Values.global.domain }}:30443/callback', // `OHIFStandaloneViewer.js`                                   
+        redirect_uri: 'https://visor{{ .Values.global.domain }}:30443/callback', // `OHIFStandaloneViewer.js`                                   
         // "Authorization Code Flow"                                                                                
         response_type: 'code',                                                                                      
         scope: 'openid', // email profile openid                                                                    

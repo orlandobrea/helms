@@ -48,7 +48,7 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     TLS:
-    - host: ohif
+    - host: visor
       service: dcm4che-ohif
       port: 80               
   tls: []

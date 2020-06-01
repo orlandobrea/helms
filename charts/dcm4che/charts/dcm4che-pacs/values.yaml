@@ -68,7 +68,7 @@ env_vars:
   POSTGRES_PASSWORD: "pacs"
   LOGSTASH_HOST: "dcm4che-logstash"
   AUTH_SERVER_PROTOCOL: https
-  AUTH_SERVER_HOST: keycloak
+  AUTH_SERVER_HOST: keycloak-pacs
   AUTH_SERVER_PORT: 30443
   AUTH_SERVER_PATH: /auth
   #AUTH_SERVER_URL: protocol + domain + global.domain + port + path
@@ -80,12 +80,6 @@ env_vars:
   MANAGEMENT_HTTPS_PORT: 9993
   SSL_REQUIRED: all
   ALLOW_ANY_HOSTNAME: true
-
-host_alias:
-  enabled: true
-  ip: "192.168.68.3"
-  hostnames:
-    - "keycloak"
 
 volume:
     name: data
