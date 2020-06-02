@@ -95,26 +95,26 @@ questions:
 #   label: "Instalar Traefik"
 #   group: "Ingress"
 
-# - variable: tls.custom_cert
-#   default: "true"
-#   description: "Usar certificados propios (Ej: ya generados por let's encrypt)"
-#   type: boolean
-#   label: "Usar certificados propios"
-#   group: "Certificados"
-#   show_subquestion_if: true
-#   subquestions:  
-#   - variable: traefik-dcm4che.tls.privkey
-#     default: ""
-#     description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
-#     type: multiline
-#     label: "Key (privkey.pem)"
-#     group: "Certificados"
-#   - variable: traefik-dcm4che.tls.fullchain
-#     default: ""
-#     description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
-#     type: multiline
-#     label: "Certificado (fullchain.pem)"
-#     group: "Certificados"  
+- variable: tls.custom_cert
+  default: "true"
+  description: "El ingress usa certificados de let's encrypt"
+  type: boolean
+  label: "Usa certificados de Let's Encrypt en ingress?"
+  group: "Certificados"
+  show_subquestion_if: true
+  subquestions:  
+  - variable: tls.privkey
+    default: ""
+    description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    type: multiline
+    label: "Key (privkey.pem)"
+    group: "Certificados"
+  - variable: tls.fullchain
+    default: ""
+    description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    type: multiline
+    label: "Certificado (fullchain.pem)"
+    group: "Certificados"  
 
 - variable: fluent-bit.enabled
   default: "true"

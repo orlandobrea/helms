@@ -2,6 +2,7 @@
 
 {{- $fullName := include "dcm4che-pacs.fullname" . -}}
 
+
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRoute
 # metadata:

@@ -17,6 +17,10 @@ global:
     type: "PVC"
     storageClass: ""
     # path: "/k8s"
+
+tls:
+  privkey: "-empty-"
+  fullchain: "-empty-"
     
 # Fluentbit
 fluent-bit:
