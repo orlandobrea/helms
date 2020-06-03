@@ -2,7 +2,7 @@ FROM alpine
 
 RUN apk add --update openssl openjdk11-jre-headless && rm -rf /var/cache/apk/*
 
-VOLUME ["/opt/input/pem", "/opt/output"]
+VOLUME ["/opt/input", "/opt/output"]
 
 COPY keystores /opt/output/
 
