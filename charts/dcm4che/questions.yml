@@ -105,13 +105,13 @@ questions:
   subquestions:  
   - variable: global.tls.privkey
     default: ""
-    description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    description: "key de Letsencrypt (comienza con -----BEGIN PRIVATE KEY-----)"
     type: multiline
     label: "Key (privkey.pem)"
     group: "Certificados"
   - variable: global.tls.fullchain
     default: ""
-    description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
+    description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE-----)"
     type: multiline
     label: "Certificado (fullchain.pem)"
     group: "Certificados"  
