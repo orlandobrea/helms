@@ -28,6 +28,7 @@ spec:
           volumeMounts:
             - name: pems
               mountPath: "/opt/input"
+              readOnly: true
             - name: data
               mountPath: /opt/output
               subPath: configuration/keystore
