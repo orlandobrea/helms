@@ -30,8 +30,8 @@ spec:
               mountPath: "/opt/input"
               readOnly: true
             - name: data
-              mountPath: /opt/output
-              subPath: configuration/keystores
+              mountPath: "/opt/output"
+              subPath: "configuration/keystores"
       {{ end }}
       containers:
         - name: {{ .Chart.Name }}
