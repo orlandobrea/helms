@@ -29,7 +29,8 @@ spec:
             - name: pems
               mountPath: "/opt/input"
             - name: data
-              mountPath: /opt/wildfly/standalone              
+              mountPath: /opt/output
+              subPath: configuration/keystore
       {{ end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -63,8 +64,7 @@ spec:
           - name: vm-timezone
             mountPath: /etc/timezone 
           - name: data
-            mountPath: /opt/output
-            subPath: opt/keycloak/standalone/configuration/keystore
+            mountPath: /opt/wildfly/standalone
           # - name: keycloak-certs
             # mountPath: /opt/certs/keycloak
             # readOnly: true
