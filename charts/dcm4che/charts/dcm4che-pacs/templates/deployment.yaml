@@ -31,7 +31,7 @@ spec:
               readOnly: true
             - name: data
               mountPath: /opt/output
-              subPath: configuration/keystores
+              subPath: docker-entrypoint.d/configuration/keystores
       {{ end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -61,9 +61,11 @@ spec:
               value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
           volumeMounts:
           - name: vm-localtime
-            mountPath: /etc/localtime            
+            mountPath: /etc/localtime   
+            readOnly: true         
           - name: vm-timezone
             mountPath: /etc/timezone 
+            readOnly: true
           - name: data
             mountPath: /opt/wildfly/standalone
           # - name: keycloak-certs
