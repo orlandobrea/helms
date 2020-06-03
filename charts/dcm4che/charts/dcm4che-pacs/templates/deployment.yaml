@@ -31,7 +31,7 @@ spec:
               readOnly: true
             - name: data
               mountPath: "/opt/output"
-              subPath: "configuration/keystores"
+              subPath: "../../../docker-entrypoint.d/configuration/keystores"
       {{ end }}
       containers:
         - name: {{ .Chart.Name }}
