@@ -64,7 +64,7 @@ spec:
             mountPath: /etc/timezone 
           - name: data
             mountPath: /opt/output
-            subPath: /opt/keycloak/standalone/configuration/keystore
+            subPath: opt/keycloak/standalone/configuration/keystore
           # - name: keycloak-certs
             # mountPath: /opt/certs/keycloak
             # readOnly: true
