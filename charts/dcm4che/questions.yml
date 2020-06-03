@@ -95,7 +95,7 @@ questions:
 #   label: "Instalar Traefik"
 #   group: "Ingress"
 
-- variable: tls.custom_cert
+- variable: global.tls.custom_cert
   default: "true"
   description: "El ingress usa certificados de let's encrypt"
   type: boolean
@@ -103,13 +103,13 @@ questions:
   group: "Certificados"
   show_subquestion_if: true
   subquestions:  
-  - variable: tls.privkey
+  - variable: global.tls.privkey
     default: ""
     description: "key de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
     type: multiline
     label: "Key (privkey.pem)"
     group: "Certificados"
-  - variable: tls.fullchain
+  - variable: global.tls.fullchain
     default: ""
     description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE----- o -----BEGIN RSA PRIVATE KEY-----)"
     type: multiline

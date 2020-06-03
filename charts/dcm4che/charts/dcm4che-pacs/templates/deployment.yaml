@@ -20,7 +20,17 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-
+      {{ if .Values.global.tls.custom_cert }}
+      initContainers:
+        - name: init-keystore
+          image: orlandobrea/init-keystore:1.0.0
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: pems
+              mountPath: "/opt/input"
+            - name: data
+              mountPath: /opt/wildfly/standalone              
+      {{ end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -53,7 +63,8 @@ spec:
           - name: vm-timezone
             mountPath: /etc/timezone 
           - name: data
-            mountPath: /opt/wildfly/standalone
+            mountPath: /opt/output
+            subPath: /opt/keycloak/standalone/configuration/keystore
           # - name: keycloak-certs
             # mountPath: /opt/certs/keycloak
             # readOnly: true
@@ -78,6 +89,11 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone  
+        {{ if .Values.global.tls.custom_cert }}
+        - name: pems
+          secret:
+            secretName: ingress-pem
+        {{ end }}
         # - name: keycloak-certs
           # secret:
             # secretName: {{ .Values.global.prefix}}-keycloak-cert
