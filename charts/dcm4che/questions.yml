@@ -103,17 +103,17 @@ questions:
   group: "Certificados"
   show_subquestion_if: true
   subquestions:  
-  - variable: global.tls.privkey
+  - variable: global.tls.ca
     default: ""
-    description: "key de Letsencrypt (comienza con -----BEGIN PRIVATE KEY-----)"
+    description: "Certificado ca.crt"
     type: multiline
-    label: "Key (privkey.pem)"
+    label: "Certificado (ca.crt)"
     group: "Certificados"
-  - variable: global.tls.fullchain
+  - variable: global.tls.key
     default: ""
-    description: "Certificado de Letsencrypt (comienza con -----BEGIN CERTIFICATE-----)"
+    description: "Certificado tls.crt"
     type: multiline
-    label: "Certificado (fullchain.pem)"
+    label: "Certificado (tls.pem)"
     group: "Certificados"  
 
 - variable: fluent-bit.enabled

@@ -5,7 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: dcm4che/dcm4chee-arc-psql
+  # repository: dcm4che/dcm4chee-arc-psql
+  repository: orlandobrea/dcm4chee-arc-psql
   pullPolicy: Always
 
 imagePullSecrets: []

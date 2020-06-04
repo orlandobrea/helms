@@ -21,17 +21,17 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       {{ if .Values.global.tls.custom_cert }}
-      initContainers:
-        - name: init-keystore
-          image: orlandobrea/init-keystore:1.0.0
-          imagePullPolicy: Always
-          volumeMounts:
-            - name: pems
-              mountPath: "/opt/input"
-              readOnly: true
-            - name: data
-              mountPath: "/opt/output"
-              subPath: "../../../docker-entrypoint.d/configuration/keystores"
+      # initContainers:
+      #   - name: init-keystore
+      #     image: orlandobrea/init-keystore:1.0.0
+      #     imagePullPolicy: Always
+      #     volumeMounts:
+      #       - name: pems
+      #         mountPath: "/opt/input"
+      #         readOnly: true
+      #       - name: data
+      #         mountPath: "/opt/output"
+      #         subPath: "configuration/keystores"
       {{ end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -68,9 +68,9 @@ spec:
             readOnly: true
           - name: data
             mountPath: /opt/wildfly/standalone
-          # - name: keycloak-certs
-            # mountPath: /opt/certs/keycloak
-            # readOnly: true
+          - name: certs
+            mountPath: /opt/certs/keycloak
+            readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
       {{- with .Values.nodeSelector }}
@@ -93,9 +93,9 @@ spec:
           hostPath:
             path: /etc/timezone  
         {{ if .Values.global.tls.custom_cert }}
-        - name: pems
+        - name: certs
           secret:
-            secretName: ingress-pem
+            secretName: ingress-cert
         {{ end }}
         # - name: keycloak-certs
           # secret:

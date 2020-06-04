@@ -1,9 +1,10 @@
 # PACS
 
 
-Dado que esta aplicación funciona con traefik como ingress y el mismo esta preparado para usar un certificado pasado por el usuario en formato PEM (entregado por let's encrypt). Se plantea el siguiente escenario para poder comunicar con keycloak sin inconvenientes de firma de certificado
+Dado que esta aplicación funciona con traefik como ingress y los certificados actualmente no son solicitados desde un cert-manager o traefik, se va a seguir el siguiente proceso:
 
 
-- Crear un secret con los certificados utilizados por traefik (PEM -> CRT)
-- Crear dos secret con los keystores para key y cacerts
-- Montar los keystore en el contenedor
+- Solicitar al usuario los certificados (ca.crt y tls.crt)
+- Montar los certificados en /opt/certs/keycloak
+- Usar la imagen orlandobrea/dcm4chee-arc-psql:5.22.1-secure para agregar los certificados en el keystore
+

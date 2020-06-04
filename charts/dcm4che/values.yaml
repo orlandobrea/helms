@@ -19,8 +19,8 @@ global:
     # path: "/k8s"
   tls:
     custom_cert: true
-    privkey: "-empty-"
-    fullchain: "-empty-"
+    ca: "-empty-"
+    key: "-empty-"
     
 # Fluentbit
 fluent-bit:
