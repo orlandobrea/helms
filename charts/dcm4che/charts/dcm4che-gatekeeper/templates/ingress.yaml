@@ -52,10 +52,21 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: gatekeeper-csp
+  name: gatekeeper-middleware
 spec:
   headers:
     contentSecurityPolicy: script-src https://kibana-pacs{{ .host }}{{ $.Values.global.domain }}:30443; object-src 'none'
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+    accessControlAllowOriginList:
+      - "https://kibana-pacs{{ .Values.global.domain }}:30443"
+    accessControlAllowHeaders:
+      - "authorization"
+    addVaryHeader: true
+    accessControlAllowCredentials: true    
 
 
 ---
@@ -71,7 +82,7 @@ spec:
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
-    - name: gatekeeper-csp      
+    - name: gatekeeper-middleware  
     services:
     - name:  {{ .service }}
       port: {{ .port }}
