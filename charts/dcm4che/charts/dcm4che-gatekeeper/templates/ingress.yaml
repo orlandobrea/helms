@@ -50,6 +50,16 @@
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: gatekeeper-csp
+spec:
+  headers:
+    contentSecurityPolicy: script-src https://{{ .host }}{{ $.Values.global.domain }}:30443; object-src 'none'
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: {{ $fullName }}-https
@@ -60,6 +70,8 @@ spec:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
+    middlewares:
+    - name: gatekeeper-csp      
     services:
     - name:  {{ .service }}
       port: {{ .port }}
