@@ -55,7 +55,7 @@ metadata:
   name: gatekeeper-csp
 spec:
   headers:
-    contentSecurityPolicy: script-src https://{{ .host }}{{ $.Values.global.domain }}:30443; object-src 'none'
+    contentSecurityPolicy: script-src https://kibana-pacs{{ .host }}{{ $.Values.global.domain }}:30443; object-src 'none'
 
 
 ---
