@@ -43,8 +43,6 @@ spec:
               value: {{ .Values.elasticsearch.host | quote }}
             - name: CSP_STRICT
               value: "false"
-            - name: SERVER_BASEPATH
-              value: "/app/kibana"
           volumeMounts:
           - name: vm-localtime
             mountPath: /etc/localtime            
