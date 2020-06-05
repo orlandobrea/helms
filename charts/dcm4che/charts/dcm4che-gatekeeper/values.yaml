@@ -87,10 +87,8 @@ ingress:
   # tls: []
 
 args:
-  # - "--log-driver gelf"
-  # - "--log-opt gelf-address=udp://$LOGSTASH_SERVER:12201"
   - "--enable-refresh-tokens=true"
-  - "--skip-openid-provider-tls-verify=true" # ToDo improve this
+  - "--skip-openid-provider-tls-verify=true" 
   - "--resources=uri=/*|roles=auditlog"
   - "--openid-provider-timeout=120s"
 
