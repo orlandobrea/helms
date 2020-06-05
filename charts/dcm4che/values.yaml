@@ -20,7 +20,7 @@ global:
   tls:
     custom_cert: true
     ca: "-empty-"
-    key: "-empty-"
+    # key: "-empty-"
     
 # Fluentbit
 fluent-bit:
