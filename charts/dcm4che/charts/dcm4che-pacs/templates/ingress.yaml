@@ -76,3 +76,57 @@ spec:
 {{- end}}
 
 
+# DICOM port
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-dicom
+spec:
+  entryPoints:
+    - traefikdicom
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: 2762
+      scheme: tcp
+  {{- end }}
+  
+# HL7
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-hl7
+spec:
+  entryPoints:
+    - traefikhl7
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: 2575
+      scheme: tcp
+  {{- end }}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-hl7-udp
+spec:
+  entryPoints:
+    - traefikhl7-udp
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: 2575
+      scheme: udp
+  {{- end }}  
