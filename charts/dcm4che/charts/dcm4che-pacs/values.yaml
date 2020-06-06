@@ -57,7 +57,10 @@ service:
       protocol: TCP
     - name: hl7-udp
       number: 2575
-      protocol: UDP      
+      protocol: UDP  
+    - name: nema
+      number: 11112
+      protocol: TCP              
     # - name: other
       # number: 12575
       # protocol: TCP
