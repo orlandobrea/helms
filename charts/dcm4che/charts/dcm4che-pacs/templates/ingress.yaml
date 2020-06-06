@@ -83,7 +83,7 @@ metadata:
   name: {{ $fullName }}-dicom
 spec:
   entryPoints:
-    - traefikdicom
+    - dicom
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: HostSNI(`*`)
@@ -102,7 +102,7 @@ metadata:
   name: {{ $fullName }}-hl7
 spec:
   entryPoints:
-    - traefikhl7
+    - hl7
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: HostSNI(`*`)
@@ -119,7 +119,7 @@ metadata:
   name: {{ $fullName }}-hl7-udp
 spec:
   entryPoints:
-    - traefikhl7-udp
+    - hl7udp
   routes:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: HostSNI(`*`)
