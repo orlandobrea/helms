@@ -10,7 +10,7 @@ ports:
   hl7: 32575
   hl7udp: 32576
   dicom: 32762
-  name: 32112
+  nema: 32112
 
 
 tls:
