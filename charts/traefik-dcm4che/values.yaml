@@ -10,6 +10,7 @@ ports:
   hl7: 32575
   hl7udp: 32576
   dicom: 32762
+  name: 32112
 
 
 tls:
@@ -74,6 +75,9 @@ service:
     - name: hl7-udp
       number: 2575
       protocol: UDP      
+    - name: nema
+      number: 11112
+      protocol: TCP           
     # - name: other
       # number: 12575
       # protocol: TCP

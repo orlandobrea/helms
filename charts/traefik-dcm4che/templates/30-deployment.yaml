@@ -81,6 +81,8 @@ spec:
               containerPort: 2575
             - name: dicom
               containerPort: 2762
+            - name: nema
+              containerPort: 11112              
           volumeMounts:
             - name: certificates
               mountPath: /certs

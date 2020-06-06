@@ -98,3 +98,18 @@ spec:
       targetPort: 2762
       nodePort: {{ .Values.ports.dicom }}
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefiknema
+spec:
+  type: LoadBalancer
+  selector:
+    app: traefik
+  ports:      
+    - protocol: TCP      
+      name: nema
+      port: 11112
+      targetPort: 11112
+      nodePort: {{ .Values.ports.nema }}

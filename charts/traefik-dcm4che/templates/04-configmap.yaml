@@ -27,6 +27,8 @@ data:
         address: ":2575/udp"
       dicom:
         address: ":2762"
+      nema:
+        address: ":11112"        
     providers:
       providersThrottleDuration: 10s
 
