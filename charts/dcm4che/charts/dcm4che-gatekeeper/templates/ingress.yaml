@@ -84,7 +84,7 @@ spec:
     middlewares:
     - name: gatekeeper-middleware  
     services:
-    - name: kibana
+    - name: dcm4che-kibana
     #{{ .service }}
       port: {{ .port }}
       scheme: http
