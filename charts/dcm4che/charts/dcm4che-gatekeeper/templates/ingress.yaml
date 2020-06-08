@@ -86,7 +86,8 @@ spec:
     services:
     - name: dcm4che-kibana
     #{{ .service }}
-      port: {{ .port }}
+     # port: {{ .port }}
+      port: 5601
       scheme: http
   {{- end }}
   tls:
