@@ -89,7 +89,7 @@ spec:
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
-    - name: pacs-rate    
+    # - name: pacs-rate    
     #- name: pacs-prefix
     - name: pacs-compress
     services:
