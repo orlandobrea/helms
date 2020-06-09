@@ -45,35 +45,7 @@
 #   dnsNames: 
 #   {{- range .Values.ingress.hosts.TLS }}  
 #   - {{ .host }}.{{ $.Values.global.domain }}
-#   {{- end}}
-
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: pacs-rate
-spec:
-  rateLimit:
-    average: 200
-    burst: 100
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: pacs-compress
-spec:
-  compress: {}
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: pacs-prefix
-spec:
-  addPrefix:
-    prefix: /dcm4chee-arc/ui2        
+#   {{- end}}      
 
 ---   
 
@@ -89,9 +61,7 @@ spec:
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
-    # - name: pacs-rate    
-    #- name: pacs-prefix
-    - name: pacs-compress
+    - name: dcm4che-compress
     services:
     - name:  {{ .service }}
       port: {{ .port }}
