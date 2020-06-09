@@ -90,7 +90,7 @@ spec:
     kind: Rule
     middlewares:
     - name: pacs-rate    
-    - name: pacs-prefix
+    #- name: pacs-prefix
     - name: pacs-compress
     services:
     - name:  {{ .service }}
