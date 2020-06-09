@@ -46,6 +46,21 @@
 #   {{- range .Values.ingress.hosts.TLS }}  
 #   - {{ .host }}.{{ $.Values.global.domain }}
 #   {{- end}}
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pacs-middleware
+spec:
+  rateLimit:
+    average: 100
+    burst: 50
+  compress: {}
+  addPrefix:
+    prefix: /dcm4chee-arc/ui2
+
 ---   
 
 apiVersion: traefik.containo.us/v1alpha1
@@ -59,6 +74,8 @@ spec:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
+    middlewares:
+    - name: pacs-middleware    
     services:
     - name:  {{ .service }}
       port: {{ .port }}
@@ -74,8 +91,6 @@ spec:
       name: keycloak-tls-options
 {{- end}}
 
-
----
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
