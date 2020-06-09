@@ -55,8 +55,8 @@ metadata:
   name: pacs-rate
 spec:
   rateLimit:
-    average: 100
-    burst: 50
+    average: 200
+    burst: 100
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
