@@ -1,4 +1,4 @@
-FROM dcm4che/dcm4chee-arc-psql:5.22.1-secure
+FROM dcm4che/dcm4chee-arc-psql:5.22.2-secure
 
 # Agrega el cert de keycloak al store de java
 COPY load-hook.sh /load-hook.sh
