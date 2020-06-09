@@ -52,14 +52,28 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: pacs-middleware
+  name: pacs-rate
 spec:
   rateLimit:
     average: 100
     burst: 50
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pacs-compress
+spec:
   compress: {}
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pacs-prefix
+spec:
   addPrefix:
-    prefix: /dcm4chee-arc/ui2
+    prefix: /dcm4chee-arc/ui2        
 
 ---   
 
@@ -75,7 +89,9 @@ spec:
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
-    - name: pacs-middleware    
+    - name: pacs-rate    
+    - name: pacs-prefix
+    - name: pacs-compress
     services:
     - name:  {{ .service }}
       port: {{ .port }}
