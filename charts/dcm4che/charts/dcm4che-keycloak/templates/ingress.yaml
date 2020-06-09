@@ -109,6 +109,7 @@ spec:
     kind: Rule
     middlewares:
     - name: cors-keycloak  
+    - name: dcm4che-compress
     services:
     - name:  {{ .service }}
       port: {{ .port }}

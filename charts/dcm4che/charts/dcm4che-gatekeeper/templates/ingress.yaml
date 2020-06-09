@@ -83,6 +83,7 @@ spec:
     kind: Rule
     middlewares:
     - name: gatekeeper-middleware  
+    - name: dcm4che-compress    
     services:
     - name: dcm4che-kibana
     #{{ .service }}

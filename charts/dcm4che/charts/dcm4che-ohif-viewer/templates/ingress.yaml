@@ -59,6 +59,8 @@ spec:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
+    middlewares:
+    - name: dcm4che-compress
     services:
     - name:  {{ .service }}
       port: {{ .port }}
