@@ -47,6 +47,27 @@
 #   - {{ .host }}.{{ $.Values.global.domain }}
 #   {{- end}}     
 
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: cors-pacs
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+    accessControlAllowOriginList:
+      - "https://pacs{{ .Values.global.domain }}:30443"
+      - "https://visor{{ .Values.global.domain }}:30443"
+    accessControlAllowHeaders:
+      - "authorization"
+    addVaryHeader: true
+    accessControlAllowCredentials: true
+
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -74,6 +95,7 @@ spec:
     middlewares:
     - name: dcm4che-compress
     - name: dcm4che-cache
+    - name: cors-pacs
     # - name: dcm4che-ratelimit
     #- name: pacs-redirect-custom
     services:
