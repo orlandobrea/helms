@@ -35,3 +35,12 @@ metadata:
 spec:
   minVersion: VersionTLS12
   sniStrict: false
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: dcm4che-cache
+spec:
+  headers:
+    accessControlMaxAge: 600
