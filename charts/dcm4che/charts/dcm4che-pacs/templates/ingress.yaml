@@ -74,7 +74,7 @@ spec:
     middlewares:
     - name: dcm4che-compress
     - name: dcm4che-ratelimit
-    - name: pacs-redirect-custom
+    #- name: pacs-redirect-custom
     services:
     - name:  {{ .service }}
       port: {{ .port }}
