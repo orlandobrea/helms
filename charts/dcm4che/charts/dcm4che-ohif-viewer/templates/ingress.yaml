@@ -74,8 +74,8 @@ spec:
       - {{ .host }}{{ $.Values.global.domain }}
     {{- end}}
     passthrough: false
-    options:
-      name: dcm4che-tls-options
+    # options:
+      # name: dcm4che-tls-options
 {{- end}}
 {{- end}}
 
