@@ -96,9 +96,9 @@ spec:
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
+    - name: cors-pacs
     - name: dcm4che-compress
     - name: dcm4che-cache
-    - name: cors-pacs
     # - name: dcm4che-ratelimit
     #- name: pacs-redirect-custom
     services:
