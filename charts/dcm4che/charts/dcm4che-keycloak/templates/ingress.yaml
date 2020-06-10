@@ -23,26 +23,6 @@ spec:
     addVaryHeader: true
     accessControlAllowCredentials: true
 
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: keycloak-redirect-https
-spec:
-  redirectScheme:
-    scheme: https
-    port: "30443"
-    permanent: true
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: TLSOption
-metadata:
-  name: keycloak-tls-options
-spec:
-  minVersion: VersionTLS12
-  sniStrict: false
-
 # ---
 
 
@@ -124,7 +104,7 @@ spec:
     #secretName: dcm4che-certs
     passthrough: false
     options:
-      name: keycloak-tls-options
+      name: dcm4che-tls-options
     # stores:
     #   default:
     #     defaultCertificate:

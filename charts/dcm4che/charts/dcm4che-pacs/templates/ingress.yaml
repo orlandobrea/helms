@@ -45,7 +45,18 @@
 #   dnsNames: 
 #   {{- range .Values.ingress.hosts.TLS }}  
 #   - {{ .host }}.{{ $.Values.global.domain }}
-#   {{- end}}      
+#   {{- end}}     
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pacs-redirect-custom
+spec:
+  redirectRegex:
+    regex: ^https://(.*).{{ $.Values.global.domain }}(:[0-9]*)
+    replacement: https://${1}.{{ $.Values.global.domain }}:${2}/dcm4chee-arc/ui2
+
 
 ---   
 
@@ -62,6 +73,8 @@ spec:
     kind: Rule
     middlewares:
     - name: dcm4che-compress
+    - name: dcm4che-ratelimit
+    - name: pacs-redirect-custom
     services:
     - name:  {{ .service }}
       port: {{ .port }}
@@ -74,7 +87,7 @@ spec:
     {{- end}}
     passthrough: false
     options:
-      name: keycloak-tls-options
+      name: dcm4che-tls-options
 {{- end}}
 
 ---
