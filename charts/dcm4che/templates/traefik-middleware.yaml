@@ -24,7 +24,7 @@ metadata:
   name: dcm4che-ratelimit
 spec:
   rateLimit:
-    average: 50   
+    average: 200   
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
