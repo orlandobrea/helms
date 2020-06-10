@@ -59,8 +59,8 @@ spec:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
-    # middlewares:
-    # - name: dcm4che-compress
+    middlewares:
+    - name: dcm4che-compress
     #- name: dcm4che-redirect-https
     services:
     - name:  {{ .service }}
@@ -74,8 +74,8 @@ spec:
       - {{ .host }}{{ $.Values.global.domain }}
     {{- end}}
     passthrough: false
-    # options:
-      # name: dcm4che-tls-options
+    options:
+      name: dcm4che-tls-options
 {{- end}}
 {{- end}}
 
