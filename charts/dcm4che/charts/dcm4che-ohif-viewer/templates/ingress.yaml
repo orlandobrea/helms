@@ -22,6 +22,25 @@
 
 {{- if .Values.ingress.withTLS }}
 
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: cors-ohif
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+    accessControlAllowOriginList:
+      - "https://visor{{ .Values.global.domain }}:30443"
+    accessControlAllowHeaders:
+      - "authorization"
+    addVaryHeader: true
+    accessControlAllowCredentials: true
+
 # ---
 
 # # Create cert
@@ -61,6 +80,7 @@ spec:
     kind: Rule
     middlewares:
     - name: dcm4che-compress
+    - name: cors-ohif
     #- name: dcm4che-redirect-https
     services:
     - name:  {{ .service }}
