@@ -98,7 +98,7 @@ spec:
     {{- end}}
     passthrough: false
     options:
-      name: keycloak-tls-options
+      name: dcm4che-tls-options
 
 {{- end}}
 {{- end}}
