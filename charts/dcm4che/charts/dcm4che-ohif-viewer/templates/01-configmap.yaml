@@ -14,17 +14,18 @@ data:
     servers: {
         dicomWeb: [
         {
-            name: 'PACS prueba',
+            name: 'DCM4CHEE',
             wadoUriRoot: 'https://pacs{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/wado',
             qidoRoot: 'https://pacs{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
             wadoRoot: 'https://pacs{{ .Values.global.domain }}:30443/dcm4chee-arc/aets/DCM4CHEE/rs',
             qidoSupportsIncludeField: true,
             imageRendering: 'wadors',
             thumbnailRendering: 'wadors',
-            enableStudyLazyLoad: true,
+            enableStudyLazyLoad: true
         },
         ],
     },
+    studyListFunctionsEnabled: true,
     oidc: [                                                                                                         
     {                                                                                                             
         // ~ REQUIRED                                                                                               
