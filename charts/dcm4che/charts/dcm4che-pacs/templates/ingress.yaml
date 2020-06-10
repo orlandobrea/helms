@@ -64,7 +64,10 @@ spec:
       - "https://pacs{{ .Values.global.domain }}:30443"
       - "https://visor{{ .Values.global.domain }}:30443"
     accessControlAllowHeaders:
-      - "authorization"
+      - "Authorization"
+      - "Origin"   
+      - "Access-Control-Request-Headers"   
+      - "Access-Control-Request-Method"
     addVaryHeader: true
     accessControlAllowCredentials: true
 
