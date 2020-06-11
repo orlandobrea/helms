@@ -63,7 +63,6 @@ spec:
     accessControlAllowOriginList:
       - "https://pacs{{ .Values.global.domain }}:30443"
       - "https://visor{{ .Values.global.domain }}:30443"
-      - "http://localhost:8888"
     accessControlAllowHeaders:
       - "Authorization"
       - "Origin"   
@@ -79,7 +78,7 @@ metadata:
   name: pacs-redirect-custom
 spec:
   redirectRegex:
-    regex: ^https://(.*){{ $.Values.global.domain }}(:[0-9]*)$
+    regex: ^https://(.*){{ $.Values.global.domain }}(:[0-9]*)/$
     replacement: https://${1}{{ $.Values.global.domain }}:${2}/dcm4chee-arc/ui2
 
 
