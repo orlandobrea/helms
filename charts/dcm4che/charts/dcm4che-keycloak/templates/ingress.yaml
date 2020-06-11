@@ -18,6 +18,7 @@ spec:
       - "https://console-pacs{{ .Values.global.domain }}:30443"
       - "https://keycloak-pacs{{ .Values.global.domain }}:30443"
       - "https://visor{{ .Values.global.domain }}:30443"
+      - "http://localhost:8888"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
