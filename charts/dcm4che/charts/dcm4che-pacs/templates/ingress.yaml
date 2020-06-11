@@ -79,7 +79,7 @@ metadata:
 spec:
   redirectRegex:
     regex: ^https://(.*){{ $.Values.global.domain }}(:[0-9]*)/$
-    replacement: https://${1}{{ $.Values.global.domain }}:${2}/dcm4chee-arc/ui2
+    replacement: https://${1}{{ $.Values.global.domain }}${2}/dcm4chee-arc/ui2
 
 
 ---   
