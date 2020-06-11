@@ -23,6 +23,16 @@ spec:
     addVaryHeader: true
     accessControlAllowCredentials: true
 
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: keycloak-redirect-custom
+spec:
+  redirectRegex:
+    regex: ^https://(.*){{ $.Values.global.domain }}(:[0-9]*)/$
+    replacement: https://${1}{{ $.Values.global.domain }}${2}/auth/admin/dcm4che/console/    
+
 # ---
 
 
@@ -90,6 +100,7 @@ spec:
     middlewares:
     - name: cors-keycloak  
     - name: dcm4che-compress
+    - name: keycloak-redirect-custom
     services:
     - name:  {{ .service }}
       port: {{ .port }}
