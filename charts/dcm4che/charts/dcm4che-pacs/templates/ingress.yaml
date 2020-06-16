@@ -61,8 +61,8 @@ spec:
       - "PUT"
       - "POST"
     accessControlAllowOriginList:
-      - "https://pacs{{ .Values.global.domain }}:30443"
-      - "https://visor{{ .Values.global.domain }}:30443"
+      - "https://pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
     accessControlAllowHeaders:
       - "Authorization"
       - "Origin"   

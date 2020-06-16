@@ -50,9 +50,9 @@ spec:
               value: {{ $val | quote}}
             {{- end}}
             - name: PROXY_REDIRECTION_URL
-              value: "https://kibana-pacs{{ $.Values.global.domain }}:30443"
+              value: "https://kibana-pacs{{ $.Values.global.domain }}:{{ $.Values.global.https_port }}"
             - name: PROXY_DISCOVERY_URL
-              value: "https://keycloak-pacs{{ .Values.global.domain }}:30443/auth/realms/dcm4che"
+              value: "https://keycloak-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}/auth/realms/dcm4che"
             - name: PROXY_CLIENT_SECRET
               value: "{{ .Values.keycloak.client_secret }}"
             - name: PROXY_UPSTREAM_URL

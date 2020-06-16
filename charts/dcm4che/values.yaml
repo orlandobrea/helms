@@ -12,6 +12,8 @@
 global:
   prefix: dcm4che
   domain: hpn.andes.gob.ar
+  https_port: 30443
+
   persistence:
     enabled: true
     type: "PVC"

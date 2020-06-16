@@ -14,10 +14,10 @@ spec:
       - "PUT"
       - "POST"
     accessControlAllowOriginList:
-      - "https://pacs{{ .Values.global.domain }}:30443"
-      - "https://console-pacs{{ .Values.global.domain }}:30443"
-      - "https://keycloak-pacs{{ .Values.global.domain }}:30443"
-      - "https://visor{{ .Values.global.domain }}:30443"
+      - "https://pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://console-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://keycloak-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true

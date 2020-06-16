@@ -14,7 +14,7 @@ metadata:
 spec:
   redirectScheme:
     scheme: https
-    port: "30443"
+    port: "{{ $.Values.global.https_port }}"
     permanent: true
 
 ---
