@@ -6,6 +6,15 @@ questions:
   label: "Dominio a utilizar"
   group: "General"
 
+- variable: global.https_port
+  default: "30443"
+  description: "Puerto HTTPS"
+  type: string
+  label: "HTTPS port"
+  group: "General"
+
+  
+
 - variable: global.persistence.type
   default: "PVC"
   description: "Tipo de persistencia"
