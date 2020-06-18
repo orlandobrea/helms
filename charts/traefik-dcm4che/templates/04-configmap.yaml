@@ -38,6 +38,7 @@ data:
         default:
           minVersion: VersionTLS12
           sniStrict: false
+  {{- if .Values.tls.custom_cert }}
       certificates:
           - certFile: /certs/fullchain.pem
             keyFile: /certs/privkey.pem
@@ -47,4 +48,5 @@ data:
         default:
           defaultCertificate:
             certFile: /certs/fullchain.pem
-            keyFile: /certs/privkey.pem           
+            keyFile: /certs/privkey.pem       
+  {{- end }}    
