@@ -82,11 +82,14 @@ spec:
             - name: dicom
               containerPort: 2762
             - name: nema
-              containerPort: 11112              
+              containerPort: 11112   
+
           volumeMounts:
+          {{- if .Values.tls.custom_cert }}
             - name: certificates
               mountPath: /certs
               readOnly: true
+          {{- end }}
             - name: config-files-static
               mountPath: /etc/traefik/traefik.yaml
               subPath: traefik.yaml
@@ -95,9 +98,11 @@ spec:
               mountPath: /config
               readOnly: true                        
       volumes:
+      {{- if .Values.tls.custom_cert }}
       - name: certificates
         secret:
           secretName: traefik-default-certs     
+      {{- end }}
       - name: config-files
         configMap:
           name: "traefik-config"      
