@@ -68,9 +68,11 @@ spec:
             readOnly: true
           - name: data
             mountPath: /opt/wildfly/standalone
+          {{ if .Values.global.tls.custom_cert }}
           - name: certs
             mountPath: /opt/certs/keycloak
             readOnly: true
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}          
       {{- with .Values.nodeSelector }}
