@@ -57,6 +57,10 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote}}
             {{- end}}
+            - name: AUTH_SERVER:
+              value: {{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}
+            - name: AUTH_SERVER_PORT:
+              value: {{ .Values.env_vars.AUTH_SERVER_PORT}}
             - name: AUTH_SERVER_URL
               value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
           volumeMounts:
