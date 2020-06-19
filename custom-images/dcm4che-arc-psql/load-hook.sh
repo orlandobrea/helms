@@ -18,14 +18,11 @@ if [ -f "$FILE" ]; then
     keytool -import -trustcacerts -alias keycloak -file /opt/certs/keycloak/ca.crt -keystore /docker-entrypoint.d/configuration/keystores/key.jks -noprompt -storepass secret    
 else
     echo "No certs found (/opt/certs/keycloak/ca.crt not found)"
-
-    echo "Adding $AUTH_SERVER TLS Cert to JBOSS keystore"
-    openssl s_client -connect $AUTH_SERVER:$AUTH_SERVER_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -import -trustcacerts -alias keycloak -keystore /docker-entrypoint.d/configuration/keystores/cacerts.jks -storepass secret -noprompt    
-
-    echo "Adding $AUTH_SERVER TLS cacerts.jks"    
-    openssl s_client -connect $AUTH_SERVER:$AUTH_SERVER_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -import -trustcacerts -alias keycloak -keystore /docker-entrypoint.d/configuration/keystores/key.jks -storepass secret -noprompt      
 fi
 
+
+echo "Add Wildfly HTTPS certificate to JBOSS keystore to enable commands from console"
+openssl s_client -connect $HOSTNAME:$MANAGEMENT_HTTPS_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -alias local -import -keystore ~/.jboss-cli.truststore -storepass cli_truststore -noprompt
 
 echo "Ready to start app..."
 
