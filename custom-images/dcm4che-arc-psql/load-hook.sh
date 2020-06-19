@@ -21,8 +21,8 @@ else
 fi
 
 
-echo "Add Wildfly HTTPS certificate to JBOSS keystore to enable commands from console"
-openssl s_client -connect $HOSTNAME:$MANAGEMENT_HTTPS_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -alias local -import -keystore ~/.jboss-cli.truststore -storepass cli_truststore -noprompt
+#echo "Use the following line in a script to enable the jboss_cli without asking for cert approval"
+#openssl s_client -connect $HOSTNAME:$MANAGEMENT_HTTPS_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -alias local -import -keystore ~/.jboss-cli.truststore -storepass cli_truststore -noprompt
 
 echo "Ready to start app..."
 
