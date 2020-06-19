@@ -62,7 +62,9 @@ spec:
       - "POST"
     accessControlAllowOriginList:
       - "https://pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://pacs{{ .Values.global.domain }}"
       - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://visor{{ .Values.global.domain }}"
     accessControlAllowHeaders:
       - "Authorization"
       - "Origin"   
@@ -75,12 +77,21 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: pacs-redirect-custom
+  name: pacs-redirect-custom-ingress
 spec:
   redirectRegex:
     regex: ^https://(.*){{ $.Values.global.domain }}(:[0-9]*)/$
     replacement: https://${1}{{ $.Values.global.domain }}${2}/dcm4chee-arc/ui2
 
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pacs-redirect-custom-lb
+spec:
+  redirectRegex:
+    regex: ^https://(.*){{ $.Values.global.domain }}/$
+    replacement: https://${1}{{ $.Values.global.domain }}/dcm4chee-arc/ui2
 
 ---   
 
