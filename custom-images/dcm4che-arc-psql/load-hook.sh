@@ -20,10 +20,10 @@ else
     echo "No certs found (/opt/certs/keycloak/ca.crt not found)"
 
     echo "Adding $AUTH_SERVER TLS Cert to JBOSS keystore"
-    openssl s_client -connect $AUTH_SERVER:$AUTH_SERVER_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -import -keystore /docker-entrypoint.d/configuration/keystores/cacerts.jks -storepass secret -noprompt    
+    openssl s_client -connect $AUTH_SERVER:$AUTH_SERVER_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -import -trustcacerts -alias keycloak -keystore /docker-entrypoint.d/configuration/keystores/cacerts.jks -storepass secret -noprompt    
 
     echo "Adding $AUTH_SERVER TLS cacerts.jks"    
-    openssl s_client -connect $AUTH_SERVER:$AUTH_SERVER_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -import -keystore /docker-entrypoint.d/configuration/keystores/key.jks -storepass secret -noprompt      
+    openssl s_client -connect $AUTH_SERVER:$AUTH_SERVER_PORT 2>&1 < /dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' |keytool -import -trustcacerts -alias keycloak -keystore /docker-entrypoint.d/configuration/keystores/key.jks -storepass secret -noprompt      
 fi
 
 
