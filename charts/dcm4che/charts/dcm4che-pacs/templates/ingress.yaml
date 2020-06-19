@@ -90,8 +90,8 @@ metadata:
   name: pacs-redirect-custom-lb
 spec:
   redirectRegex:
-    regex: ^https://(.*){{ $.Values.global.domain }}/$
-    replacement: https://${1}{{ $.Values.global.domain }}/dcm4chee-arc/ui2
+    regex: ^https://pacs{{ $.Values.global.domain }}/$
+    replacement: https://pacs{{ $.Values.global.domain }}/dcm4chee-arc/ui2
 
 ---   
 
