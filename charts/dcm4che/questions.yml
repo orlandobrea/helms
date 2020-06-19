@@ -105,7 +105,7 @@ questions:
 #   group: "Ingress"
 
 - variable: global.tls.custom_cert
-  default: "true"
+  default: "false"
   description: "El ingress usa certificados de let's encrypt"
   type: boolean
   label: "Usa certificados de Let's Encrypt en ingress?"
