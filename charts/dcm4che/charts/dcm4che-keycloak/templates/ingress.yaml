@@ -15,13 +15,13 @@ spec:
       - "POST"
     accessControlAllowOriginList:
       - "https://pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
-      - "https://pacs{{ .Values.global.domain }}:443"
+      - "https://pacs{{ .Values.global.domain }}"
       - "https://console-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
-      - "https://console-pacs{{ .Values.global.domain }}:443"
+      - "https://console-pacs{{ .Values.global.domain }}"
       - "https://keycloak-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
-      - "https://keycloak-pacs{{ .Values.global.domain }}:443"
+      - "https://keycloak-pacs{{ .Values.global.domain }}"
       - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
-      - "https://visor{{ .Values.global.domain }}:443"
+      - "https://visor{{ .Values.global.domain }}"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
