@@ -32,3 +32,6 @@ dependencies:
 - name: "dcm4che-gatekeeper"
   version: 9.0.2
   condition: dcm4che-gatekeeper.enabled
+- name: "reloader"
+  version: 1.2.0
+  repository: "https://stakater.github.io/stakater-charts"
