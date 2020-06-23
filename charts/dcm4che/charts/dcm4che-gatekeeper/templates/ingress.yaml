@@ -63,6 +63,7 @@ spec:
       - "POST"
     accessControlAllowOriginList:
       - "https://kibana-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://kibana-pacs{{ .Values.global.domain }}"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
