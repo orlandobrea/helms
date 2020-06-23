@@ -3,7 +3,7 @@ dependencies:
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 2.8.13
 - name: reloader
-  repository: https://stakater.github.io/stakater-charts/
-  version: v0.0.60
-digest: sha256:c299f2ff114ff7b34d6810857e3877b666024903c9745302a7c361729c6b7587
-generated: "2020-06-23T16:02:53.341241-03:00"
+  repository: https://stakater.github.io/stakater-charts
+  version: 0.0.60
+digest: sha256:0727f2a03a8727eddf4d2902ce50c4a0b465f707b7592e8b8ae17033d5a5725e
+generated: "2020-06-23T16:26:19.817603-03:00"
