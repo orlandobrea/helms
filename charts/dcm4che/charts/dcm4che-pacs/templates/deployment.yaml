@@ -1,7 +1,8 @@
 {{- $fullName := include "dcm4che-pacs.fullname" . -}}
 ---
 apiVersion: apps/v1
-kind: Deployment
+#kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "dcm4che-pacs.fullname" . }}
   labels:
