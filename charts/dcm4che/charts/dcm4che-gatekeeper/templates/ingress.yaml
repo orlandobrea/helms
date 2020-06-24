@@ -86,7 +86,7 @@ spec:
     - name: gatekeeper-middleware  
     - name: dcm4che-compress    
     services:
-    - name: dcm4che-kibana
+    - name: dcm4che-gatekeeper
     #{{ .service }}
      # port: {{ .port }}
       port: 5601
