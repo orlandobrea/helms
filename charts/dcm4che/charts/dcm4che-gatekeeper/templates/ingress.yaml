@@ -87,7 +87,7 @@ spec:
     - name: dcm4che-compress    
     services:
     - name: dcm4che-gatekeeper
-    {{ .service }}
+      {{ .service }}
       port: {{ .port }}
       # port: 5601
       scheme: http
