@@ -28,7 +28,7 @@ questions:
 - variable: global.persistence.storageClass
   default: ""
   description: "StorageClass a utilizar para solicitar volumenes (solo si habilito PVC)"
-  type: string
+  type: storageclass
   label: "Storage Class"
   group: "Persistencia"
   show_if: "global.persistence.type=PVC"
