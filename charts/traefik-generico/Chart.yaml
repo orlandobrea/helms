@@ -1,5 +1,5 @@
 apiVersion: v2
-name: traefik
+name: traefik_ingress
 description: Traefik
 
 # A chart can be either an 'application' or a 'library' chart.
