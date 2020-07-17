@@ -18,7 +18,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: "traefik"
+fullnameOverride: "traefik_ingress"
 
 
 serviceAccount:
