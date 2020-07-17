@@ -1,17 +1,7 @@
-# Default values for dcm4che-kibana.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-
 ports:
   https: 30443
   http: 30080
   dashboard: 30800
-  hl7: 32575
-  hl7udp: 32576
-  dicom: 32762
-  nema: 32112
-
 
 tls:
   custom_cert: true

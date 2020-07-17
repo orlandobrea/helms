@@ -6,3 +6,4 @@ Acepta tráfico en los siguientes puertos:
 
 - HTTPS: 30443
 - HTTP: 30080
+- Traefik dashboard: 30800

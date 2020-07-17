@@ -1,6 +1,6 @@
 apiVersion: v2
 name: traefik_ingress
-description: Traefik
+description: Traefik ingress genérico para Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
