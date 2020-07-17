@@ -1,0 +1,112 @@
+# Default values for dcm4che-kibana.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+ports:
+  https: 30443
+  http: 30080
+  dashboard: 30800
+  hl7: 32575
+  hl7udp: 32576
+  dicom: 32762
+  nema: 32112
+
+
+tls:
+  custom_cert: true
+  
+  privkey: |+
+    -----BEGIN PRIVATE KEY-----
+    -----END PRIVATE KEY-----
+  fullchain: |+
+    -----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
+image:
+  repository: traefik
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "traefik"
+
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      number: 8080
+      protocol: TCP
+    - name: https
+      number: 8443
+      protocol: TCP
+    - name: management
+      number: 9990
+      protocol: TCP
+    - name: management-tls
+      number: 9993
+      protocol: TCP
+    - name: dicom
+      number: 2762
+      protocol: TCP
+    - name: hl7
+      number: 2575
+      protocol: TCP
+    - name: hl7-udp
+      number: 2575
+      protocol: UDP      
+    - name: nema
+      number: 11112
+      protocol: TCP           
+    # - name: other
+      # number: 12575
+      # protocol: TCP
+
+env_vars:
+  DUMMY: false
+
+volumes:
+  - name: data
+    type: "hostPath"
+    properties:
+      path: "/k8s/pacs"
+      type: "DirectoryOrCreate"    
+
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+    # cpu: 100m
+    # memory: 512Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
