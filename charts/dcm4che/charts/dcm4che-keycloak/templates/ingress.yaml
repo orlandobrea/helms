@@ -76,30 +76,30 @@ spec:
 
 ---
 
-# # Create cert
-# apiVersion: cert-manager.io/v1alpha2
-# kind: Issuer
-# metadata:
-#   name: {{ $fullName }}
-# spec:
-#   selfSigned: {}
+# Create cert
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: {{ $fullName }}
+spec:
+  selfSigned: {}
 
-# ---
-# apiVersion: cert-manager.io/v1alpha2
-# kind: Certificate
-# metadata:
-#   name: {{ $fullName }}-cert
-# spec:
-#   commonName: {{ $fullName }}
-#   secretName: {{ $fullName }}-cert
-#   issuerRef:
-#     name: {{ $fullName }}
-#   dnsNames: 
-#   {{- range .Values.ingress.hosts.TLS }}  
-#   - {{ .host }}.{{ $.Values.global.domain }}
-#   {{- end}}
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ $fullName }}-cert
+spec:
+  commonName: {{ $fullName }}
+  secretName: {{ $fullName }}-cert
+  issuerRef:
+    name: {{ $fullName }}
+  dnsNames: 
+  {{- range .Values.ingress.hosts.TLS }}  
+  - {{ .host }}.{{ $.Values.global.domain }}
+  {{- end}}
   
-# ---   
+---   
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -127,6 +127,8 @@ spec:
     {{- range .Values.ingress.hosts.TLS }}      
       - {{ .host }}{{ $.Values.global.domain }}
     {{- end}}
+    domains:     
+      - {{ .host }}{{ $.Values.global.domain }}
     # secretName: {{ $fullName }}-cert
     #secretName: dcm4che-certs
     passthrough: false
