@@ -123,18 +123,19 @@ spec:
       scheme: https
   {{- end }}
   tls:
-    hosts: 
-    {{- range .Values.ingress.hosts.TLS }}      
-      - {{ .host }}{{ $.Values.global.domain }}
-    {{- end}}
-    domains:     
-      - pacs{{ $.Values.global.domain }}
-      - keycloak-pacs{{ $.Values.global.domain }}
-    # secretName: {{ $fullName }}-cert
-    #secretName: dcm4che-certs
-    passthrough: false
-    options:
-      name: dcm4che-tls-options
+    name: {{ $fullName }}-cert
+    # hosts: 
+    # {{- range .Values.ingress.hosts.TLS }}      
+    #   - {{ .host }}{{ $.Values.global.domain }}
+    # {{- end}}
+    # domains:     
+    #   - pacs{{ $.Values.global.domain }}
+    #   - keycloak-pacs{{ $.Values.global.domain }}
+    # # secretName: {{ $fullName }}-cert
+    # #secretName: dcm4che-certs
+    # passthrough: false
+    # options:
+    #   name: dcm4che-tls-options
     # stores:
     #   default:
     #     defaultCertificate:
