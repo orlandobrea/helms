@@ -1,3 +1,3 @@
-FROM dcm4che/keycloak:9.0.2
+FROM dcm4che/keycloak:10.0.1
 
 COPY setenv.sh /
