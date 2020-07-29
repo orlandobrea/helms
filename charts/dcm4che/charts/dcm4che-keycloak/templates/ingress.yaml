@@ -115,8 +115,8 @@ spec:
     middlewares:
     - name: cors-keycloak  
     - name: dcm4che-compress
-    - name: keycloak-redirect-custom-ingress
-    - name: keycloak-redirect-custom-lb
+    # - name: keycloak-redirect-custom-ingress
+    # - name: keycloak-redirect-custom-lb
     services:
     - name:  {{ .service }}
       port: {{ .port }}
