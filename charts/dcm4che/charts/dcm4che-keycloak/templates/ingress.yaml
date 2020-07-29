@@ -128,7 +128,7 @@ spec:
       - {{ .host }}{{ $.Values.global.domain }}
     {{- end}}
     domains:     
-      - {{ .host }}{{ $.Values.global.domain }}
+      - pacs{{ $.Values.global.domain }}
     # secretName: {{ $fullName }}-cert
     #secretName: dcm4che-certs
     passthrough: false
