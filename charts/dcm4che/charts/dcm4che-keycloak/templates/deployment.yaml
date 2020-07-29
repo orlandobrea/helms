@@ -1,7 +1,7 @@
 {{- $fullName := include "dcm4che-keycloak.fullname" . -}}
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "dcm4che-keycloak.fullname" . }}
   labels:
