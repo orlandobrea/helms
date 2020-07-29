@@ -129,6 +129,7 @@ spec:
     {{- end}}
     domains:     
       - pacs{{ $.Values.global.domain }}
+      - keycloak-pacs{{ $.Values.global.domain }}
     # secretName: {{ $fullName }}-cert
     #secretName: dcm4che-certs
     passthrough: false
