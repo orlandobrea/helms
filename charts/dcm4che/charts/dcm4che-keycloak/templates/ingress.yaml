@@ -76,30 +76,30 @@ spec:
 
 ---
 
-# Create cert
-apiVersion: cert-manager.io/v1alpha2
-kind: Issuer
-metadata:
-  name: {{ $fullName }}
-spec:
-  selfSigned: {}
+# # Create cert
+# apiVersion: cert-manager.io/v1alpha2
+# kind: Issuer
+# metadata:
+#   name: {{ $fullName }}
+# spec:
+#   selfSigned: {}
 
----
-apiVersion: cert-manager.io/v1alpha2
-kind: Certificate
-metadata:
-  name: {{ $fullName }}-cert
-spec:
-  commonName: {{ $fullName }}
-  secretName: {{ $fullName }}-cert
-  issuerRef:
-    name: {{ $fullName }}
-  dnsNames: 
-  {{- range .Values.ingress.hosts.TLS }}  
-  - {{ .host }}.{{ $.Values.global.domain }}
-  {{- end}}
+# ---
+# apiVersion: cert-manager.io/v1alpha2
+# kind: Certificate
+# metadata:
+#   name: {{ $fullName }}-cert
+# spec:
+#   commonName: {{ $fullName }}
+#   secretName: {{ $fullName }}-cert
+#   issuerRef:
+#     name: {{ $fullName }}
+#   dnsNames: 
+#   {{- range .Values.ingress.hosts.TLS }}  
+#   - {{ .host }}.{{ $.Values.global.domain }}
+#   {{- end}}
   
----   
+# ---   
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -112,30 +112,26 @@ spec:
   {{- range .Values.ingress.hosts.TLS }}  
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
-    #middlewares:
-    #- name: cors-keycloak  
-    # - name: dcm4che-compress
-    # - name: keycloak-redirect-custom-ingress
-    # - name: keycloak-redirect-custom-lb
+    middlewares:
+    - name: cors-keycloak  
+    - name: dcm4che-compress
+    - name: keycloak-redirect-custom-ingress
+    - name: keycloak-redirect-custom-lb
     services:
     - name:  {{ .service }}
       port: {{ .port }}
       scheme: https
   {{- end }}
   tls:
-    name: {{ $fullName }}-cert
-    # hosts: 
-    # {{- range .Values.ingress.hosts.TLS }}      
-    #   - {{ .host }}{{ $.Values.global.domain }}
-    # {{- end}}
-    # domains:     
-    #   - pacs{{ $.Values.global.domain }}
-    #   - keycloak-pacs{{ $.Values.global.domain }}
-    # # secretName: {{ $fullName }}-cert
-    # #secretName: dcm4che-certs
-    # passthrough: false
-    # options:
-    #   name: dcm4che-tls-options
+    hosts: 
+    {{- range .Values.ingress.hosts.TLS }}      
+      - {{ .host }}{{ $.Values.global.domain }}
+    {{- end}}
+    # secretName: {{ $fullName }}-cert
+    #secretName: dcm4che-certs
+    passthrough: false
+    options:
+      name: dcm4che-tls-options
     # stores:
     #   default:
     #     defaultCertificate:
