@@ -31,7 +31,7 @@ fluent-bit:
     type: "forward"
     forward:
       host: "dcm4che-logstash"
-      port: 12201
+      port: 8514
 
   
 dcm4che-gatekeeper:
