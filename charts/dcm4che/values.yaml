@@ -28,10 +28,15 @@ global:
 fluent-bit:
   enabled: true
   backend:
-    type: "forward"
-    forward:
-      host: "dcm4che-logstash"
-      port: 8514
+    type: "elasticsearch"
+    es:
+      host: dcm4che-elastic
+      index: fluentbit
+      
+
+    # forward:
+    #   host: "dcm4che-logstash"
+    #   port: 8514
 
   
 dcm4che-gatekeeper:
