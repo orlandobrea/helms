@@ -70,6 +70,7 @@ spec:
       - "Origin"   
       - "Access-Control-Request-Headers"   
       - "Access-Control-Request-Method"
+      - "Accept"
     addVaryHeader: true
     accessControlAllowCredentials: true
 
