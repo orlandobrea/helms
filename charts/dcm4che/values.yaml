@@ -28,16 +28,11 @@ global:
 fluent-bit:
   enabled: true
   backend:
-    type: "es"
-    es:
+    type: "http"
+    http:
       host: dcm4che-elastic
-      index: fluentbit
-      port: 9200
-
-
-    # forward:
-    #   host: "dcm4che-logstash"
-    #   port: 8514
+      port: 8080
+      format: json
 
   
 dcm4che-gatekeeper:
