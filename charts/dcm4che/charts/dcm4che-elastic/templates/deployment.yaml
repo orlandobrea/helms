@@ -1,7 +1,7 @@
 {{- $fullName := include "dcm4che-elastic.fullname" . -}}
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ $fullName }}
   labels:
