@@ -30,7 +30,7 @@ fluent-bit:
   backend:
     type: "http"
     http:
-      host: dcm4che-elastic
+      host: dcm4che-logstash
       port: 8080
       format: json
 
