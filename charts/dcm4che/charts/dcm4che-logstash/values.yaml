@@ -47,6 +47,9 @@ service:
     - name: syslog-tcp
       number: 8514
       protocol: TCP  
+    - name: syslog-http
+      number: 8080
+      protocol: TCP   
 
 volume:
     name: data
