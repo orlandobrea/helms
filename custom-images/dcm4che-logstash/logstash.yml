@@ -24,8 +24,8 @@ input {
     ssl_certificate_authorities => "${SSL_CERTIFICATE_AUTHORITIES}"
   }
   http {
+    type      => "fluentbit"
     port      => "${SYSLOG_HTTP_PORT}"
-    add_field => { "[@metadata][input-http]" => "" }
   }  
 }
 
@@ -221,7 +221,7 @@ filter {
       }
     }
   }
-  if [@metadata][input-http] {
+  if [type] == "fluentbit" {
     date {
       match => [ "date", "UNIX" ]
       remove_field => [ "date" ]

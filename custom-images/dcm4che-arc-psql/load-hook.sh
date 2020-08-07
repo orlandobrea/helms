@@ -20,8 +20,21 @@ if [ -f "$FILE" ]; then
     keytool -import -trustcacerts -alias keycloak_new -file $FILE -keystore /opt/wildfly/standalone/configuration/keystores/cacerts.jks -noprompt -storepass secret
     
     echo "Adding certificate to key.jks"
+
+
     keytool -import -trustcacerts -alias keycloak -file $FILE -keystore /docker-entrypoint.d/configuration/keystores/key.jks -noprompt -storepass secret    
-    keytool -import -trustcacerts -alias keycloak_new -file $FILE -keystore /opt/wildfly/standalone/configuration/keystores/key.jks -noprompt -storepass secret    
+    RESULT=$?
+    if [ $RESULT <> 0 ]; then
+        keytool -delete -alias keycloak -keystore /docker-entrypoint.d/configuration/keystores/key.jks
+        keytool -import -trustcacerts -alias keycloak -file $FILE -keystore /docker-entrypoint.d/configuration/keystores/key.jks -noprompt -storepass secret    
+    fi
+    keytool -import -trustcacerts -alias keycloak_new -file $FILE -keystore /opt/wildfly/standalone/configuration/keystores/key.jks -noprompt -storepass secret   
+    RESULT=$?
+    if [ $RESULT <> 0 ]; then
+        keytool -delete -alias keycloak_new -keystore /opt/wildfly/standalone/configuration/keystores/key.jks
+        keytool -import -trustcacerts -alias keycloak_new -file $FILE -keystore /opt/wildfly/standalone/configuration/keystores/key.jks -noprompt -storepass secret 
+    fi    
+
 else
     echo "No certs found ($FILE not found)"
 fi
