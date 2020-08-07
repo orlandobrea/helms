@@ -20,5 +20,4 @@ version: 0.1.1
 # incremented each time you make changes to the application.
 #appVersion: v3.11.8.11447
 #appVersion: v4.2.3.11714
-#appVersion: v4.2.15.12173
-appVersion: latest
+appVersion: v4.2.15.12173
