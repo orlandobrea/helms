@@ -5,7 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: ohif/viewer
+  #repository: ohif/viewer
+  repository: orlandobrea/ohif
   pullPolicy: Always
 
 imagePullSecrets: []
