@@ -6,6 +6,14 @@ questions:
   label: "Dominio a utilizar"
   group: "General"
 
+- variable: global.ae_title
+  default: "DCM4CHEE"
+  description: "Application Entity Title"
+  type: string
+  label: "AE Title"
+  group: "General"
+  
+
 - variable: global.https_port
   default: "30443"
   description: "Puerto HTTPS"

@@ -13,6 +13,7 @@ global:
   prefix: dcm4che
   domain: hpn.andes.gob.ar
   https_port: 30443
+  ae_title: 'DCM4CHEE'
 
   persistence:
     enabled: true

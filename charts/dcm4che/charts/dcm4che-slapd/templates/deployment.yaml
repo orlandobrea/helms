@@ -41,6 +41,8 @@ spec:
           #     path: /
           #     port: http
           env:
+            - name: AE_TITLE
+              value: {{ $.Values.global.ae_title }}
             - name: ELASTICSEARCH_HOST
               value: {{ .Values.elasticsearch.host | quote }}
           volumeMounts:
