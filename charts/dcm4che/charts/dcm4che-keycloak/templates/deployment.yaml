@@ -32,10 +32,10 @@ spec:
             - containerPort: {{ $port.number }}
               protocol: {{ $port.protocol }}
             {{- end}}  
-          # lifecycle:
-          #   postStart:
-          #     exec:
-          #       command: ["/bin/bash", "-c", "/postStart.sh"]            
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/bash", "-c", "/postStart.sh"]            
           # livenessProbe:
           #   httpGet:
           #     path: /
