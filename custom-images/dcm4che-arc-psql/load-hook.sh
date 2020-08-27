@@ -6,18 +6,24 @@
 # echo "--DEBUG END--"
 
 
-set -e
+#set -e
 
 echo "Initializing keystore..."
 FILE=/opt/certs/keycloak/ca.crt
 
 # Debug
-cat $FILE | base64
+# cat $FILE | base64
 
 if [ -f "$FILE" ]; then
     echo "Adding certificate to cacerts.jks"
-    keytool -import -trustcacerts -alias keycloak -file $FILE -keystore /docker-entrypoint.d/configuration/keystores/cacerts.jks -noprompt -storepass secret
+    keytool -import -trustcacerts -alias keycloak -file $FILE -keystore /docker-entrypoint.d/configuration/keystores/cacerts.jks -noprompt -storepass secret  
     keytool -import -trustcacerts -alias keycloak_new -file $FILE -keystore /opt/wildfly/standalone/configuration/keystores/cacerts.jks -noprompt -storepass secret
+    RESULT=$?
+    if [ $RESULT <> 0 ]; then
+        echo "Replacing keycloak_new from cacerts.jks"
+        keytool -delete -alias keycloak_new -keystore /opt/wildfly/standalone/configuration/keystores/cacerts.jks -noprompt -storepass secret  
+        keytool -import -trustcacerts -alias keycloak_new -file $FILE -keystore /opt/wildfly/standalone/configuration/keystores/cacerts.jks -noprompt -storepass secret 
+    fi       
     
     echo "Adding certificate to key.jks"
 

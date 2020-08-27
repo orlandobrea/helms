@@ -1,4 +1,4 @@
-FROM dcm4che/logstash-dcm4chee:7.6.0-10
+FROM dcm4che/logstash-dcm4chee:7.8.0-10
 
 COPY logstash.yml /etc/logstash.yml
 

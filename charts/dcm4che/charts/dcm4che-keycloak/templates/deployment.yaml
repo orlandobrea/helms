@@ -58,6 +58,11 @@ spec:
             mountPath: /etc/timezone 
           - name: data
             mountPath: /opt/keycloak/standalone  
+          - name: KIBANA_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "dcm4che-keycloak.fullname" . }}-kibana-client-secret
+                key: secret
           # - name: keycloak-certs
             # mountPath: /opt/certs/keycloak
             # readOnly: true                      
