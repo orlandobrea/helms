@@ -37,7 +37,5 @@ fluent-bit:
 
   
 dcm4che-gatekeeper:
-  enabled: false
-  keycloak:
-    client_secret: ''
+  enabled: true
 

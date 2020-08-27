@@ -54,7 +54,10 @@ spec:
             - name: PROXY_DISCOVERY_URL
               value: "https://keycloak-pacs{{ .Values.global.domain }}/auth/realms/dcm4che"
             - name: PROXY_CLIENT_SECRET
-              value: "{{ .Values.keycloak.client_secret }}"
+              valueFrom:
+                secretKeyRef:
+                  name: keycloak-kibana-client-secret
+                  key: secret                   
             - name: PROXY_UPSTREAM_URL
               value: http://{{ .Values.global.prefix }}-kibana:5601
           # volumeMounts:

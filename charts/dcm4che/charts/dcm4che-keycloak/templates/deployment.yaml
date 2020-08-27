@@ -54,7 +54,7 @@ spec:
             - name: KIBANA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "dcm4che-keycloak.fullname" . }}-kibana-client-secret
+                  name: keycloak-kibana-client-secret
                   key: secret                     
           volumeMounts:
           - name: vm-localtime

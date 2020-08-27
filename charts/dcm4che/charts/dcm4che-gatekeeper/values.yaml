@@ -4,10 +4,10 @@
 
 replicaCount: 1
 
-enabled: false
+# enabled: false
 
-keycloak:
-  client_secret: ''
+# keycloak:
+#   client_secret: ''
 
 image:
   repository: dcm4che/keycloak-gatekeeper
