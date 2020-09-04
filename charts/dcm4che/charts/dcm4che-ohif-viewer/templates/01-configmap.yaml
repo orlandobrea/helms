@@ -14,10 +14,10 @@ data:
     servers: {
         dicomWeb: [
         {
-            name: 'DCM4CHEE',
-            wadoUriRoot: 'https://pacs{{ .Values.global.domain }}/dcm4chee-arc/aets/DCM4CHEE/wado',
-            qidoRoot: 'https://pacs{{ .Values.global.domain }}/dcm4chee-arc/aets/DCM4CHEE/rs',
-            wadoRoot: 'https://pacs{{ .Values.global.domain }}/dcm4chee-arc/aets/DCM4CHEE/rs',
+            name: '{{ .Values.global.ae_title }}',
+            wadoUriRoot: 'https://pacs{{ .Values.global.domain }}/dcm4chee-arc/aets/{{ .Values.global.ae_title }}/wado',
+            qidoRoot: 'https://pacs{{ .Values.global.domain }}/dcm4chee-arc/aets/{{ .Values.global.ae_title }}/rs',
+            wadoRoot: 'https://pacs{{ .Values.global.domain }}/dcm4chee-arc/aets/{{ .Values.global.ae_title }}/rs',
             qidoSupportsIncludeField: true,
             imageRendering: 'wadors',
             thumbnailRendering: 'wadors',
