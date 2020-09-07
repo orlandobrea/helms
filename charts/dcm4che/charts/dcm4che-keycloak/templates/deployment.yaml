@@ -51,6 +51,10 @@ spec:
             {{- end}}
             - name: GLOBAL_DOMAIN
               value: {{ $.Values.global.domain }}    
+            - name: KEYCLOAK_USER
+              value: {{ $.Values.global.keycloak_user }}
+            - name: KEYCLOAK_PASSWORD
+              value: {{ $.Values.global.keycloak_password }}
             - name: KIBANA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:

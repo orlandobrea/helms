@@ -62,8 +62,8 @@ env_vars:
   LOGSTASH_HOST: dcm4che-logstash
   KEYCLOAK_WAIT_FOR: "dcm4che-slapd:389 dcm4che-logstash:8514"
   LDAP_URL: ldap://dcm4che-slapd:389
-  KEYCLOAK_USER: admin
-  KEYCLOAK_PASSWORD: admin
+  #KEYCLOAK_USER: admin
+  #KEYCLOAK_PASSWORD: admin
 
 volume:
     name: data

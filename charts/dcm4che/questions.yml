@@ -12,6 +12,20 @@ questions:
   type: string
   label: "AE Title"
   group: "General"
+
+- variable: global.keycloak_user
+  default: "admin"
+  description: "Keycloak admin user"
+  type: string
+  label: "Keycloak user"
+  group: "General"
+
+- variable: global.keycloak_password
+  default: "admin"
+  description: "Keycloak admin pasword"
+  type: string
+  label: "Keycloak password"
+  group: "General"
   
 
 - variable: global.https_port
