@@ -16,6 +16,8 @@ global:
   ae_title: DCM4CHEE
   keycloak_user: admin
   keycloak_password: admin
+  keycloak_regular_user: user
+  keycloak_regular_password: user123
 
   persistence:
     enabled: true

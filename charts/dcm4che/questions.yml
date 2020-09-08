@@ -28,6 +28,20 @@ questions:
   group: "General"
   
 
+- variable: global.regular_user
+  default: "user"
+  description: "Viewer user"
+  type: string
+  label: "Keycloak regular user"
+  group: "General"
+
+- variable: global.regular_password
+  default: "user123"
+  description: "Viewer password"
+  type: string
+  label: "Keycloak regular password"
+  group: "General"
+
 - variable: global.https_port
   default: "30443"
   description: "Puerto HTTPS"
