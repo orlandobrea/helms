@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # File to check if this script was already run
 FILE=/opt/keycloak/standalone/configuration/CLIENTS_IMPORTED
 
@@ -17,8 +19,19 @@ do
     STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8880)
 done
 
+echo "Adding custom clients"
+
+
+
 # Login with keycloak client
+#/opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8880/auth --realm dcm4che --user $KEYCLOAK_USER --password $KEYCLOAK_PASSWORD
 /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8880/auth --realm dcm4che --user $KEYCLOAK_USER --password $KEYCLOAK_PASSWORD
+
+# Change admin password if it's necesary
+if [ "$KEYCLOAK_PASSWORD" != "admin" ]
+    echo "Setting new admin password"
+    /opt/keycloak/bin/kcadm.sh set-password -r dcm4che --username admin --new-password $KEYCLOAK_PASSWORD
+fi
 
 # Prepare and import dcm4chee-arc-ui client
 sed 's/{{DOMAIN}}/'$GLOBAL_DOMAIN'/g' /clients_conf/dcm4chee-arc-ui.json.tpl > /clients_conf/dcm4chee-arc-ui.json
@@ -37,5 +50,11 @@ sed 's/{{DOMAIN}}/'$GLOBAL_DOMAIN'/g' /clients_conf/kibana.json.tpl > /clients_c
 sed 's/{{KIBANA_CLIENT_SECRET}}/'$KIBANA_CLIENT_SECRET'/g' /clients_conf/kibana.tmp > /clients_conf/kibana.json
 /opt/keycloak/bin/kcadm.sh create clients -r dcm4che -f /clients_conf/kibana.json
 rm /clients_conf/kibana.tmp
+
+
+echo "Creating keycloak regular user"
+/opt/keycloak/bin/kcadm.sh create users -r dcm4che -s username=$KEYCLOAK_REGULAR_USER -s enabled=true
+/opt/keycloak/bin/kcadm.sh set-password -r dcm4che --username $KEYCLOAK_REGULAR_USER --new-password $KEYCLOAK_REGULAR_PASSWORD
+
 
 touch $FILE
