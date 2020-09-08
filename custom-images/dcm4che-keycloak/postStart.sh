@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 # File to check if this script was already run
 FILE=/opt/keycloak/standalone/configuration/CLIENTS_IMPORTED
