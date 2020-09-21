@@ -38,6 +38,7 @@ fluent-bit:
       host: dcm4che-logstash
       port: 8080
       format: json
+      json_date_format: iso8601
 
   
 dcm4che-gatekeeper:
