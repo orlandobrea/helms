@@ -18,8 +18,8 @@ global:
   keycloak_password: admin
   keycloak_regular_user: user
   keycloak_regular_password: user123
-  keycloak_api_user: api
-  keycloak_api_password: api123  
+  # keycloak_api_user: api
+  # keycloak_api_password: api123  
 
   persistence:
     enabled: true
