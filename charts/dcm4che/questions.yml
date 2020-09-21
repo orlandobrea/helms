@@ -42,6 +42,20 @@ questions:
   label: "Keycloak regular password"
   group: "General"
 
+- variable: global.api_user
+  default: "api"
+  description: "Viewer user"
+  type: string
+  label: "Keycloak api user"
+  group: "General"
+
+- variable: global.api_password
+  default: "api123"
+  description: "Viewer password"
+  type: string
+  label: "Keycloak api password"
+  group: "General"
+
 - variable: global.https_port
   default: "30443"
   description: "Puerto HTTPS"

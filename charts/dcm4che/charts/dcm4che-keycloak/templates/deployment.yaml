@@ -59,6 +59,10 @@ spec:
               value: {{ $.Values.global.keycloak_regular_user }}
             - name: KEYCLOAK_REGULAR_PASSWORD
               value: {{ $.Values.global.keycloak_regular_password }}
+            - name: KEYCLOAK_API_USER
+              value: {{ $.Values.global.keycloak_api_user }}
+            - name: KEYCLOAK_API_PASSWORD
+              value: {{ $.Values.global.keycloak_api_password }}
             - name: KIBANA_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
