@@ -70,7 +70,7 @@ env_vars:
   POSTGRES_DB: "pacsdb"
   POSTGRES_USER: "pacs"
   POSTGRES_PASSWORD: "pacs"
-  LOGSTASH_HOST: "dcm4che-logstash"
+  #LOGSTASH_HOST: "dcm4che-logstash"  # Without this parmeters the logs are not sent to logstash
   AUTH_SERVER_PROTOCOL: https
   AUTH_SERVER_HOST: keycloak-pacs
   AUTH_SERVER_PORT: 443
