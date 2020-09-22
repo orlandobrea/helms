@@ -23,7 +23,6 @@ spec:
       - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
       - "https://visor{{ .Values.global.domain }}"
       - "http://172.16.80.19"
-      - "http://localhost:3000"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
