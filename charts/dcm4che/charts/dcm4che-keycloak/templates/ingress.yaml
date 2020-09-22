@@ -22,6 +22,7 @@ spec:
       - "https://keycloak-pacs{{ .Values.global.domain }}"
       - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
       - "https://visor{{ .Values.global.domain }}"
+      - "http://172.16.80.19:3000"
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
