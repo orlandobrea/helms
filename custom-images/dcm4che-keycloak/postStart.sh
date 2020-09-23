@@ -57,8 +57,8 @@ echo "Creating keycloak regular user"
 /opt/keycloak/bin/kcadm.sh create users -r dcm4che -s username=$KEYCLOAK_REGULAR_USER -s enabled=true
 /opt/keycloak/bin/kcadm.sh set-password -r dcm4che --username $KEYCLOAK_REGULAR_USER --new-password $KEYCLOAK_REGULAR_PASSWORD
 
-echo "Creating keycloak API user"
-/opt/keycloak/bin/kcadm.sh create users -r dcm4che -s username=$KEYCLOAK_API_USER -s enabled=true
-/opt/keycloak/bin/kcadm.sh set-password -r dcm4che --username $KEYCLOAK_API_USER --new-password $KEYCLOAK_API_PASSWORD
+# echo "Creating keycloak API user"
+# /opt/keycloak/bin/kcadm.sh create users -r dcm4che -s username=$KEYCLOAK_API_USER -s enabled=true
+# /opt/keycloak/bin/kcadm.sh set-password -r dcm4che --username $KEYCLOAK_API_USER --new-password $KEYCLOAK_API_PASSWORD
 
 touch $FILE
