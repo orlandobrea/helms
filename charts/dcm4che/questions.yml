@@ -13,6 +13,13 @@ questions:
   label: "AE Title"
   group: "General"
 
+- variable: global.andes_keycloak_secret
+  default: "d0b8122f-8dfb-46b7-b68a-f5cc4e25d000"
+  description: "Andes Keycloak Secret"
+  type: string
+  label: "Andes Keykloak Secret"
+  group: "General"  
+
 - variable: global.keycloak_user
   default: "admin"
   description: "Keycloak admin user"
