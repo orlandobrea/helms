@@ -51,7 +51,8 @@ if [ -n "$LOGSTASH_HOST" ]; then
 	LOGSTASH="-logstash"
 fi
 
-BIND_IP="0.0.0.0"
+#BIND_IP="0.0.0.0"
+BIND_IP=$(hostname -i)
 SYS_PROPS="-c keycloak${HA}${DB}${LOGSTASH}.xml"
 SYS_PROPS+=" -Djboss.bind.address=$BIND_IP"
 SYS_PROPS+=" -Djboss.bind.address.management=$BIND_IP"
