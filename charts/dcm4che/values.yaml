@@ -18,7 +18,7 @@ global:
   keycloak_password: admin
   keycloak_regular_user: user
   keycloak_regular_password: user123
-  andes_keycloak_secret: d0b8122f-8dfb-46b7-b68a-f5cc4e25d000
+  andes_keycloak_secret: 
   # keycloak_api_user: api
   # keycloak_api_password: api123  
 
