@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: slapd-init-configmap
+data:
+  mwl.ldif: |+
+      version: 1
+      dn: dicomDeviceName=dcm4chee-arc,cn=Devices,cn=DICOM Configuration,dc=dcm4che,dc=org
+      changetype: modify
+      add: hl7PSUMWL
+      hl7PSUMWL: TRUE
+
+      dn: dicomDeviceName=dcm4chee-arc,cn=Devices,cn=DICOM Configuration,dc=dcm4che,dc=org
+      changetype: modify
+      add: hl7PSUDelay
+      hl7PSUDelay: PT1M
+
+      dn: dicomDeviceName=dcm4chee-arc,cn=Devices,cn=DICOM Configuration,dc=dcm4che,dc=org
+      changetype: modify
+      add: hl7PSUTaskPollingInterval
+      hl7PSUTaskPollingInterval: PT1M
+      
+      dn: dicomDeviceName=dcm4chee-arc,cn=Devices,cn=DICOM Configuration,dc=dcm4che,dc=org
+      changetype: modify
+      add: hl7PSUTaskFetchSize
+      hl7PSUTaskFetchSize: 500
+
+      dn: dicomDeviceName=dcm4chee-arc,cn=Devices,cn=DICOM Configuration,dc=dcm4che,dc=org
+      changetype: modify
+      delete: dcmHideSPSWithStatusFromMWL
+      dcmHideSPSWithStatusFromMWL: COMPLETED     
+        
+  postStart.sh: |+
+      #!/bin/sh
+      set -e
+      FILE=/tmp/SLAPD_IMPORTED
+      if test -f "$FILE"; then
+          echo "Nothing to do - already run before"
+          exit 0;
+      fi
+      ldapmodify -x -W -D cn=admin,dc=dcm4che,dc=org -H ldapi:/// -f mwl.ldif
+      touch $FILE

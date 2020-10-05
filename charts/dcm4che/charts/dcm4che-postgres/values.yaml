@@ -43,7 +43,7 @@ service:
 env_vars:
   POSTGRES_DB: "pacsdb"
   POSTGRES_USER: "pacs"
-  POSTGRES_PASSWORD: "pacs" #@ToDo sacara a secrets
+  POSTGRES_PASSWORD: "pacs" #@ToDo sacar a secrets
 
 
 volume:
