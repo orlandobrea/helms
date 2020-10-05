@@ -60,6 +60,11 @@ spec:
                   key: secret                   
             - name: PROXY_UPSTREAM_URL
               value: http://{{ .Values.global.prefix }}-kibana:5601
+            - name: PROXY_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: gatekeeper-encryption-key
+                  key: encryption-key            
           # volumeMounts:
           # - name: vm-localtime
           #   mountPath: /etc/localtime            

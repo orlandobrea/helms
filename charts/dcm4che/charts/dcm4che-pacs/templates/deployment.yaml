@@ -66,6 +66,16 @@ spec:
               value: {{ .Values.env_vars.AUTH_SERVER_PORT | quote}}
             - name: AUTH_SERVER_URL
               value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password                
           volumeMounts:
           - name: vm-localtime
             mountPath: /etc/localtime   
