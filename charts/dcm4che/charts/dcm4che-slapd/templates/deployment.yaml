@@ -33,9 +33,9 @@ spec:
               protocol: {{ $port.protocol }}
             {{- end}}  
           lifecycle:
-            postStart:
+            lifecycle:
               exec:
-                command: "cd /init && chmod +x postStart.sh && /bin/sh -c postStart.sh"
+                command: ["cd /init && chmod +x postStart.sh && /bin/sh -c postStart.sh"]
           # livenessProbe:
           #   httpGet:
           #     path: /
