@@ -1,0 +1,29 @@
+{{ if eq .Values.global.persistence.type "PVC" }}
+{{- $fullName := include "dcm4che-postgres.fullname" . -}}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $fullName }}-{{ .Values.volume_ldap.name }}
+spec:
+  storageClassName: {{ $.Values.global.persistence.storageClass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.volume_ldap.size }}
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $fullName }}-{{ .Values.volume_slapd.name }}
+spec:
+  storageClassName: {{ $.Values.global.persistence.storageClass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.volume_slapd.size }}
+
+{{ end }}

@@ -1,0 +1,81 @@
+questions:
+- variable: global.domain
+  default: "hpn.192.168.0.1.nip.io"
+  description: "Dominio en el cual va a correr la app (ej: test1.192.168.0.5.nip.io)"
+  type: string
+  label: "Dominio a utilizar"
+  group: "General"
+
+- variable: global.ae_title
+  default: "DCM4CHEE"
+  description: "Application Entity Title"
+  type: string
+  label: "AE Title"
+  group: "General"
+
+  
+
+- variable: global.https_port
+  default: "30443"
+  description: "Puerto HTTPS"
+  type: string
+  label: "HTTPS port"
+  group: "General"
+
+  
+
+- variable: global.persistence.type
+  default: "PVC"
+  description: "Tipo de persistencia"
+  type: enum
+  options:
+    - "PVC"
+  label: "Tipo de persistencia a utilizar (volume claim / path en el nodo)"
+  group: "Persistencia"
+
+  
+- variable: global.persistence.storageClass
+  default: ""
+  description: "StorageClass a utilizar para solicitar volumenes (solo si habilito PVC)"
+  type: storageclass
+  label: "Storage Class"
+  group: "Persistencia"
+  show_if: "global.persistence.type=PVC"
+
+  
+  # Postgres
+- variable: dcm4che-postgres.volume.size
+  default: "10Gi"
+  description: "Tamaño del volumen de Postgres"
+  type: string
+  show_if: "global.persistence.type=PVC"
+  label: "Tamaño del volumen de Postgres"
+  group: "Persistencia"
+
+  # LDAP
+- variable: dcm4che-ldap.volume_ldap.size
+  default: "10Gi"
+  description: "Tamaño del volumen de LDAP"
+  type: string
+  show_if: "global.persistence.type=PVC"
+  label: "Tamaño del volumen de LDAP"
+  group: "Persistencia"  
+
+
+  # SLAPD
+- variable: dcm4che-ldap.volume_slapd.size
+  default: "10Gi"
+  description: "Tamaño del volumen de SLAPD"
+  type: string
+  show_if: "global.persistence.type=PVC"
+  label: "Tamaño del volumen de SLAPD"
+  group: "Persistencia"
+
+  # PACS
+- variable: dcm4che-pacs.volume.size
+  default: "10Gi"
+  description: "Tamaño del volumen de PACS"
+  type: string
+  show_if: "global.persistence.type=PVC"
+  label: "Tamaño del volumen de PACS"
+  group: "Persistencia"

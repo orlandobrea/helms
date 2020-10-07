@@ -1,0 +1,208 @@
+{{- if .Values.ingress.enabled -}}
+
+{{- $fullName := include "dcm4che-pacs.fullname" . -}}
+
+
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: {{ $fullName }}-http
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#   {{- range .Values.ingress.hosts.nonTLS }}  
+#   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
+#     kind: Rule
+#     services:
+#     - name:  {{ .service }}
+#       port: {{ .port }}
+
+#   {{- end }}
+
+
+{{- if .Values.ingress.withTLS }}
+
+# ---
+
+# # Create cert
+# apiVersion: cert-manager.io/v1alpha2
+# kind: Issuer
+# metadata:
+#   name: {{ $fullName }}
+# spec:
+#   selfSigned: {}
+# ---
+# apiVersion: cert-manager.io/v1alpha2
+# kind: Certificate
+# metadata:
+#   name: {{ $fullName }}-cert
+# spec:
+#   commonName: {{ $fullName }}
+#   secretName: {{ $fullName }}-cert
+#   issuerRef:
+#     name: {{ $fullName }}
+#   dnsNames: 
+#   {{- range .Values.ingress.hosts.TLS }}  
+#   - {{ .host }}.{{ $.Values.global.domain }}
+#   {{- end}}     
+
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: cors-pacs
+spec:
+  headers:
+    accessControlAllowMethods:
+      - "GET"
+      - "OPTIONS"
+      - "PUT"
+      - "POST"
+    accessControlAllowOriginList:
+      - "https://pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://pacs{{ .Values.global.domain }}"
+      - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://visor{{ .Values.global.domain }}"
+      - "http://172.16.80.19"
+    accessControlAllowHeaders:
+      - "Authorization"
+      - "Origin"   
+      - "Access-Control-Request-Headers"   
+      - "Access-Control-Request-Method"
+      - "Accept"
+    addVaryHeader: true
+    accessControlAllowCredentials: true
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pacs-redirect-custom-ingress
+spec:
+  redirectRegex:
+    regex: ^https://(.*){{ $.Values.global.domain }}(:[0-9]*)/$
+    replacement: https://${1}{{ $.Values.global.domain }}${2}/dcm4chee-arc/ui2
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pacs-redirect-custom-lb
+spec:
+  redirectRegex:
+    regex: ^https://(.*){{ $.Values.global.domain }}/$
+    replacement: https://${1}{{ $.Values.global.domain }}/dcm4chee-arc/ui2
+
+---   
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-https
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
+    kind: Rule
+    middlewares:
+    - name: cors-pacs
+    - name: dcm4che-compress
+    - name: dcm4che-cache
+    # - name: dcm4che-ratelimit
+    - name: pacs-redirect-custom-ingress
+    - name: pacs-redirect-custom-lb
+    services:
+    - name:  {{ .service }}
+      port: {{ .port }}
+      scheme: https
+  {{- end }}
+  tls:
+    hosts: 
+    {{- range .Values.ingress.hosts.TLS }}      
+      - {{ .host }}{{ $.Values.global.domain }}
+    {{- end}}
+    passthrough: false
+    options:
+      name: dcm4che-tls-options
+{{- end}}
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: {{ $fullName }}-nema
+spec:
+  entryPoints:
+    - nema
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: HostSNI(`*`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: 11112
+      scheme: tcp
+  {{- end }}
+
+
+# DICOM port
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: {{ $fullName }}-dicom
+spec:
+  entryPoints:
+    - dicom
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: HostSNI(`*`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: 2762
+      scheme: tcp
+  {{- end }}
+  
+# HL7
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: {{ $fullName }}-hl7
+spec:
+  entryPoints:
+    - hl7
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: HostSNI(`*`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: 2575
+      scheme: tcp
+  {{- end }}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: {{ $fullName }}-hl7-udp
+spec:
+  entryPoints:
+    - hl7udp
+  routes:
+  {{- range .Values.ingress.hosts.TLS }}  
+  - match: HostSNI(`*`)
+    kind: Rule
+    services:
+    - name:  {{ .service }}
+      port: 2575
+      scheme: udp
+  {{- end }}  
+
+{{- end}}
+

@@ -1,0 +1,112 @@
+{{- $fullName := include "dcm4che-slapd.fullname" . -}}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "dcm4che-slapd.fullname" . }}
+  labels:
+    {{- include "dcm4che-slapd.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dcm4che-slapd.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dcm4che-slapd.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- range $port :=  .Values.service.ports }}
+            - containerPort: {{ $port.number }}
+              protocol: {{ $port.protocol }}
+            {{- end}}  
+          lifecycle:
+            lifecycle:
+              exec:
+                command: ["cd /init && chmod +x postStart.sh && /bin/sh -c postStart.sh"]
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          env:
+            - name: AE_TITLE
+              value: {{ $.Values.global.ae_title }}
+            - name: ELASTICSEARCH_HOST
+              value: {{ .Values.elasticsearch.host | quote }}
+          volumeMounts:
+          - name: vm-localtime
+            mountPath: /etc/localtime            
+          - name: vm-timezone
+            mountPath: /etc/timezone   
+          - name: ldap
+            mountPath: /var/lib/openldap/openldap-data         
+          - name: sldapd
+            mountPath: /etc/openldap/slapd.d
+          - name: init-files
+            mountPath: /init/mwl.ldif
+            subPath: mwl.ldif
+            readOnly: true
+          - name: init-files
+            mountPath: /init/postStart.sh
+            subPath: postStart.sh
+            readOnly: true            
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}          
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+        - name: vm-localtime
+          hostPath:
+            path: /etc/localtime  
+        - name: vm-timezone
+          hostPath:
+            path: /etc/timezone  
+        - name: {{ .Values.volume_ldap.name }}
+          {{ if eq $.Values.global.persistence.type "PVC" }}
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-{{ .Values.volume_ldap.name }}
+          {{ end }}
+          {{ if eq $.Values.global.persistence.type "PATH" }}
+          hostPath:
+            path: {{ $.Values.global.persistence.path }}{{ .Values.volume_ldap.path }}
+            type: DirectoryOrCreate
+          {{ end }}  
+        - name: {{ .Values.volume_slapd.name }}
+          {{ if eq $.Values.global.persistence.type "PVC" }}
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-{{ .Values.volume_slapd.name }}
+          {{ end }}
+          {{ if eq $.Values.global.persistence.type "PATH" }}
+          hostPath:
+            path: {{ $.Values.global.persistence.path }}{{ .Values.volume_slapd.path }}
+            type: DirectoryOrCreate
+          {{ end }}     
+        - name: init-files
+          configMap:
+            name: "slapd-init-configmap"                 

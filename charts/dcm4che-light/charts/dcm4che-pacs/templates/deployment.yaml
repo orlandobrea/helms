@@ -1,0 +1,123 @@
+{{- $fullName := include "dcm4che-pacs.fullname" . -}}
+---
+apiVersion: apps/v1
+#kind: Deployment
+kind: StatefulSet
+metadata:
+  name: {{ include "dcm4che-pacs.fullname" . }}
+  labels:
+    {{- include "dcm4che-pacs.labels" . | nindent 4 }}
+  annotations:
+    secret.reloader.stakater.com/reload: "ingress-cert"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dcm4che-pacs.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dcm4che-pacs.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      {{ if .Values.global.tls.custom_cert }}
+      # initContainers:
+      #   - name: init-keystore
+      #     image: orlandobrea/init-keystore:1.0.0
+      #     imagePullPolicy: Always
+      #     volumeMounts:
+      #       - name: pems
+      #         mountPath: "/opt/input"
+      #         readOnly: true
+      #       - name: data
+      #         mountPath: "/opt/output"
+      #         subPath: "configuration/keystores"
+      {{ end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- range $port :=  .Values.service.ports }}
+            - containerPort: {{ $port.number }}
+              protocol: {{ $port.protocol }}
+            {{- end}}  
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          env:
+            {{- range $key, $val := .Values.env_vars }}
+            - name: {{ $key }}
+              value: {{ $val | quote}}
+            {{- end}}
+            - name: AUTH_SERVER
+              value: {{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}
+            - name: AUTH_SERVER_PORT
+              value: {{ .Values.env_vars.AUTH_SERVER_PORT | quote}}
+            - name: AUTH_SERVER_URL
+              value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password                
+          volumeMounts:
+          - name: vm-localtime
+            mountPath: /etc/localtime   
+            readOnly: true         
+          - name: vm-timezone
+            mountPath: /etc/timezone 
+            readOnly: true
+          - name: data
+            mountPath: /opt/wildfly/standalone
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}          
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+        - name: vm-localtime
+          hostPath:
+            path: /etc/localtime  
+        - name: vm-timezone
+          hostPath:
+            path: /etc/timezone  
+        {{ if .Values.global.tls.custom_cert }}
+        - name: certs
+          secret:
+            secretName: ingress-cert
+        {{ end }}
+        - name: {{ .Values.volume.name }}
+          {{ if eq $.Values.global.persistence.type "PVC" }}
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-{{ .Values.volume.name }}
+          {{ end }}
+          {{ if eq $.Values.global.persistence.type "PATH" }}
+          hostPath:
+            path: {{ $.Values.global.persistence.path }}{{ .Values.volume.path }}
+            type: DirectoryOrCreate
+          {{ end }}  

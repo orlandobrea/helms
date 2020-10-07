@@ -1,0 +1,100 @@
+{{- $fullName := include "dcm4che-postgres.fullname" . -}}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "dcm4che-postgres.fullname" . }}
+  labels:
+    {{- include "dcm4che-postgres.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dcm4che-postgres.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dcm4che-postgres.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            {{- range $port :=  .Values.service.ports }}
+            - containerPort: {{ $port.number }}
+              protocol: {{ $port.protocol }}
+            {{- end}}  
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          env:
+            {{- range $key, $val := .Values.env_vars }}
+            - name: {{ $key }}
+              value: {{ $val | quote}}
+            {{- end}}
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password            
+          volumeMounts:
+          - name: vm-localtime
+            mountPath: /etc/localtime            
+          - name: vm-timezone
+            mountPath: /etc/timezone 
+          - name: data
+            mountPath: /var/lib/postgresql/data
+            {{ if eq $.Values.global.persistence.type "PVC" }}
+            # For PVC we must create a folder, because the lost+found default folder on the root directory
+            # makes postgres to throw an error
+            subPath: data
+            {{ end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}          
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+        - name: vm-localtime
+          hostPath:
+            path: /etc/localtime  
+        - name: vm-timezone
+          hostPath:
+            path: /etc/timezone  
+        - name: {{ .Values.volume.name }}
+          {{ if eq $.Values.global.persistence.type "PVC" }}
+          persistentVolumeClaim:
+            claimName: {{ $fullName }}-{{ .Values.volume.name }}
+          {{ end }}
+          {{ if eq $.Values.global.persistence.type "PATH" }}
+          hostPath:
+            path: {{ $.Values.global.persistence.path }}{{ .Values.volume.path }}
+            type: DirectoryOrCreate
+          {{ end }}  
