@@ -94,11 +94,9 @@ spec:
         - name: vm-timezone
           hostPath:
             path: /etc/timezone  
-        {{ if .Values.global.tls.custom_cert }}
         - name: certs
           secret:
-            secretName: ingress-cert
-        {{ end }}
+            secretName: {{ $fullName }}-cert
         - name: {{ .Values.volume.name }}
           {{ if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
