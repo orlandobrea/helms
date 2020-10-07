@@ -34,7 +34,7 @@ spec:
             {{- range $port :=  .Values.service.ports }}
             - containerPort: {{ $port.number }}
               protocol: {{ $port.protocol }}
-            {{- end}}  
+            {{- end }}  
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -47,13 +47,7 @@ spec:
             {{- range $key, $val := .Values.env_vars }}
             - name: {{ $key }}
               value: {{ $val | quote}}
-            {{- end}}
-            - name: AUTH_SERVER
-              value: {{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}
-            - name: AUTH_SERVER_PORT
-              value: {{ .Values.env_vars.AUTH_SERVER_PORT | quote}}
-            - name: AUTH_SERVER_URL
-              value : {{ .Values.env_vars.AUTH_SERVER_PROTOCOL }}://{{ .Values.env_vars.AUTH_SERVER_HOST}}{{ .Values.global.domain}}:{{ .Values.env_vars.AUTH_SERVER_PORT}}{{ .Values.env_vars.AUTH_SERVER_PATH }}
+            {{- end }}
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -74,19 +68,7 @@ spec:
           - name: data
             mountPath: /opt/wildfly/standalone
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}          
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+            {{- toYaml .Values.resources | nindent 12 }}                
       volumes:
         - name: vm-localtime
           hostPath:
@@ -98,12 +80,12 @@ spec:
           secret:
             secretName: {{ $fullName }}-cert
         - name: {{ .Values.volume.name }}
-          {{ if eq $.Values.global.persistence.type "PVC" }}
+          {{- if eq $.Values.global.persistence.type "PVC" }}
           persistentVolumeClaim:
             claimName: {{ $fullName }}-{{ .Values.volume.name }}
-          {{ end }}
-          {{ if eq $.Values.global.persistence.type "PATH" }}
+          {{- end }}
+          {{- if eq $.Values.global.persistence.type "PATH" }}
           hostPath:
             path: {{ $.Values.global.persistence.path }}{{ .Values.volume.path }}
             type: DirectoryOrCreate
-          {{ end }}  
+          {{- end }}  
