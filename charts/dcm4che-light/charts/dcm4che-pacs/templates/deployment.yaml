@@ -23,19 +23,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      {{ if .Values.global.tls.custom_cert }}
-      # initContainers:
-      #   - name: init-keystore
-      #     image: orlandobrea/init-keystore:1.0.0
-      #     imagePullPolicy: Always
-      #     volumeMounts:
-      #       - name: pems
-      #         mountPath: "/opt/input"
-      #         readOnly: true
-      #       - name: data
-      #         mountPath: "/opt/output"
-      #         subPath: "configuration/keystores"
-      {{ end }}
+
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
