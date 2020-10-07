@@ -3,49 +3,30 @@
 {{- $fullName := include "dcm4che-pacs.fullname" . -}}
 
 
-# apiVersion: traefik.containo.us/v1alpha1
-# kind: IngressRoute
-# metadata:
-#   name: {{ $fullName }}-http
-# spec:
-#   entryPoints:
-#     - web
-#   routes:
-#   {{- range .Values.ingress.hosts.nonTLS }}  
-#   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
-#     kind: Rule
-#     services:
-#     - name:  {{ .service }}
-#       port: {{ .port }}
-
-#   {{- end }}
-
-
-{{- if .Values.ingress.withTLS }}
 
 # ---
 
 # # Create cert
-# apiVersion: cert-manager.io/v1alpha2
-# kind: Issuer
-# metadata:
-#   name: {{ $fullName }}
-# spec:
-#   selfSigned: {}
-# ---
-# apiVersion: cert-manager.io/v1alpha2
-# kind: Certificate
-# metadata:
-#   name: {{ $fullName }}-cert
-# spec:
-#   commonName: {{ $fullName }}
-#   secretName: {{ $fullName }}-cert
-#   issuerRef:
-#     name: {{ $fullName }}
-#   dnsNames: 
-#   {{- range .Values.ingress.hosts.TLS }}  
-#   - {{ .host }}.{{ $.Values.global.domain }}
-#   {{- end}}     
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: {{ $fullName }}
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: {{ $fullName }}-cert
+spec:
+  commonName: {{ $fullName }}
+  secretName: {{ $fullName }}-cert
+  issuerRef:
+    name: {{ $fullName }}
+  dnsNames: 
+  {{- range .Values.ingress.hosts.TLS }}  
+  - {{ .host }}.{{ $.Values.global.domain }}
+  {{- end}}     
 
 
 ---
