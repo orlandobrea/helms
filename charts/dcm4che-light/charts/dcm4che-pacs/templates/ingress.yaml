@@ -1,4 +1,3 @@
-{{- if .Values.ingress.enabled -}}
 
 {{- $fullName := include "dcm4che-pacs.fullname" . -}}
 
@@ -109,7 +108,7 @@ spec:
     passthrough: false
     options:
       name: dcm4che-tls-options
-{{- end}}
+
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -185,5 +184,5 @@ spec:
       scheme: udp
   {{- end }}  
 
-{{- end}}
+
 
