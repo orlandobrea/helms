@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   # repository: dcm4che/dcm4chee-arc-psql
-  repository: orlandobrea/dcm4chee-arc-psql
+  repository: dcm4che/dcm4chee-arc-psql
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -72,10 +72,11 @@ env_vars:
   LDAP_URL: "ldap://dcm4che-slapd:389"
   HTTP_PORT: 8080
   HTTPS_PORT: 8443
-  MANAGEMENT_HTTP_PORT: 9990
-  MANAGEMENT_HTTPS_PORT: 9993
+  # MANAGEMENT_HTTP_PORT: 9990
+  # MANAGEMENT_HTTPS_PORT: 9993
   SSL_REQUIRED: all
   ALLOW_ANY_HOSTNAME: true
+  WILDFLY_CHOWN: "/opt/wildfly/standalone /storage"
 
 volume:
     name: data
