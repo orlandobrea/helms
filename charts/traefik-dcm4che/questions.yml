@@ -1,6 +1,6 @@
 questions:
 - variable: tls.custom_cert
-  default: "true"
+  default: "false"
   description: "Usar certificados propios (Ej: ya generados por let's encrypt)"
   type: boolean
   label: "Usar certificados propios"
