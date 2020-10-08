@@ -17,8 +17,10 @@ rules:
       - watch
   - apiGroups:
       - extensions
+      - networking.k8s.io
     resources:
       - ingresses
+      - ingressclasses
     verbs:
       - get
       - list
@@ -58,4 +60,3 @@ subjects:
   - kind: ServiceAccount
     name: traefik-ingress-controller
     namespace: default
-
