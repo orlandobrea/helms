@@ -1,0 +1,15 @@
+questions:
+- variable: global.domain
+  default: "hpn.192.168.0.1.nip.io"
+  description: "Dominio en el cual va a correr la app (ej: oviyamhpn.192.168.0.5.nip.io)"
+  type: string
+  label: "Dominio a utilizar"
+  group: "General"
+
+- variable: global.https_port
+  default: "30443"
+  description: "Puerto HTTPS"
+  type: string
+  label: "HTTPS port"
+  group: "General"
+

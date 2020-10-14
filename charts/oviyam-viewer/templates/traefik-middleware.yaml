@@ -1,0 +1,46 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: dcm4che-compress
+spec:
+  compress: {}
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: dcm4che-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    port: "{{ $.Values.global.https_port }}"
+    permanent: true
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: dcm4che-ratelimit
+spec:
+  rateLimit:
+    average: 200
+    burst: 100   
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: TLSOption
+metadata:
+  name: dcm4che-tls-options
+spec:
+  minVersion: VersionTLS12
+  sniStrict: false
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: dcm4che-cache
+spec:
+  headers:
+    accessControlMaxAge: 600

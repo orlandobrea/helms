@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dcm4che-oviyam.fullname" . }}
+  labels:
+    {{- include "dcm4che-oviyam.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports: 
+    {{- range $port :=  .Values.service.ports }}
+    - name: {{ $port.name }}
+      port: {{ $port.number }}
+      targetPort: {{ $port.number }}
+      protocol: {{ $port.protocol }}
+    {{- end}}
+  selector:
+    {{- include "dcm4che-oviyam.selectorLabels" . | nindent 4 }}

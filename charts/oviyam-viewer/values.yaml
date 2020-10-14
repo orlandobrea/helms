@@ -1,0 +1,20 @@
+
+# Tomando como ejemplo hospital.test.com para el nombre de dominio
+# Se generan las siguientes rutas en el ingress
+#   - kibana-pacshospital.test.com
+#   - keycloak-pacshospital.test.com
+#   - visorhospital.test.com
+#   - pacshospital.test.com
+#   - console-pacshospital.test.com
+
+
+# No cambiar el prefix
+global:
+  prefix: dcm4che
+  domain: hpn.192.168.0.5.nip.io
+  https_port: 30443
+  ae_title: DCM4CHEE
+
+
+
+
