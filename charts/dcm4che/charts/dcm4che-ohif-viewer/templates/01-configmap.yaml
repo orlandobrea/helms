@@ -21,26 +21,33 @@ data:
             qidoSupportsIncludeField: true,
             imageRendering: 'wadors',
             thumbnailRendering: 'wadors',
-            enableStudyLazyLoad: true
+            enableStudyLazyLoad: true,
+            requestOptions: {
+              auth: options => {
+                const url = new URLSearchParams(window.location.search);
+                const token = url.get('token');
+                return 'Bearer ' + token;
+              },
+            }
         },
         ],
     },
     studyListFunctionsEnabled: true,
-    oidc: [                                                                                                         
-    {                                                                                                             
-        // ~ REQUIRED                                                                                               
-        // Authorization Server URL                                                                                 
-        authority: 'https://keycloak-pacs{{ .Values.global.domain }}/auth/realms/dcm4che',                                                   
-        client_id: 'ohif',                                                                                          
-        redirect_uri: 'https://visor{{ .Values.global.domain }}/callback', // `OHIFStandaloneViewer.js`                                   
-        // "Authorization Code Flow"                                                                                
-        response_type: 'code',                                                                                      
-        scope: 'openid', // email profile openid                                                                    
-        // ~ OPTIONAL                                                                                               
-        post_logout_redirect_uri: '/logout-redirect.html',                                                          
+    oidc: [
+    {
+        // ~ REQUIRED
+        // Authorization Server URL
+        authority: 'https://keycloak-pacs{{ .Values.global.domain }}/auth/realms/dcm4che',
+        client_id: 'ohif',
+        redirect_uri: 'https://visor{{ .Values.global.domain }}/callback', // `OHIFStandaloneViewer.js`
+        // "Authorization Code Flow"
+        response_type: 'code',
+        scope: 'openid', // email profile openid
+        // ~ OPTIONAL
+        post_logout_redirect_uri: '/logout-redirect.html',
     }
-    ],                                                                                                            
-    
+    ],
+
     // Extensions should be able to suggest default values for these?
     // Or we can require that these be explicitly set
     hotkeys: [
