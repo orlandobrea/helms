@@ -32,13 +32,13 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-    
+
 service:
   type: ClusterIP
   ports:
     - name: ohif-tcp
       number: 80
-      protocol: TCP  
+      protocol: TCP
 
 ingress:
   enabled: true
@@ -48,9 +48,9 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     TLS:
-    - host: visor
+    - host: visor-pacs
       service: dcm4che-ohif
-      port: 80               
+      port: 80
   tls: []
 
 resources: {}

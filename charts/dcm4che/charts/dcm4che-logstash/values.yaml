@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: orlandobrea/dcm4che-logstash
+  repository: andesnqn/dcm4che-logstash
   pullPolicy: Always
 
 imagePullSecrets: []

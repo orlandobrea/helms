@@ -6,5 +6,5 @@ Dado que esta aplicación funciona con traefik como ingress y los certificados a
 
 - Solicitar al usuario los certificados (ca.crt)
 - Montar los certificados en /opt/certs/keycloak
-- Usar la imagen orlandobrea/dcm4chee-arc-psql:5.22.1-secure para agregar los certificados en el keystore
+- Usar la imagen andesnqn/dcm4chee-arc-psql:5.22.1-secure para agregar los certificados en el keystore
 

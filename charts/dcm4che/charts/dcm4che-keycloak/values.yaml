@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   # repository: dcm4che/keycloak
-  repository: orlandobrea/dcm4che-keycloak
+  repository: andesnqn/dcm4che-keycloak
   pullPolicy: Always
 
 imagePullSecrets: []
