@@ -20,8 +20,8 @@ spec:
       - "https://console-pacs{{ .Values.global.domain }}"
       - "https://keycloak-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
       - "https://keycloak-pacs{{ .Values.global.domain }}"
-      - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
-      - "https://visor{{ .Values.global.domain }}"
+      - "https://visor-pacs{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+      - "https://visor-pacs{{ .Values.global.domain }}"
       - "http://172.16.80.19"
     accessControlAllowHeaders:
       - "authorization"
@@ -36,7 +36,7 @@ metadata:
 spec:
   redirectRegex:
     regex: ^https://(.*){{ $.Values.global.domain }}(:[0-9]*)/$
-    replacement: https://${1}{{ $.Values.global.domain }}${2}/auth/admin/dcm4che/console/    
+    replacement: https://${1}{{ $.Values.global.domain }}${2}/auth/admin/dcm4che/console/
 
 
 ---
@@ -47,7 +47,7 @@ metadata:
 spec:
   redirectRegex:
     regex: ^https://(.*){{ $.Values.global.domain }}/$
-    replacement: https://${1}{{ $.Values.global.domain }}/auth/admin/dcm4che/console/    
+    replacement: https://${1}{{ $.Values.global.domain }}/auth/admin/dcm4che/console/
 
 # ---
 
@@ -60,7 +60,7 @@ spec:
 #   entryPoints:
 #     - web
 #   routes:
-#   {{- range .Values.ingress.hosts.nonTLS }}  
+#   {{- range .Values.ingress.hosts.nonTLS }}
 #   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
 #     kind: Rule
 #     middlewares:
@@ -95,12 +95,12 @@ spec:
 #   secretName: {{ $fullName }}-cert
 #   issuerRef:
 #     name: {{ $fullName }}
-#   dnsNames: 
-#   {{- range .Values.ingress.hosts.TLS }}  
+#   dnsNames:
+#   {{- range .Values.ingress.hosts.TLS }}
 #   - {{ .host }}.{{ $.Values.global.domain }}
 #   {{- end}}
-  
-# ---   
+
+# ---
 
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -110,11 +110,11 @@ spec:
   entryPoints:
     - websecure
   routes:
-  {{- range .Values.ingress.hosts.TLS }}  
+  {{- range .Values.ingress.hosts.TLS }}
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
-    - name: cors-keycloak  
+    - name: cors-keycloak
     - name: dcm4che-compress
     - name: keycloak-redirect-custom-ingress
     - name: keycloak-redirect-custom-lb
@@ -124,8 +124,8 @@ spec:
       scheme: https
   {{- end }}
   tls:
-    hosts: 
-    {{- range .Values.ingress.hosts.TLS }}      
+    hosts:
+    {{- range .Values.ingress.hosts.TLS }}
       - {{ .host }}{{ $.Values.global.domain }}
     {{- end}}
     # secretName: {{ $fullName }}-cert
@@ -141,5 +141,3 @@ spec:
 
 {{- end}}
 {{- end}}
-
-

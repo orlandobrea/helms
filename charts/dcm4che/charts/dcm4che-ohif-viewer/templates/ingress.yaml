@@ -10,7 +10,7 @@
 #   entryPoints:
 #     - web
 #   routes:
-#   {{- range .Values.ingress.hosts.nonTLS }}  
+#   {{- range .Values.ingress.hosts.nonTLS }}
 #   - match: Host(`{{ .host }}.{{ $.Values.global.domain }}`)
 #     kind: Rule
 #     services:
@@ -35,7 +35,9 @@ spec:
       - "PUT"
       - "POST"
     accessControlAllowOriginList:
-      - "https://visor{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+  {{- range .Values.ingress.hosts.TLS }}
+      - "https://{{ .host }}{{ .Values.global.domain }}:{{ $.Values.global.https_port }}"
+  {{- end }}
     accessControlAllowHeaders:
       - "authorization"
     addVaryHeader: true
@@ -60,13 +62,13 @@ spec:
 #   secretName: {{ $fullName }}-cert
 #   issuerRef:
 #     name: {{ $fullName }}
-#   dnsNames: 
-#   {{- range .Values.ingress.hosts.TLS }}  
+#   dnsNames:
+#   {{- range .Values.ingress.hosts.TLS }}
 #   - {{ .host }}.{{ $.Values.global.domain }}
 #   {{- end}}
 
 
----  
+---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -75,7 +77,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  {{- range .Values.ingress.hosts.TLS }}  
+  {{- range .Values.ingress.hosts.TLS }}
   - match: Host(`{{ .host }}{{ $.Values.global.domain }}`)
     kind: Rule
     middlewares:
@@ -89,8 +91,8 @@ spec:
 
   {{- end }}
   tls:
-    hosts: 
-    {{- range .Values.ingress.hosts.TLS }}      
+    hosts:
+    {{- range .Values.ingress.hosts.TLS }}
       - {{ .host }}{{ $.Values.global.domain }}
     {{- end}}
     passthrough: false
@@ -98,5 +100,3 @@ spec:
       name: dcm4che-tls-options
 {{- end}}
 {{- end}}
-
-
